@@ -1,0 +1,202 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{737960DB-B846-4D38-8860-5CF3F7532A81}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>candescentport</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Program Files\Prime Sense\NITE\Include;C:\Program Files\OpenNI\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files\OpenNI\Lib;C:\Program Files\Prime Sense\NITE\Lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;OpenNI.lib;XnVNite.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="bitmap.cpp" />
+    <ClCompile Include="clusterdata.cpp" />
+    <ClCompile Include="clusterdatasrc.cpp" />
+    <ClCompile Include="clusterdatasrcsets.cpp" />
+    <ClCompile Include="clusterfactory.cpp" />
+    <ClCompile Include="clusterhelper.cpp" />
+    <ClCompile Include="clustermerger.cpp" />
+    <ClCompile Include="clusters.cpp" />
+    <ClCompile Include="contextdatasourcebase.cpp" />
+    <ClCompile Include="datasourcebase.cpp" />
+    <ClCompile Include="datasourceprocessor.cpp" />
+    <ClCompile Include="DepthDataFrame.cpp" />
+    <ClCompile Include="depthdataframerep.cpp" />
+    <ClCompile Include="depthimagefact.cpp" />
+    <ClCompile Include="depthimagesource.cpp" />
+    <ClCompile Include="depthpntdatsrc.cpp" />
+    <ClCompile Include="HandTracking\BinaryMap.cpp" />
+    <ClCompile Include="HandTracking\Contour.cpp" />
+    <ClCompile Include="HandTracking\ContourFactory.cpp" />
+    <ClCompile Include="HandTracking\ContourScanner.cpp" />
+    <ClCompile Include="HandTracking\ContourTracer.cpp" />
+    <ClCompile Include="HandTracking\ConvexHull.cpp" />
+    <ClCompile Include="HandTracking\DistanceMap2.cpp" />
+    <ClCompile Include="HandTracking\FingerPoint.cpp" />
+    <ClCompile Include="HandTracking\FingerPointDetector.cpp" />
+    <ClCompile Include="HandTracking\GrahamScan.cpp" />
+    <ClCompile Include="HandTracking\HandCollection.cpp" />
+    <ClCompile Include="HandTracking\HandData.cpp" />
+    <ClCompile Include="HandTracking\HandDataFactory.cpp" />
+    <ClCompile Include="HandTracking\HandDataSource.cpp" />
+    <ClCompile Include="HandTracking\HandDataSourceSettings.cpp" />
+    <ClCompile Include="HandTracking\IdGenerator.cpp" />
+    <ClCompile Include="HandTracking\LineThinner.cpp" />
+    <ClCompile Include="HandTracking\Palm.cpp" />
+    <ClCompile Include="HandTracking\PalmFinder.cpp" />
+    <ClCompile Include="HandTracking\PointAngleComparer.cpp" />
+    <ClCompile Include="histogram.cpp" />
+    <ClCompile Include="idatasource.cpp" />
+    <ClCompile Include="idatasrcfact.cpp" />
+    <ClCompile Include="idepthpntdatsrc.cpp" />
+    <ClCompile Include="Iimagesource.cpp" />
+    <ClCompile Include="ImageData.cpp" />
+    <ClCompile Include="intsize.cpp" />
+    <ClCompile Include="kmeans.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="OpenNIDataSourceFactory.cpp" />
+    <ClCompile Include="Point.cpp" />
+    <ClCompile Include="pointfnc.cpp" />
+    <ClCompile Include="Range.cpp" />
+    <ClCompile Include="rectangle.cpp" />
+    <ClCompile Include="rgbimagefact.cpp" />
+    <ClCompile Include="rgbimagesrc.cpp" />
+    <ClCompile Include="size.cpp" />
+    <ClCompile Include="sysrect.cpp" />
+    <ClCompile Include="volume.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="actionrunner.h" />
+    <ClInclude Include="bitmap.h" />
+    <ClInclude Include="clusterdata.h" />
+    <ClInclude Include="clusterdatasrc.h" />
+    <ClInclude Include="clusterdatasrcsets.h" />
+    <ClInclude Include="clusterfactory.h" />
+    <ClInclude Include="clusterhelper.h" />
+    <ClInclude Include="clustermerger.h" />
+    <ClInclude Include="clusters.h" />
+    <ClInclude Include="contextdatasourcebase.h" />
+    <ClInclude Include="datasourcebase.h" />
+    <ClInclude Include="datasourceprocessor.h" />
+    <ClInclude Include="DepthDataFrame.h" />
+    <ClInclude Include="depthdataframerep.h" />
+    <ClInclude Include="depthdatasource.h" />
+    <ClInclude Include="depthimagefact.h" />
+    <ClInclude Include="depthimagesource.h" />
+    <ClInclude Include="depthpntdatsrc.h" />
+    <ClInclude Include="HandTracking\BinaryMap.h" />
+    <ClInclude Include="HandTracking\Contour.h" />
+    <ClInclude Include="HandTracking\ContourFactory.h" />
+    <ClInclude Include="HandTracking\ContourScanner.h" />
+    <ClInclude Include="HandTracking\ContourTracer.h" />
+    <ClInclude Include="HandTracking\ConvexHull.h" />
+    <ClInclude Include="HandTracking\DistanceMap2.h" />
+    <ClInclude Include="HandTracking\FingerPoint.h" />
+    <ClInclude Include="HandTracking\FingerPointDetector.h" />
+    <ClInclude Include="HandTracking\GrahamScan.h" />
+    <ClInclude Include="HandTracking\HandCollection.h" />
+    <ClInclude Include="HandTracking\HandData.h" />
+    <ClInclude Include="HandTracking\HandDataFactory.h" />
+    <ClInclude Include="HandTracking\HandDataSource.h" />
+    <ClInclude Include="HandTracking\HandDataSourceSettings.h" />
+    <ClInclude Include="HandTracking\IdGenerator.h" />
+    <ClInclude Include="HandTracking\IHandDataSource.h" />
+    <ClInclude Include="HandTracking\LineThinner.h" />
+    <ClInclude Include="HandTracking\Palm.h" />
+    <ClInclude Include="HandTracking\PalmFinder.h" />
+    <ClInclude Include="HandTracking\PointAngleComparer.h" />
+    <ClInclude Include="histogram.h" />
+    <ClInclude Include="iclusterdatasrc.h" />
+    <ClInclude Include="idatasource.h" />
+    <ClInclude Include="idatasrcfact.h" />
+    <ClInclude Include="idepthpntdatsource.h" />
+    <ClInclude Include="Iimagesource.h" />
+    <ClInclude Include="ILocatable.h" />
+    <ClInclude Include="intsize.h" />
+    <ClInclude Include="irgbpntdatsrc.h" />
+    <ClInclude Include="kmeans.h" />
+    <ClInclude Include="OpenNIDataSourceFactory.h" />
+    <ClInclude Include="Point.h" />
+    <ClInclude Include="pointfnc.h" />
+    <ClInclude Include="Range.h" />
+    <ClInclude Include="rectangle.h" />
+    <ClInclude Include="rgbimagefact.h" />
+    <ClInclude Include="rgbimagesrc.h" />
+    <ClInclude Include="rgbpntdatsrc.h" />
+    <ClInclude Include="savedframedepthpntdatsrc.h" />
+    <ClInclude Include="size.h" />
+    <ClInclude Include="sysrect.h" />
+    <ClInclude Include="volume.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

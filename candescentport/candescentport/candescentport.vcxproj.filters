@@ -1,0 +1,393 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Core">
+      <UniqueIdentifier>{74882359-c79e-48e3-9bb7-c21f5d2d213d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\HandTracking">
+      <UniqueIdentifier>{97c1e367-f58f-42e3-a59b-f3ea7309dec5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Core\DataSrc">
+      <UniqueIdentifier>{8cd508ba-c092-4063-88ad-dfd8a214fd48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Core\Cluster">
+      <UniqueIdentifier>{34cdca26-028c-4885-a6ed-6412c9d679cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Core">
+      <UniqueIdentifier>{713b2651-44a1-4ba3-887a-9e0b4a0cf9f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Core\Cluster">
+      <UniqueIdentifier>{ecc0b932-6d6f-4ee9-ba0d-4dc0a95e1859}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Core\DataSrc">
+      <UniqueIdentifier>{bec2bbc7-e576-4b9c-9eca-0a02710f1e53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\HandTracking">
+      <UniqueIdentifier>{7746ad23-e4d1-4ed3-b04f-3becb3c0e6cb}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="clusterdata.cpp">
+      <Filter>Source Files\Core\Cluster</Filter>
+    </ClCompile>
+    <ClCompile Include="clusters.cpp">
+      <Filter>Source Files\Core\Cluster</Filter>
+    </ClCompile>
+    <ClCompile Include="clusterdatasrc.cpp">
+      <Filter>Source Files\Core\Cluster</Filter>
+    </ClCompile>
+    <ClCompile Include="clusterdatasrcsets.cpp">
+      <Filter>Source Files\Core\Cluster</Filter>
+    </ClCompile>
+    <ClCompile Include="clusterfactory.cpp">
+      <Filter>Source Files\Core\Cluster</Filter>
+    </ClCompile>
+    <ClCompile Include="clusterhelper.cpp">
+      <Filter>Source Files\Core\Cluster</Filter>
+    </ClCompile>
+    <ClCompile Include="clustermerger.cpp">
+      <Filter>Source Files\Core\Cluster</Filter>
+    </ClCompile>
+    <ClCompile Include="kmeans.cpp">
+      <Filter>Source Files\Core\Cluster</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageData.cpp">
+      <Filter>Source Files\Core\DataSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="contextdatasourcebase.cpp">
+      <Filter>Source Files\Core\DataSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="rgbimagesrc.cpp">
+      <Filter>Source Files\Core\DataSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="intsize.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="volume.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenNIDataSourceFactory.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Point.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="pointfnc.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Range.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="rectangle.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="size.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="HandTracking\BinaryMap.cpp">
+      <Filter>Source Files\HandTracking</Filter>
+    </ClCompile>
+    <ClCompile Include="HandTracking\Contour.cpp">
+      <Filter>Source Files\HandTracking</Filter>
+    </ClCompile>
+    <ClCompile Include="HandTracking\ContourFactory.cpp">
+      <Filter>Source Files\HandTracking</Filter>
+    </ClCompile>
+    <ClCompile Include="HandTracking\ContourScanner.cpp">
+      <Filter>Source Files\HandTracking</Filter>
+    </ClCompile>
+    <ClCompile Include="HandTracking\ContourTracer.cpp">
+      <Filter>Source Files\HandTracking</Filter>
+    </ClCompile>
+    <ClCompile Include="HandTracking\ConvexHull.cpp">
+      <Filter>Source Files\HandTracking</Filter>
+    </ClCompile>
+    <ClCompile Include="HandTracking\DistanceMap2.cpp">
+      <Filter>Source Files\HandTracking</Filter>
+    </ClCompile>
+    <ClCompile Include="HandTracking\FingerPoint.cpp">
+      <Filter>Source Files\HandTracking</Filter>
+    </ClCompile>
+    <ClCompile Include="HandTracking\FingerPointDetector.cpp">
+      <Filter>Source Files\HandTracking</Filter>
+    </ClCompile>
+    <ClCompile Include="HandTracking\GrahamScan.cpp">
+      <Filter>Source Files\HandTracking</Filter>
+    </ClCompile>
+    <ClCompile Include="HandTracking\HandCollection.cpp">
+      <Filter>Source Files\HandTracking</Filter>
+    </ClCompile>
+    <ClCompile Include="HandTracking\HandData.cpp">
+      <Filter>Source Files\HandTracking</Filter>
+    </ClCompile>
+    <ClCompile Include="HandTracking\HandDataFactory.cpp">
+      <Filter>Source Files\HandTracking</Filter>
+    </ClCompile>
+    <ClCompile Include="HandTracking\HandDataSource.cpp">
+      <Filter>Source Files\HandTracking</Filter>
+    </ClCompile>
+    <ClCompile Include="HandTracking\HandDataSourceSettings.cpp">
+      <Filter>Source Files\HandTracking</Filter>
+    </ClCompile>
+    <ClCompile Include="HandTracking\IdGenerator.cpp">
+      <Filter>Source Files\HandTracking</Filter>
+    </ClCompile>
+    <ClCompile Include="HandTracking\LineThinner.cpp">
+      <Filter>Source Files\HandTracking</Filter>
+    </ClCompile>
+    <ClCompile Include="HandTracking\Palm.cpp">
+      <Filter>Source Files\HandTracking</Filter>
+    </ClCompile>
+    <ClCompile Include="HandTracking\PalmFinder.cpp">
+      <Filter>Source Files\HandTracking</Filter>
+    </ClCompile>
+    <ClCompile Include="HandTracking\PointAngleComparer.cpp">
+      <Filter>Source Files\HandTracking</Filter>
+    </ClCompile>
+    <ClCompile Include="depthpntdatsrc.cpp">
+      <Filter>Source Files\Core\DataSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="depthimagesource.cpp">
+      <Filter>Source Files\Core\DataSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="DepthDataFrame.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="depthdataframerep.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="depthimagefact.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="histogram.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="idatasrcfact.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="rgbimagefact.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="sysrect.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="bitmap.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="datasourcebase.cpp">
+      <Filter>Source Files\Core\DataSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="datasourceprocessor.cpp">
+      <Filter>Source Files\Core\DataSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="Iimagesource.cpp">
+      <Filter>Source Files\Core\DataSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="idatasource.cpp">
+      <Filter>Source Files\Core\DataSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="idepthpntdatsrc.cpp">
+      <Filter>Source Files\Core\DataSrc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="clusterdata.h">
+      <Filter>Header Files\Core\Cluster</Filter>
+    </ClInclude>
+    <ClInclude Include="clusters.h">
+      <Filter>Header Files\Core\Cluster</Filter>
+    </ClInclude>
+    <ClInclude Include="clusterdatasrc.h">
+      <Filter>Header Files\Core\Cluster</Filter>
+    </ClInclude>
+    <ClInclude Include="clusterdatasrcsets.h">
+      <Filter>Header Files\Core\Cluster</Filter>
+    </ClInclude>
+    <ClInclude Include="clusterfactory.h">
+      <Filter>Header Files\Core\Cluster</Filter>
+    </ClInclude>
+    <ClInclude Include="clusterhelper.h">
+      <Filter>Header Files\Core\Cluster</Filter>
+    </ClInclude>
+    <ClInclude Include="clustermerger.h">
+      <Filter>Header Files\Core\Cluster</Filter>
+    </ClInclude>
+    <ClInclude Include="kmeans.h">
+      <Filter>Header Files\Core\Cluster</Filter>
+    </ClInclude>
+    <ClInclude Include="contextdatasourcebase.h">
+      <Filter>Header Files\Core\DataSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="iclusterdatasrc.h">
+      <Filter>Header Files\Core\Cluster</Filter>
+    </ClInclude>
+    <ClInclude Include="Iimagesource.h">
+      <Filter>Header Files\Core\DataSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="idepthpntdatsource.h">
+      <Filter>Header Files\Core\DataSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="irgbpntdatsrc.h">
+      <Filter>Header Files\Core\DataSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="rgbimagesrc.h">
+      <Filter>Header Files\Core\DataSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="intsize.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="volume.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenNIDataSourceFactory.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Point.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="pointfnc.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Range.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="rectangle.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="size.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="HandTracking\BinaryMap.h">
+      <Filter>Header Files\HandTracking</Filter>
+    </ClInclude>
+    <ClInclude Include="HandTracking\Contour.h">
+      <Filter>Header Files\HandTracking</Filter>
+    </ClInclude>
+    <ClInclude Include="HandTracking\ContourFactory.h">
+      <Filter>Header Files\HandTracking</Filter>
+    </ClInclude>
+    <ClInclude Include="HandTracking\ContourScanner.h">
+      <Filter>Header Files\HandTracking</Filter>
+    </ClInclude>
+    <ClInclude Include="HandTracking\ContourTracer.h">
+      <Filter>Header Files\HandTracking</Filter>
+    </ClInclude>
+    <ClInclude Include="HandTracking\ConvexHull.h">
+      <Filter>Header Files\HandTracking</Filter>
+    </ClInclude>
+    <ClInclude Include="HandTracking\DistanceMap2.h">
+      <Filter>Header Files\HandTracking</Filter>
+    </ClInclude>
+    <ClInclude Include="HandTracking\FingerPoint.h">
+      <Filter>Header Files\HandTracking</Filter>
+    </ClInclude>
+    <ClInclude Include="HandTracking\FingerPointDetector.h">
+      <Filter>Header Files\HandTracking</Filter>
+    </ClInclude>
+    <ClInclude Include="HandTracking\GrahamScan.h">
+      <Filter>Header Files\HandTracking</Filter>
+    </ClInclude>
+    <ClInclude Include="HandTracking\HandCollection.h">
+      <Filter>Header Files\HandTracking</Filter>
+    </ClInclude>
+    <ClInclude Include="HandTracking\HandData.h">
+      <Filter>Header Files\HandTracking</Filter>
+    </ClInclude>
+    <ClInclude Include="HandTracking\HandDataFactory.h">
+      <Filter>Header Files\HandTracking</Filter>
+    </ClInclude>
+    <ClInclude Include="HandTracking\HandDataSource.h">
+      <Filter>Header Files\HandTracking</Filter>
+    </ClInclude>
+    <ClInclude Include="HandTracking\HandDataSourceSettings.h">
+      <Filter>Header Files\HandTracking</Filter>
+    </ClInclude>
+    <ClInclude Include="HandTracking\IdGenerator.h">
+      <Filter>Header Files\HandTracking</Filter>
+    </ClInclude>
+    <ClInclude Include="HandTracking\IHandDataSource.h">
+      <Filter>Header Files\HandTracking</Filter>
+    </ClInclude>
+    <ClInclude Include="HandTracking\LineThinner.h">
+      <Filter>Header Files\HandTracking</Filter>
+    </ClInclude>
+    <ClInclude Include="HandTracking\Palm.h">
+      <Filter>Header Files\HandTracking</Filter>
+    </ClInclude>
+    <ClInclude Include="HandTracking\PalmFinder.h">
+      <Filter>Header Files\HandTracking</Filter>
+    </ClInclude>
+    <ClInclude Include="HandTracking\PointAngleComparer.h">
+      <Filter>Header Files\HandTracking</Filter>
+    </ClInclude>
+    <ClInclude Include="ILocatable.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="depthpntdatsrc.h">
+      <Filter>Header Files\Core\DataSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="rgbpntdatsrc.h">
+      <Filter>Header Files\Core\DataSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="depthimagesource.h">
+      <Filter>Header Files\Core\DataSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="DepthDataFrame.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="depthdataframerep.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="depthimagefact.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="histogram.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="idatasrcfact.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="rgbimagefact.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="sysrect.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="bitmap.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="actionrunner.h">
+      <Filter>Header Files\Core\DataSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="datasourcebase.h">
+      <Filter>Header Files\Core\DataSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="datasourceprocessor.h">
+      <Filter>Header Files\Core\DataSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="depthdatasource.h">
+      <Filter>Header Files\Core\DataSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="idatasource.h">
+      <Filter>Header Files\Core\DataSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="savedframedepthpntdatsrc.h">
+      <Filter>Header Files\Core\DataSrc</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
