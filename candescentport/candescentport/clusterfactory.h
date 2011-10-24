@@ -8,7 +8,7 @@ class ClusterFactory
 {
 public:
 	//Random random = new Random();
-
+	std::vector<Cluster*>* createdclusters;
 
 	std::vector<Cluster*>* CreateClusters(int numberOfClusters, intsize* areaSize);
 

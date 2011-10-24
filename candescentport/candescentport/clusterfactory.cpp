@@ -4,9 +4,9 @@
 
 
 std::vector<Cluster*>* ClusterFactory::CreateClusters(int numberOfClusters, intsize* areaSize){
-	std::vector<Cluster*>* result;
+	
 	if ((numberOfClusters>=0)&&(areaSize->Width > 0 && areaSize->Height > 0)) {
-		result = new std::vector<Cluster*>;
+		createdclusters = new std::vector<Cluster*>;
 
 
 		float sliceWidth = areaSize->Width / numberOfClusters;
@@ -18,12 +18,12 @@ std::vector<Cluster*>* ClusterFactory::CreateClusters(int numberOfClusters, ints
 			int maxX = (int)((index + 1) * sliceWidth);
 			int minY = (int)((index) * sliceHeight);
 			int maxY = (int)((index + 1) * sliceHeight);
-			result->push_back(CreateClusterWithin(minX, maxX, minY, maxY));
+			createdclusters->push_back(CreateClusterWithin(minX, maxX, minY, maxY));
 		}
 
 
 	}
-	return result;
+	return createdclusters;
 
 
 }

@@ -13,7 +13,7 @@ public:
 
 	volume(float x, float y, float z, float width, float height, float depth);
 	volume(Point* location, float width, float height, float depth);
-	//volume();
+	volume();
 	bool contains(int x, int y, int z);
 	float X();
 	float Y();

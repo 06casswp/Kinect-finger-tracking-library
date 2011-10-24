@@ -13,16 +13,16 @@
 class Cluster : public ILocatable
 {
 public:
-	std::vector<Point*>* points;
-	Point* center;
-	volume* vol;
+	std::vector<Point*> points;
+	Point center;
+	volume vol;
 	pointfunctions pntfnc;
-	std::vector<Point*>* AllPoints;
+	std::vector<Point*> AllPoints;
 
-	Cluster(Point* center1);
+	Cluster(Point center1);
 	Cluster(int x, int y, int z);
-
-	Cluster(Point* center, std::vector<Point*>* points1);
+	Cluster(void* cl);
+	Cluster(Point center, std::vector<Point*> points1);
 	double Calc2DDistance(Point* point);
 	Point* FindClosestPoint(std::vector<Point*>* points);
 	void AddPoint(Point* point);

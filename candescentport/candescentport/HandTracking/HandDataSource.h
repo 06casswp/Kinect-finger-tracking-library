@@ -9,19 +9,20 @@
 #include "HandDataFactory.h"
 #include "../datasourceprocessor.h"
 #include "../iclusterdatasrc.h"
+#include "../clusterdatasrc.h"
 
 
-class HandDataSource : public DataSourceProcessor<HandCollection*, ClusterData*>, public IHandDataSource
+class HandDataSource : public IHandDataSource//, public DataSourceProcessor<HandCollection*, ClusterData*>,
 {
 public:
-	intsize* size;
+	
 	HandDataFactory* factory;
 
 	HandCollection* CurrentValue;
 
-	HandDataSource(IClusterDataSource* clusterDataSource);
+	HandDataSource(ClusterDataSource* clusterDataSource);
 
-	HandDataSource(IClusterDataSource* clusterDataSource, HandDataSourceSettings* settings);
+	HandDataSource(intsize* size1,/*ClusterDataSource* clusterDataSource, */HandDataSourceSettings* settings);
 
 	int Width();
 
@@ -29,7 +30,7 @@ public:
 
 
 
-	HandCollection* Process(ClusterData clusterData1);
+	HandCollection* Process(ClusterData* clusterData1);
 };
 
 #endif 

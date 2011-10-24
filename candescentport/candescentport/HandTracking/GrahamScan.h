@@ -20,6 +20,12 @@ public:
 	Point* ReturnMinPoint(Point* p1, Point* p2);
 
 	std::vector<Point*>* SortPointsByAngle();
+
+	double cartesian_angle(int x, int y);
+
+	int orientation(Point* p1, Point* p2, Point* p3);
+	int orientation(int x1, int y1, int x2,int y2,int px, int py);
+	bool is_equal(double v1,double v2);
 }; 
 
 #endif 

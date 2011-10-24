@@ -7,7 +7,7 @@
 #include "intsize.h"
 #include "idatasource.h"
 
-class IDepthPointerDataSource : public IDataSourceT<int*>
+class IDepthPointerDataSource : public IDataSourceT<const XnDepthPixel *>
 {
 public:
 

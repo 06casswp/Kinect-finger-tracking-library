@@ -1,9 +1,9 @@
 #include "Point.h"
 
-Point::Point(float x, float y, float z){
-	Point::x = x;
-	Point::y = y;
-	Point::z = z;
+Point::Point(int x1, int y1, int z1){
+	x = x1;
+	y = y1;
+	z = z1;
 }
 Point::Point(void* p) {
 	Point* p1 = (Point*)p;
@@ -11,14 +11,15 @@ Point::Point(void* p) {
 	y = p1->y;
 	z = p1->z;
 }
-
-void Point::adapt(float x, float y, float z){
-	Point::x = x;
-	Point::y = y;
-	Point::z = z;
+/*
+void Point::adapt(float x1, float y1, float z1){
+	x = x1;
+	y = y1;
+	z = z1;
 }
+*/
 bool Point::isZero(){
-	if ((Point::x == 0)&&(Point::y == 0)&&(Point::z == 0)) {
+	if ((x == 0)&&(y == 0)&&(z == 0)) {
 		return true;
 	}
 	else

@@ -8,17 +8,30 @@ public:
 	TValue data;
 
 	DataSourceProcessor<TValue,TSourceData>(IDataSourceT<TSourceData>* dataSource1){
-				            dataSource = dataSource1;
+				            //dataSource = dataSource1;
             //dataSource->NewDataAvailable += new NewDataHandler<TSourceData>(dataSource_NewDataAvailable);
 	}
 
+	void Start(){
+		//dataSource->Start();
+	}
+	void Stop() {
+		//dataSource->Stop();
+	}
+	bool IsRunning()
+	{
+		return dataSource->IsRunning;
+	}
 
 
-	bool IsRunning;
+	TValue CurrentValue()
+	{
+		return data;
+	}
 
-	TValue CurrentValue;
-
-	void dataSource_NewDataAvailable(TSourceData sourceData);
+	void dataSource_NewDataAvailable(TSourceData sourceData){
+		data = Process(sourceData);
+	}
 
 	TValue Process(TSourceData sourceData);
 

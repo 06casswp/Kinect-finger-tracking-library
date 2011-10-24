@@ -162,9 +162,6 @@
     <ClCompile Include="depthpntdatsrc.cpp">
       <Filter>Source Files\Core\DataSrc</Filter>
     </ClCompile>
-    <ClCompile Include="depthimagesource.cpp">
-      <Filter>Source Files\Core\DataSrc</Filter>
-    </ClCompile>
     <ClCompile Include="DepthDataFrame.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
@@ -177,9 +174,6 @@
     <ClCompile Include="histogram.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
-    <ClCompile Include="idatasrcfact.cpp">
-      <Filter>Source Files\Core</Filter>
-    </ClCompile>
     <ClCompile Include="rgbimagefact.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
@@ -189,12 +183,6 @@
     <ClCompile Include="bitmap.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
-    <ClCompile Include="datasourcebase.cpp">
-      <Filter>Source Files\Core\DataSrc</Filter>
-    </ClCompile>
-    <ClCompile Include="datasourceprocessor.cpp">
-      <Filter>Source Files\Core\DataSrc</Filter>
-    </ClCompile>
     <ClCompile Include="Iimagesource.cpp">
       <Filter>Source Files\Core\DataSrc</Filter>
     </ClCompile>
@@ -202,6 +190,12 @@
       <Filter>Source Files\Core\DataSrc</Filter>
     </ClCompile>
     <ClCompile Include="idepthpntdatsrc.cpp">
+      <Filter>Source Files\Core\DataSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="depthdatasource.cpp">
+      <Filter>Source Files\Core\DataSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="datasourcebase.cpp">
       <Filter>Source Files\Core\DataSrc</Filter>
     </ClCompile>
   </ItemGroup>
@@ -371,9 +365,6 @@
     <ClInclude Include="bitmap.h">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
-    <ClInclude Include="actionrunner.h">
-      <Filter>Header Files\Core\DataSrc</Filter>
-    </ClInclude>
     <ClInclude Include="datasourcebase.h">
       <Filter>Header Files\Core\DataSrc</Filter>
     </ClInclude>
@@ -388,6 +379,9 @@
     </ClInclude>
     <ClInclude Include="savedframedepthpntdatsrc.h">
       <Filter>Header Files\Core\DataSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="main.h">
+      <Filter>Header Files\Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

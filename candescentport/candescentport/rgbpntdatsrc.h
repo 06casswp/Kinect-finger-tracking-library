@@ -3,13 +3,16 @@
 
 #include "irgbpntdatsrc.h"
 
-class RGBPointerDataSource : public DataSourceBase<int*, xn::ImageGenerator>, IRGBPointerDataSource 
+class RGBPointerDataSource : public DataSourceBase<const XnUInt8*, xn::ImageGenerator*>, public IRGBPointerDataSource 
 {
 public:
-	RGBPointerDataSource(xn::ImageGenerator generator)
+	RGBPointerDataSource(xn::ImageGenerator* generator)
 		: DataSourceBase(generator){};
 
-	void InternalRun();
+	void InternalRun(){
+		data = generator->GetImageMap();
+		OnNewDataAvailable(data);
+	}
 
 	int Width();
 

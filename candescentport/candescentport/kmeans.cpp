@@ -1,7 +1,7 @@
 #include "kmeans.h"
 #include <time.h>
 
-KMeans::KMeans(int numberOfClusters, Range* zRange1, intsize *size1)
+KMeans::KMeans(int numberOfClusters, Range* zRange1, intsize* size1)
 {
 	size = size1;
 	zRange = zRange1;
@@ -18,18 +18,24 @@ void KMeans::Initialize(std::vector<Point*>* points1)
 
 void KMeans::IterateUntilStable()
 {
-	std::vector<int> counts;
+	Clusters->at(0)->AllPoints.clear();
+	Clusters->at(0)->points.clear();
+	if (Clusters->size()>1) {
+		Clusters->at(1)->AllPoints.clear();
+		Clusters->at(1)->points.clear();
+	}
+	std::vector<int>* counts = new std::vector<int>;
 	do
 	{
 
 		std::vector<Cluster*>::iterator iter1;
-
+		counts->clear();
 
 		Cluster* c1;
 
 		for (iter1=Clusters->begin();iter1<Clusters->end();iter1++){
 			c1 = (Cluster*)*iter1;
-			counts.push_back(c1->Count());
+			counts->push_back(c1->Count());
 		}
 		IterateOnce();
 	} while (DetectCountChange(counts));
@@ -66,32 +72,40 @@ void KMeans::DistributePointsToClusters()
 	Point* p;
 	for (iter=points->begin();iter<points->end();iter++) {
 		p = (Point*)*iter;
-		AddToMinimalDistanceCluster(p);
+		AddToMinimalDistanceCluster(new Point(p));
 	}
 }
 
-bool KMeans::DetectCountChange(std::vector<int> counts) //match up a vector of the counts with the counts of clusters in the cluster vector
+int KMeans::ClusterCount(){
+	return Clusters->size();
+}
+
+bool KMeans::DetectCountChange(std::vector<int>* counts) //match up a vector of the counts with the counts of clusters in the cluster vector
 {
 	std::vector<Cluster*>::iterator iter1;
 	std::vector<int>::iterator iter2;
 	//form a new count vector and compare
 	Cluster* c1;
-	std::vector<int> newcount;
+	std::vector<int>* newcount = new std::vector<int>;
+
 	for (iter1=Clusters->begin();iter1<Clusters->end();iter1++){
 		c1 = (Cluster*)*iter1;
-		newcount.push_back(c1->Count());
+		newcount->push_back(c1->Count());
 	}
 
 	int number;
+
 	int index = 0;
-	for (iter2=counts.begin(); iter2 < counts.end(); iter2++)
+	for (iter2=counts->begin(); iter2 < counts->end(); iter2++)
 	{
+		
 		number = (int)*iter2;
-		if (!number==newcount.at(index)) {
-			return false;
+		if (!number==newcount->at(index)) {
+			return true;
 		}
+		index++;
 	}
-	return true;
+	return false;
 }
 
 void KMeans::RecalculateCenters()
@@ -105,9 +119,9 @@ void KMeans::RecalculateCenters()
 		if (c1->Count() == 0) //If no points are assigned, the point is repositioned randomly
 		{
 			srand(time(NULL));
-			float a = rand()%(size->Width - 1);
-			float b = rand()%(size->Height - 1);
-			float c = rand()%((int)zRange->Max-(int)zRange->Min)+(int)zRange->Min;
+			int a = rand()%(size->Width - 1);
+			int b = rand()%(size->Height - 1);
+			int c = rand()%(zRange->Max-zRange->Min)+zRange->Min;
 
 			c1->center= new Point(a, b, c);
 		}
@@ -126,10 +140,10 @@ double KMeans::CalcDistance(Cluster* c1, Point* point)
 void KMeans::AddToMinimalDistanceCluster(Point* point)
 {
 	int clusterIndex = 0;
-	double minDist = CalcDistance(0, point);
+	double minDist = CalcDistance(*Clusters->begin(), point);
 	std::vector<Cluster*>::iterator iter;
 	Cluster* c1;
-	Cluster* closest;
+	Cluster* closest = *Clusters->begin();
 	for (iter = Clusters->begin(); iter < Clusters->end(); iter++)
 	{
 		c1 = (Cluster*)*iter;

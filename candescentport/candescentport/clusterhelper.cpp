@@ -2,24 +2,29 @@
 #include "rectangle.h"
 #include "kmeans.h"
 
-ClusterHelper::ClusterHelper(ClusterDataSourceSettings* settings1, intsize *size){
-	settings = settings1;
+ClusterHelper::ClusterHelper(ClusterDataSourceSettings* settings1, intsize* size){
+	settings = *settings1;
 	clusterMergerz = new ClusterMerger(settings);
-	algorithm = new KMeans(settings->ClusterCount, settings1->DepthRange(), size);
+	algorithm = new KMeans(settings.ClusterCount, settings.DepthRange(), size);
 	value = new ClusterData();
 
 }
 
-ClusterData* ClusterHelper::Update(std::vector<Point*>* allPointsInDepthRange){
-	std::vector<Point*>* reducedPoints = ReducePoints(allPointsInDepthRange);
+ClusterData* ClusterHelper::Update(){
+
+
+	std::vector<Point*>* reducedPoints = ReducePoints(localcpy);
 
 	if (AreEnoughPointsForClustering((int)reducedPoints->size()))
 	{
 		FindClusters(reducedPoints);
-		AssignAllPoints(allPointsInDepthRange);
+		AssignAllPoints(localcpy);
 	}
 	else
 	{
+		if (value) {
+			delete value;
+		}
 		value = new ClusterData();
 	}
 	return value;
@@ -27,19 +32,19 @@ ClusterData* ClusterHelper::Update(std::vector<Point*>* allPointsInDepthRange){
 }
 
 bool ClusterHelper::AreEnoughPointsForClustering(int count){
-	return count >= settings->MinimalPointsForClustering;
+	return count >= settings.MinimalPointsForClustering;
 
 }
 
 std::vector<Point*>* ClusterHelper::ReducePoints(std::vector<Point*>* points){
 	std::vector<Point*>::iterator iter;
-	std::vector<Point*>* outp;
+	outp = new std::vector<Point*>;
 	Point* tmp;
 	for (iter=points->begin();iter<points->end();iter++) {
 		tmp = (Point*)*iter;
-		int mod = settings->PointModulo;
+		int mod = settings.PointModulo;
 		if (((int)tmp->x % mod == 0) && ((int)tmp->y%mod == 0)) {
-			outp->push_back(tmp);
+			outp->push_back(new Point(tmp));
 		}
 	}//points.Where(p => p.X % ClusterHelper::settings.PointModulo == 0 && p.Y % ClusterHelper::settings.PointModulo == 0).ToList();
 
@@ -49,24 +54,26 @@ std::vector<Point*>* ClusterHelper::ReducePoints(std::vector<Point*>* points){
 
 void ClusterHelper::FindClusters(std::vector<Point*>* pointList){
 	InitializeAlgorithm(pointList);
+
 	algorithm->IterateUntilStable();
 
-	if (algorithm->ClusterCount > 0)
+	if (algorithm->ClusterCount() > 0)
 	{
 		value = new ClusterData(FlattenIfRequired(MergeClustersIfRequired(algorithm->Clusters)));
+		printf("\nCluster Data Generated");
 	}
 
 }
 
 std::vector<Cluster*>* ClusterHelper::FlattenIfRequired(std::vector<Cluster*>* clusters){
-	if (settings->MaximumClusterDepth)
+	if (settings.MaximumClusterDepth)
 	{
 		std::vector<Cluster*>::iterator iter;
 		Cluster* c1;
 		for (iter = clusters->begin();iter<clusters->end();iter++) 
 		{
 			c1 = (Cluster*)*iter;
-			c1->Flatten(settings->MaximumClusterDepth);
+			c1->Flatten(settings.MaximumClusterDepth);
 		}
 	}
 	return clusters;
@@ -74,30 +81,31 @@ std::vector<Cluster*>* ClusterHelper::FlattenIfRequired(std::vector<Cluster*>* c
 }
 
 void ClusterHelper::InitializeAlgorithm(std::vector<Point*>* pointList){
-	ClusterHelper::algorithm->Initialize(pointList);
+	algorithm->Initialize(pointList);
 
 }
 void ClusterHelper::AssignAllPoints(std::vector<Point*>* fullList){
 	std::vector<Cluster*>::iterator iter;
-	std::vector<Point*>* allPoints = new std::vector<Point*>;
+
 	std::vector<Point*>::iterator iter1;
 	Rectanglez* area;
 	Cluster* c1;
 	Point* p1;
 	for (iter=value->Clusters->begin(); iter<value->Clusters->end();iter++) {
 		c1 = (Cluster*)*iter;
-
-		area = &c1->Area();
+		
 		for (iter1=fullList->begin();iter1<fullList->end();iter1++) 
 		{
 			p1 = (Point*)*iter1;
-			if (area->Contains(p1))
+			
+			if (c1->Area().Contains(p1))
 			{
-				allPoints->push_back(p1);
+				c1->AllPoints.push_back(new Point(p1));
 			}
 		}
-		c1->AllPoints = allPoints;
+		
 	}
+	printf("\nAssigned all Points to their classes");
 
 }
 
@@ -107,7 +115,8 @@ std::vector<Cluster*>* ClusterHelper::MergeClustersIfRequired(std::vector<Cluste
 	Cluster* c1;
 	for (iter=clusters->begin();iter<clusters->end();iter++) {
 		c1 = (Cluster*)*iter;
-		if (c1->Count()>settings->MinimalPointsForValidCluster) {
+		if (c1->Count()>settings.MinimalPointsForValidCluster) {
+			c1->CalculateVolume();
 			localClusters->push_back(c1);
 		}
 	}

@@ -1,9 +1,12 @@
 #ifndef IDATSRC_H
 #define IDATSRC_H
 
+
 class IDataSource
 {
-
+public:
+			//virtual void Start();
+			//virtual void Stop();
 			bool IsRunning;
 
 };

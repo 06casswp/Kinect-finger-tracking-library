@@ -8,16 +8,21 @@
 #include "datasourcebase.h"
 
 
-class DepthPointerDataSource : public DataSourceBase<int*, xn::DepthGenerator>, IDepthPointerDataSource
+class DepthPointerDataSource : public DataSourceBase<const XnDepthPixel*, xn::DepthGenerator*>, public IDepthPointerDataSource
 {
 public:
-	DepthPointerDataSource(xn::DepthGenerator generator);
+	DepthPointerDataSource(xn::DepthGenerator* generator);
 
-	void InternalRun();
+	void InternalRun(){
+		data = generator->GetDepthMap();
+		OnNewDataAvailable(data);
+	}
 
-	intsize Size();
 
-	int MaxDepth();
+
+	int MaxDepth;
+		 
+	
 };
 
 

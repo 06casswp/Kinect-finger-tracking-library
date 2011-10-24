@@ -7,7 +7,7 @@
 #include "idepthpntdatsource.h"
 #include "Iimagesource.h"
 
-class DepthImageSource : public DataSourceProcessor<bitmap*, int*>, public IImageSource
+class DepthImageSource : public DataSourceProcessor<bitmap*, const XnDepthPixel*>, public IImageSource
 {
 public:
 	Histogram* histogram;

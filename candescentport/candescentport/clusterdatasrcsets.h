@@ -10,7 +10,8 @@ public:
 	int PointModulo;
 	int MinimumDepthThreshold;
 	int MaximumDepthThreshold;
-	Range* DepthRange();
+	Range * DepthRange();
+	Range * depth;
 	int MinimalPointsForClustering;
 	int MinimalPointsForValidCluster;
 	double MergeMinimumDistanceToCluster;

@@ -18,7 +18,7 @@ public:
 	intsize* size;
 	Range* zRange;
 	std::vector<Cluster*>* Clusters;
-	int ClusterCount;
+	int ClusterCount();
 
 	KMeans(int numberOfClusters, Range* zRange1, intsize* size1);
 
@@ -34,7 +34,7 @@ public:
 
 	void DistributePointsToClusters();
 
-	bool DetectCountChange(std::vector<int> counts);
+	bool DetectCountChange(std::vector<int>* counts);
 
 	void RecalculateCenters();
 

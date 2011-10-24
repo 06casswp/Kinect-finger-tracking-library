@@ -9,10 +9,10 @@
 class ClusterMerger
 {
 public:
-	ClusterDataSourceSettings* settings;
+	ClusterDataSourceSettings settings;
 	pointfunctions pntfnc;
 
-	ClusterMerger(ClusterDataSourceSettings* settings);
+	ClusterMerger(ClusterDataSourceSettings settings);
 
 	std::vector<Cluster*>* MergeClustersIfRequired(std::vector<Cluster*>* clusters);
 

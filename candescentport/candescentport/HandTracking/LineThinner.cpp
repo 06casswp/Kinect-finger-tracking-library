@@ -67,7 +67,7 @@ bool LineThinner::MergeIfDistanceIsTooSmall(Point* sourcePoint, Point* destPoint
 	if (pntfnc.distance(sourcePoint, destPoint) < mindDistBetweenPoints)
 	{
 		Point p = pntfnc.Center(sourcePoint, destPoint);
-		destPoint->adapt(p.x,p.y,p.z);
+		destPoint = new Point(p.x,p.y,p.z);
 		return true;
 	}
 	return false;

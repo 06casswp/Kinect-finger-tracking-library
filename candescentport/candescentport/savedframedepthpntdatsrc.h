@@ -7,23 +7,37 @@ class SavedFrameDepthPointerDataSource : public IDepthPointerDataSource//, IDisp
 {
 	intsize* size;
 	int maxDepth;
+	unsigned short* CurrentValue;
 
-	SavedFrameDepthPointerDataSource(int width, int height, DepthDataFrame frame);
+	SavedFrameDepthPointerDataSource(int width, int height, DepthDataFrame* frame){
+		size = new intsize(width,height);
+		maxDepth = frame->MaxDepth();
+		CurrentValue = GetPointer(frame);
+	}
 
-	int* GetPointer(DepthDataFrame frame);
+	unsigned short* GetPointer(DepthDataFrame* frame){
+		unsigned short* pointerToMemory = (unsigned short*)malloc(frame->height*frame->width*2);
+		memcpy(pointerToMemory,frame->data,frame->height*frame->width*2);
+		return pointerToMemory;
+	}
 
-	
+	void Start() {
+	}
 
-	int MaxDepth();
-
-
-	bool IsRunning();
-
-	int* CurrentValue;
-
-	void Push();
+	void Stop() {
 
 
+	}
 
-	void Dispose();
+	bool IsRunning() {
+		return true;
+	}
+
+	void Push() {
+		//if (!(NewDataAvailable==0)) {
+		//	NewDataAvailable(CurrentValue);
+		//}
+	}
+
+	//void Dispose();
 };

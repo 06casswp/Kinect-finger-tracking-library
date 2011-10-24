@@ -4,11 +4,17 @@
 int IdGenerator::GetNextId(){
 	int nextId = 0;
 	std::vector<int>::iterator iter;
+
+	if (usedIds.empty()) {
+		usedIds.push_back(0);
+		return 0;
+	}
+
 	bool empty = false;
 	while (!empty)
 	{
 		nextId++;
-		for (iter=usedIds->begin();iter<usedIds->end();usedIds++) {
+		for (iter=usedIds.begin();iter<usedIds.end();iter++) {
 			if (!(int)*iter==nextId) {
 				empty = true;
 				break;
@@ -16,16 +22,16 @@ int IdGenerator::GetNextId(){
 		}
 
 	}
-	usedIds->push_back(nextId);
+	usedIds.push_back(nextId);
 
 	return nextId;
 }
 
 void IdGenerator::Return(int id)        {
 	std::vector<int>::iterator iter;
-	for (iter=usedIds->begin();iter<usedIds->end();usedIds++) {
+	for (iter=usedIds.begin();iter<usedIds.end();iter++) {
 		if ((int)*iter==id) {
-			usedIds->erase(iter);
+			usedIds.erase(iter);
 			return;
 		}
 	}
@@ -34,14 +40,14 @@ void IdGenerator::Return(int id)        {
 
 void IdGenerator::Clear()        {
 	//this.usedIds.Clear();
-	usedIds->clear();
+	usedIds.clear();
 }
 
 void IdGenerator::SetUsed(int id)        {
-	usedIds->push_back(id);
+	usedIds.push_back(id);
 	//this.usedIds.Add(id);
 }
 
 IdGenerator::IdGenerator(){
-	usedIds = new std::vector<int>;
+
 }

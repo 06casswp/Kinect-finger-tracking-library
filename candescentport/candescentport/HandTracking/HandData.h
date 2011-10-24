@@ -16,7 +16,7 @@ public:
 
 	int id;
 	ConvexHull* convexHull;
-	std::vector<FingerPoint*>* fingerPoints;
+
 
 	Cluster* cluster;
 	Palm* palm;

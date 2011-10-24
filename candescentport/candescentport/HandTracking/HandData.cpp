@@ -7,19 +7,19 @@ HandData::HandData(int id1, Cluster *cluster1, ConvexHull *convexHull1, Contour 
 	contour = contour1;
 	convexHull = convexHull1;
 	palm = palm1;
-	fingerPoints = fingerPoints1;
+	FingerPoints = fingerPoints1;
 }
 
 
 
 Point* HandData::Center(){
-	return cluster->center;
+	return &cluster->center;
 
 
 }
 
 Point* HandData::Location(){
-	return cluster->center;
+	return &cluster->center;
 
 
 }
@@ -49,14 +49,8 @@ double HandData::PalmDistance(){
 
 
 int HandData::FingerPointCount(){
-	std::vector<FingerPoint*>::iterator iter;
-	int a = 0;
-	for (iter=fingerPoints->begin(); iter<fingerPoints->end();iter++) {
-		a++;
 
-
-	}
-	return a;
+	return FingerPoints->size();
 
 
 }

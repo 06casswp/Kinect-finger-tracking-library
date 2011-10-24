@@ -1,7 +1,7 @@
 #ifndef CLUSTERHELPER_H
 #define CLUSTERHELPER_H
 
-#include "clusterdatasrc.h"
+//#include "clusterdatasrc.h"
 #include "Point.h"
 #include "clusters.h"
 
@@ -14,14 +14,15 @@ class ClusterHelper
 
 public:
 	ClusterMerger* clusterMergerz;
-	KMeans *algorithm;
-
-	ClusterDataSourceSettings* settings;
+	KMeans* algorithm;
+	std::vector<Point*>* localcpy;
+	ClusterDataSourceSettings settings;
 	ClusterData* value;
+	std::vector<Point*>* outp;
 
-	ClusterHelper(ClusterDataSourceSettings* settings1, intsize *size);
+	ClusterHelper(ClusterDataSourceSettings* settings1, intsize* size);
 
-	ClusterData* Update(std::vector<Point*>* allPointsInDepthRange);
+	ClusterData* Update();
 
 	bool AreEnoughPointsForClustering(int count);
 

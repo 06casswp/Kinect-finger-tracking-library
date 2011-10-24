@@ -87,11 +87,10 @@
     <ClCompile Include="clusters.cpp" />
     <ClCompile Include="contextdatasourcebase.cpp" />
     <ClCompile Include="datasourcebase.cpp" />
-    <ClCompile Include="datasourceprocessor.cpp" />
     <ClCompile Include="DepthDataFrame.cpp" />
     <ClCompile Include="depthdataframerep.cpp" />
+    <ClCompile Include="depthdatasource.cpp" />
     <ClCompile Include="depthimagefact.cpp" />
-    <ClCompile Include="depthimagesource.cpp" />
     <ClCompile Include="depthpntdatsrc.cpp" />
     <ClCompile Include="HandTracking\BinaryMap.cpp" />
     <ClCompile Include="HandTracking\Contour.cpp" />
@@ -115,7 +114,6 @@
     <ClCompile Include="HandTracking\PointAngleComparer.cpp" />
     <ClCompile Include="histogram.cpp" />
     <ClCompile Include="idatasource.cpp" />
-    <ClCompile Include="idatasrcfact.cpp" />
     <ClCompile Include="idepthpntdatsrc.cpp" />
     <ClCompile Include="Iimagesource.cpp" />
     <ClCompile Include="ImageData.cpp" />
@@ -134,7 +132,6 @@
     <ClCompile Include="volume.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="actionrunner.h" />
     <ClInclude Include="bitmap.h" />
     <ClInclude Include="clusterdata.h" />
     <ClInclude Include="clusterdatasrc.h" />
@@ -183,6 +180,7 @@
     <ClInclude Include="intsize.h" />
     <ClInclude Include="irgbpntdatsrc.h" />
     <ClInclude Include="kmeans.h" />
+    <ClInclude Include="main.h" />
     <ClInclude Include="OpenNIDataSourceFactory.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="pointfnc.h" />

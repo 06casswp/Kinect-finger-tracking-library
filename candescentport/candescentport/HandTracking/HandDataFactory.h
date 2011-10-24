@@ -24,7 +24,7 @@ public:
 	ContourFactory* contourFactory;
 	PalmFinder* palmFinder;
 	FingerPointDetector* fingerPointDetector;
-	IdGenerator idGenerator;
+	IdGenerator* idGenerator;
 
 	HandDataFactory(HandDataSourceSettings *settings1);
 
@@ -44,7 +44,7 @@ public:
 
 	std::vector<FingerPoint*>* DetectFingerPoints(ConvexHull* convexHull, Cluster* cluster, Contour* contour);
 
-	BinaryMap CreateMap(Cluster* cluster);
+	BinaryMap* CreateMap(Cluster* cluster);
 };
 
 #endif 

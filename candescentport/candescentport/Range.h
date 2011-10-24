@@ -8,12 +8,12 @@
 class Range
 {
 public:
-	float Min;
-	float Max;
-	Range(float Min, float Max);
-	Range(std::vector<float> values);
+	int Min;
+	int Max;
+	Range(int Min, int Max);
+	Range(std::vector<int> values);
 
-	float value();
+	int value();
 };
 
 #endif 

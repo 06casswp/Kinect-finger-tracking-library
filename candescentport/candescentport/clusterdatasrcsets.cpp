@@ -6,9 +6,9 @@ void ClusterDataSourceSettings::SetToDefault(){
 	MinimalPointsForValidCluster = 10;
 	MinimalPointsForClustering = 50;
 	PointModulo = 5;
-	LowerBorder = 75;
+	LowerBorder = 0;
 	MinimumDepthThreshold = 500;
-	MaximumDepthThreshold = 800;
+	MaximumDepthThreshold = 700;
 	ClusterCount = 2;
 
 	MergeMinimumDistanceToCluster = 50;
@@ -33,8 +33,8 @@ void ClusterDataSourceSettings::SetToAccurate(){
 }
 
 Range* ClusterDataSourceSettings::DepthRange(){
-
-	return new Range(MinimumDepthThreshold, MaximumDepthThreshold);
+	depth = new Range(MinimumDepthThreshold, MaximumDepthThreshold);
+	return depth;
 
 
 }

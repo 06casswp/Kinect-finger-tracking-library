@@ -1,19 +1,50 @@
-class ActionRunner //this auto calls things in other objects, will need to be replaced!
+#ifndef ACTIONRUNNER_H
+#define ACTIONRUNNER_H
+
+class ActionRunner //this auto calls things in other objects, using a new thread for each actionrunner.
 {
 public:
-	Action action;
-	Action afterStopAction;
 
-	Thread thread;
+	void (*func)();
+	void (*func1)();
+
 	bool run;
 
-	ActionRunner(Action action);
+	ActionRunner(void* a){
+		DataSourceBase* b = a;
 
-	ActionRunner(Action action, Action afterStopAction)
-		: this(action);
+		func = funca;
+	}
 
-	bool IsRunning();
+	ActionRunner(void(*funca)(), void(*func1b)()){
+		func = funca;
+		func1 = func1b;
+	}
 
 
-	void Run();
+	bool IsRunning() {
+		//return run;
+	}
+
+	void Start() {
+		run = true;
+		Run();
+
+	}
+
+	void Stop() {
+		//run = false;
+	}
+
+	void Run(){
+		//while(run) 
+		//{
+			func();
+		//}
+			run = false;
+		func1();
+	}
+
 };
+
+#endif 

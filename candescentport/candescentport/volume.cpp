@@ -3,9 +3,7 @@
 
 
 volume::volume(float x, float y, float z, float width, float height, float depth){
-	location->x = x;
-	location->y = y;
-	location->z = z;
+	location = new Point(x,y,z);
 	width = width;
 	height = height;
 	depth = depth;
@@ -13,8 +11,8 @@ volume::volume(float x, float y, float z, float width, float height, float depth
 
 
 }
-volume::volume(Point* location, float width, float height, float depth){
-	location = location;
+volume::volume(Point* location1, float width, float height, float depth){
+	location = location1;
 	width = width;
 	height = height;
 	depth = depth;
@@ -22,18 +20,17 @@ volume::volume(Point* location, float width, float height, float depth){
 
 }
 
-/*volume::volume(){
-	volume::location.x = 0;
-	volume::location.y = 0;
-	volume::location.z = 0;
-	volume::width = 0;
-	volume::height = 0;
-	volume::depth = 0;
+volume::volume(){
+	location = new Point(0,0,0);
+
+	width = 0;
+	height = 0;
+	depth = 0;
 
 
 
 }
-*/
+
 bool volume::contains(int x, int y, int z){
 	return (x >= location->x && x <= location->x + width && y >= location->y && y <= location->y + height && z >= location->z && z <= location->z + depth);
 }
