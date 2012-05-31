@@ -1,16 +1,15 @@
 #ifndef CONVEXHULL_H
 #define CONVEXHULL_H
 
-#include "..\Point.h"
+#include "..\point.h"
 #include <vector>
-class ConvexHull
+struct ConvexHull
 {
-public:
-	ConvexHull(std::vector<Point*>* points);
+	
+	point** pointspnt;
+	point* points[640*480];
 
-	std::vector<Point*>* Points;
-
-	int Count();
+	int Count;
 };
 
 #endif 

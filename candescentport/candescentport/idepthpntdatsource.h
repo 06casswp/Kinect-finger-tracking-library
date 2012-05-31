@@ -3,15 +3,15 @@
 
 
 #include <XnCppWrapper.h>
-#include "XnVNite.h"
-#include "intsize.h"
+
+#include "size.h"
 #include "idatasource.h"
 
-class IDepthPointerDataSource : public IDataSourceT<const XnDepthPixel *>
+class IDepthpointerDataSource : public IDataSourceT<const XnDepthPixel *>
 {
 public:
 
-	intsize *Size;
+	sizedat Size;
 	int MaxDepth;
 
 

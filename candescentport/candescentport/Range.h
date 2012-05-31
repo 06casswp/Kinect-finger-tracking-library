@@ -3,17 +3,21 @@
 
 #include <vector>
 
+struct rangedat
+{
+	unsigned short min;
+	unsigned short max;
+};
 
 
-class Range
+class rangefnc
 {
 public:
-	int Min;
-	int Max;
-	Range(int Min, int Max);
-	Range(std::vector<int> values);
-
-	int value();
+	void set(rangedat* dest, unsigned short min, unsigned short max);
+	void set(rangedat* dest, rangedat* src);
+	void set(rangedat* dest, unsigned short* ints, int size);
+	unsigned short value(rangedat* dat);
 };
+
 
 #endif 

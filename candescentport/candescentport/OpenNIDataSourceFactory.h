@@ -2,7 +2,6 @@
 #define OPENNIDATSRCFAC_H
 
 #include <XnCppWrapper.h>
-#include "XnVNite.h"
 #include "clusterdatasrcsets.h"
 #include "iclusterdatasrc.h"
 #include "Iimagesource.h"
@@ -12,36 +11,34 @@
 #include "clusterdatasrc.h"
 #include "depthpntdatsrc.h"
 #include "rgbpntdatsrc.h"
-#include "idatasrcfact.h"
+
+#include "clusterhelper.h"
 
 
 
-class OpenNIDataSourceFactory //: public IDataSourceFactory
+class OpenNIDataSourceFactory 
 {
 public:
 	xn::Context context;
-	DepthPointerDataSource* depthPointerDataSource;
-	IRGBPointerDataSource* rgbPointerDataSource;
-	DepthPointerDataSource* idpds;
-	OpenNIDataSourceFactory(std::string configFile);
+	DepthpointerDataSource* depthpointerDataSource;
+	IRGBpointerDataSource* rgbpointerDataSource;
+	DepthpointerDataSource* idpds;
+
+	ClusterDataSource cd;
+	ClusterHelper ch;
+	ClusterDataSourceSettings settings;
+	xn::ImageGenerator imagegen;
 	xn::DepthGenerator depthgen;
+	xn::DepthMetaData metaDat;
+	xn::ScriptNode node;
+	XnStatus _rc;
+	bool init(std::string configFile);
 
-	xn::DepthGenerator* GetDepthGenerator();
 
-	xn::ImageGenerator* GetImageGenerator();
-
-	IImageSource CreateRGBImageDataSource();
-
-	IImageSource CreateDepthImageDataSource();
-
-	IClusterDataSource* CreateClusterDataSource(ClusterDataSourceSettings* clusterDataSourceSettings);
-	ClusterDataSource* CreateClusterDataSource1(ClusterDataSourceSettings* clusterDataSourceSettings);
+	
 	ClusterDataSource* CreateClusterDataSource1();
-	IClusterDataSource* CreateClusterDataSource();
 
-	DepthPointerDataSource* GetDepthPointerDataSource();
-
-	IRGBPointerDataSource GetRGBPointerDataSource();
+	
 
 	void DisposeAll();
 };

@@ -1,15 +1,15 @@
-#include "FingerPoint.h"
+#include "Fingerpoint.h"
 
-float FingerPoint::X(){
+float Fingerpoint::X(){
 	return location->x;
 }
-float FingerPoint::Y() {
+float Fingerpoint::Y() {
 	return location->y;
 }
-float FingerPoint::Z() {
+float Fingerpoint::Z() {
 	return location->z;
 }
 
-FingerPoint::FingerPoint(Point* locationz){
+void Fingerpoint::set(point* locationz){
 	location = locationz;
 }

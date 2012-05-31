@@ -1,0 +1,29 @@
+material "background"
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture back.jpg
+			}
+		}
+	}
+}
+
+material "cubes"
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture cube.jpg
+			}
+		}
+	}
+}

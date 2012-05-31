@@ -1,36 +1,35 @@
 #include "ContourFactory.h"
 
 
-ContourFactory::ContourFactory(float lineThinningDistance, int maximumRetraceSteps){
-	scanner = new ContourScanner();
-	tracer = new ContourTracer(maximumRetraceSteps);
-	thinner = new LineThinner(lineThinningDistance, false);
-}
 
-Contour* ContourFactory::CreateContour(BinaryMap* map, float left, float top){
-	if (map->FillRate() < 0.01) 
+
+Contour* ContourFactory::CreateContour(depthmapdat* map, float left, float top){
+	Contour* cont = new Contour;
+	extern int contours;
+	contours++;
+
+	DepthMapFnc dfnc;
+	if (dfnc.FillRate(map) < 0.01) 
 	{
-		return new Contour();
+		return cont;
 	}
-	BinaryMap* binaryMap = scanner->Scan(map);
-	std::vector<Point*>* points = Translate(tracer->GetContourPoints(binaryMap), (int)left, (int)top);
-	points = thinner->Filter(points);
-	return new Contour(points);
+	tracer.GetContourpoints(map,cont);
+	Translate(cont, (int)left, (int)top);
+	thinner.Filter(cont); 
+
+	return cont;
 
 
 
 }
 
-std::vector<Point*>* ContourFactory::Translate(std::vector<Point*>* points, int deltaX, int deltaY){
-	std::vector<Point*>::iterator iter;
-	std::vector<Point*>* output = new std::vector<Point*>;
-	Point* p;
-	Point* p1;
-	for (iter = points->begin();iter<points->end();iter++) {
-		p = (Point*)*iter;
-		p1 = new Point(p->x + deltaX, p->y + deltaY, p->z);
-		output->push_back(p1);
+	void ContourFactory::Translate(Contour* cont, int deltaX, int deltaY){
+	int i = 0;
+	for (i=0;i<cont->newpointcnt;i++) {
+		cont->newpoints[i].x = cont->newpoints[i].x + deltaX;
+		cont->newpoints[i].y = cont->newpoints[i].y + deltaY;
 	}
 
-	return output;
+
+
 }

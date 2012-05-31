@@ -1,79 +1,86 @@
 #include "GrahamScan.h"
-#include "PointAngleComparer.h"
+#include "pointAngleComparer.h"
 #include <algorithm>
 #include <math.h>
 #include <deque>
 
-GrahamScan::GrahamScan(std::vector<Point*>* points1){
+bool myfunction (point* i, point* j) {return (i->angle<j->angle); }
+
+void GrahamScan::set(point** points1, int count){
 
 	points = points1;
-
+	pointscnt = count;
 }
 
 ConvexHull* GrahamScan::FindHull(){
-	PointAngleComparer2D *pntangcomp = new PointAngleComparer2D;
-	std::vector<Point*>::iterator iter;
-	int Count = 0;
-	for (iter=points->begin();iter<points->end();iter++) {
-		Count++;
+	
+	
+	ConvexHull* hull = new ConvexHull;
+	extern int hulls;
+	hulls++;
+	if (pointscnt <= 3)
+	{
+		hull->pointspnt = points;
+		hull->Count = pointscnt;
+		return hull;
 	}
 	
-	if (Count <= 3)
-	{
-		return new ConvexHull(points);
-	}
-
-	std::vector<Point*>* pointsSortedByAngle = SortPointsByAngle();
-	std::vector<Point*>* hull = new std::vector<Point*>;
+	SortpointsByAngle();
+	
    const std::size_t HEAD     = 0;
    const std::size_t PRE_HEAD = 1;
 
-   std::deque<Point*> pnt_queue;
+   std::deque<point*> pnt_queue;
 
-   pnt_queue.push_front(pointsSortedByAngle->at(0));
-   pnt_queue.push_front(pointsSortedByAngle->at(1));
+   pnt_queue.push_front(points[0]);
+   pnt_queue.push_front(points[1]);
 
    unsigned int i = 2;
    int    counter_clock_wise = +1;
 	int    clock_wise         = -1;
-   while(i < pointsSortedByAngle->size())
+   while(i < pointscnt)
    {
       if (pnt_queue.size() > 1)
       {
-         if (orientation(pnt_queue[PRE_HEAD],pnt_queue[HEAD],pointsSortedByAngle->at(i)) == counter_clock_wise)
-            pnt_queue.push_front(pointsSortedByAngle->at(i++));
+         if (orientation(pnt_queue[PRE_HEAD],pnt_queue[HEAD],points[i]) == counter_clock_wise)
+            pnt_queue.push_front(points[i++]);
          else
           pnt_queue.pop_front();
       }
       else
-         pnt_queue.push_front(pointsSortedByAngle->at(i++));
+         pnt_queue.push_front(points[i++]);
    }
-
-   for(std::deque<Point*>::iterator it = pnt_queue.begin(); it != pnt_queue.end(); it++)
+   hull->Count = 0;
+   std::deque<point*>::iterator it;
+   for(it = pnt_queue.begin(); it != pnt_queue.end(); it++)
    {
-      hull->push_back(new Point((*it)->x, (*it)->y,(*it)->z));
+
+	   hull->points[hull->Count] = (point*)*it;
+	   hull->Count++;
    }
-	return new ConvexHull(hull);
+   hull->pointspnt = &hull->points[0];
+	return hull;
 
 
 }
 
-Point* GrahamScan::FindMinimalOrdinatePoint(){
-	std::vector<Point*>::iterator iter;
+point* GrahamScan::FindMinimalOrdinatepoint(){
 	
-	Point* minPoint = *points->begin();
-	Point*p;
-	for (iter=points->begin()+1;iter<points->end();iter++)
+	
+	point* minpoint = points[0];
+	
+	int i=0;
+	for (i=1;i<pointscnt;i++)
 	{
-		p = (Point*)*iter;
-		minPoint = ReturnMinPoint(minPoint, p);
+		
+		minpoint = ReturnMinpoint(minpoint, points[i]);
 	}
-	return minPoint;
+	return minpoint;
 
 
 }
 
-int GrahamScan::orientation(Point* p1, Point* p2, Point* p3)
+int GrahamScan::orientation(point* p1, point* p2, point* p3)
 {
    return orientation(p1->x,p1->y,p2->x,p2->y,p3->x,p3->y);
 }
@@ -96,7 +103,7 @@ bool GrahamScan::is_equal(double v1,double v2){
 
 }
 
-Point* GrahamScan::ReturnMinPoint(Point* p1, Point* p2){
+point* GrahamScan::ReturnMinpoint(point* p1, point* p2){
 	if (p1->y < p2->y)
 	{
 		return p1;
@@ -113,6 +120,7 @@ Point* GrahamScan::ReturnMinPoint(Point* p1, Point* p2){
 
 }
 
+
 double GrahamScan::cartesian_angle(int x, int y){
 double _180DivPI  = 57.295779513082320876798154814105000;
 
@@ -128,39 +136,48 @@ double _180DivPI  = 57.295779513082320876798154814105000;
     return 0.0;
 }
 
-std::vector<Point*>* GrahamScan::SortPointsByAngle(){
-	Point* p0 = FindMinimalOrdinatePoint(); //move the minimum ordinate point to the start, run a comparer from the 2nd element to the end to sort those
-	PointAngleComparer2D* comparer = new PointAngleComparer2D(p0);
+void GrahamScan::SortpointsByAngle(){
+	point* p0 = FindMinimalOrdinatepoint(); //move the minimum ordinate point to the start, run a comparer from the 2nd element to the end to sort those
+	comparer.set(p0);
 	//copy points to the new points array
-
-	std::vector<Point*>::iterator iter;
-	for (iter = points->begin(); iter<points->end();iter++) {
-		if (p0==(Point*)*iter) {
-			points->erase(iter);
+	int i = 0;
+	for (i=0; i<pointscnt;i++) {
+		if (points[i] == p0) {
+			points[i] = points[0];
+			points[0] = p0;
 			break;
 		}
 	}
-	points->insert(points->begin(),p0);
-	Point* p1;
+
+	point* p1;
 	int ret;
-	for (iter = points->begin(); iter<points->end();iter++) {
-		p1 = (Point*)*iter;
-		p1->angle = cartesian_angle(p1->x - p0->x, p1->y - p0->y);
+	for (i = 0; i<pointscnt;i++) {
+		p1 = points[i];
+		points[i]->angle = cartesian_angle(points[i]->x - p0->x, points[i]->y - p0->y);
 	}
 	
+
+
+
 	//run through the list until u find something the comparer returns a value other than 0, then do the swap operation, then run through again and again until it reaches the end.
 	
-	
-	std::sort(++points->begin(),points->end(),PointAngleComparer2Da(p0));
-	
-	
+	//std::sort(++points->begin(),points->end(),pointAngleComparer2Da(p0));
+	point* pointtemp;
+	comparer1.anchor = p0;
+	i = 0;
+	int max = 0;
+	printf("\n");
+
+	std::vector<point*> myvector (points, points+pointscnt);
+	std::vector<point*>::iterator it;
+
+	std::sort(myvector.begin(),myvector.end(),myfunction);
 
 
-	//sortedPoints.Remove(p0);
-	//sortedPoints.Insert(0, p0);
-	//sortedPoints.Sort(1, sortedPoints.Count - 1, comparer);
-
-	return points;
+	for (it = myvector.begin();it<myvector.end();it++) {
+		points[i] = (point*)*it;
+		i++;
+	}
 
 
 

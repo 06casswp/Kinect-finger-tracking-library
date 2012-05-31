@@ -1,25 +1,26 @@
 #include "HandData.h"
 
-HandData::HandData(int id1, Cluster *cluster1, ConvexHull *convexHull1, Contour *contour1, Palm *palm1, std::vector<FingerPoint*>* fingerPoints1){
+HandData::HandData(int id1, clusterdat *clusterdat1, ConvexHull *convexHull1, Contour *contour1, Palm *palm1, Fingerpoint** fingerpoints1){
 
 	id = id1;
-	cluster = cluster1;
+	clusterdata=clusterdat1;
 	contour = contour1;
 	convexHull = convexHull1;
 	palm = palm1;
-	FingerPoints = fingerPoints1;
+	Fingerpoints = fingerpoints1;
+	FingerpointCount = 0;
 }
 
 
 
-Point* HandData::Center(){
-	return &cluster->center;
+point* HandData::Center(){
+	return &clusterdata->center;
 
 
 }
 
-Point* HandData::Location(){
-	return &cluster->center;
+point* HandData::Location(){
+	return &clusterdata->center;
 
 
 }
@@ -31,11 +32,11 @@ bool HandData::HasPalm(){
 
 }
 
-Point* HandData::PalmPoint(){
+point* HandData::Palmpoint(){
 	if (palm) {
 		return palm->location;
 	}
-	return 0;//new Point(0,0,0);
+	return 0;//new point(0,0,0);
 
 
 }
@@ -48,12 +49,7 @@ double HandData::PalmDistance(){
 }
 
 
-int HandData::FingerPointCount(){
 
-	return FingerPoints->size();
-
-
-}
 
 bool HandData::HasContour(){
 	return (!contour==0);
@@ -61,8 +57,3 @@ bool HandData::HasContour(){
 
 }
 
-bool HandData::HasFingerPoints(){
-	return (FingerPointCount()>0);
-
-
-}

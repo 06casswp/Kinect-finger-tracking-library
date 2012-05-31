@@ -4,7 +4,7 @@
 
 
 #include <XnCppWrapper.h>
-#include "XnVNite.h"
+
 
 
 class ImageDat

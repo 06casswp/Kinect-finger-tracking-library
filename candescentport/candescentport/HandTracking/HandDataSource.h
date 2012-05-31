@@ -1,8 +1,8 @@
 #ifndef HANDATSRC_H
 #define HANDATSRC_H
 
-#include "../intsize.h"
-#include "../clusterdata.h"
+#include "../size.h"
+#include "../clusters.h"
 #include "IHandDataSource.h"
 #include "HandCollection.h"
 #include "HandDataSourceSettings.h"
@@ -10,27 +10,32 @@
 #include "../datasourceprocessor.h"
 #include "../iclusterdatasrc.h"
 #include "../clusterdatasrc.h"
+#include "DistanceMap2.h"
 
 
-class HandDataSource : public IHandDataSource//, public DataSourceProcessor<HandCollection*, ClusterData*>,
+class HandDataSource
 {
 public:
 	
-	HandDataFactory* factory;
+	HandDataSourceSettings settings;
 
-	HandCollection* CurrentValue;
+	HandDataFactory factory;
 
-	HandDataSource(ClusterDataSource* clusterDataSource);
+	HandCollection handcoll;
 
-	HandDataSource(intsize* size1,/*ClusterDataSource* clusterDataSource, */HandDataSourceSettings* settings);
+	sizedat Size;
+
+	DistanceMap2a map;
+	HandData** results;
 
 	int Width();
 
 	int Height();
 
-
-
-	HandCollection* Process(ClusterData* clusterData1);
+	void start();
+	int resultcount;
+	HandCollection* Process(clusterdat** ClusterData1,sizedat* size, int count);
+	HandDataSource();
 };
 
 #endif 

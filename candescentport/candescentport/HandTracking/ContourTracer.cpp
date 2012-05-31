@@ -1,17 +1,16 @@
 #include "ContourTracer.h"
-#include "../pointfnc.h"
+
 #include <math.h>
 
-ContourTracer::ContourTracer(int maximumRetraceSteps1){
-	maximumRetraceSteps = maximumRetraceSteps1;
 
-}
 
-std::vector<Point*>* ContourTracer::GetContourPoints(BinaryMap* contourMap1){
+void ContourTracer::GetContourpoints(depthmapdat* contourMap1, Contour* contour){
 	contourMap = contourMap1;
-	contourPoints = new std::vector<Point*>;
+	cont = contour;
+	cont->contourpntcnt = 0;
+	memset(cont->contourpoints,0,640*480*sizeof(point*));
 	Process();
-	return contourPoints;
+	//normally returns contourpoints!
 
 }
 
@@ -26,26 +25,25 @@ int ContourTracer::Height(){
 }
 
 int ContourTracer::ResultCount(){
-	int a =0;
-	std::vector<Point*>::iterator iter;
-	for (iter = contourPoints->begin(); iter< contourPoints->end();iter++) {
-		a++;
-	}
 
-	return a;
+	return cont->contourpntcnt;
 
 }
 
-Point* ContourTracer::FindFirstPoint(){
+point* ContourTracer::FindFirstpoint(){
 	int width = Width();
-	int height = Width();
+	int height = Height();
+	cont->newpointcnt = 0;
+	DepthMapFnc dfnc;
 	for (int x = 0; x < width; x++)
 	{
 		for (int y = 0; y < height; y++)
 		{
-			if (IsContourPoint(x, y))
+			if (dfnc.IsSet(contourMap,x, y))
 			{
-				return new Point(x, y, 0);
+				pntfnc.set(x,y,0, &cont->newpoints[0]);
+				cont->newpointcnt++;
+				return &cont->newpoints[0];
 			}
 		}
 	}
@@ -53,89 +51,173 @@ Point* ContourTracer::FindFirstPoint(){
 
 }
 
-bool ContourTracer::IsContourPoint(int x, int y){
-	return contourMap->IsSet(x, y);
+
+
+
+
+
+
+point* ContourTracer::GetNextpoint(point* currentPoint, point* directionPoint){
+	DepthMapFnc dfnc;
+	pntrot.set();
+	int diffX = directionPoint->x - currentPoint->x;
+    int diffY = directionPoint->y - currentPoint->y;
+    int startIndex = GetStartIndex(diffX, diffY);
+
+            for (int index = startIndex; index < startIndex + 8; index++)
+            {
+
+
+                point* rotationPoint = pntrot.points[index%8];
+                int x = (int)(currentPoint->x + rotationPoint->x);
+                int y = (int)(currentPoint->y + rotationPoint->y);
+                if (dfnc.IsSet(contourMap,x, y))
+                {
+					pntfnc.set(x, y, dfnc.IsSet(contourMap,x, y),&cont->newpoints[cont->newpointcnt]);
+					cont->newpointcnt++;
+					return &cont->newpoints[cont->newpointcnt-1];
+                    
+                }
+            }
+            return 0;
+
+
 
 }
 
-bool ContourTracer::IsAllowed(int x, int y){
-	std::vector<Point*>::iterator iter;
-	Point* p;
-	for (iter = contourPoints->begin()+std::max(0,ResultCount() - maximumRetraceSteps);iter<contourPoints->end();iter++) {
-		p = (Point*)*iter;
-		if (p->x == x && p->y == y)
-		{
-			return false;
-		}
-	}
-	
-	return true;
 
-}
-
-bool ContourTracer::IsSetAndAllowed(int x, int y){
-	return contourMap->IsSet(x, y) && IsAllowed(x, y);
-
-}
-
-Point* ContourTracer::GetNextPoint(Point* p){
-	int x;
-	int y;
-	std::vector<Point*>::iterator iter;
-	PointRotation pntrot = PointRotation();
-	Point* pnt;
-	for (iter = pntrot.points->begin();iter < pntrot.points->end(); iter++)
-	{
-		pnt = (Point*)*iter;
-		x = (int)(p->x + pnt->x);
-		y = (int)(p->y + pnt->y);
-		if (IsSetAndAllowed(x, y))
-		{
-			return new Point(x, y, p->z);
-		}
-	}
-	return 0;
-
-}
 
 void ContourTracer::Process(){
-	Point* firstPoint = FindFirstPoint();
-	Point* currentPoint = firstPoint;
-	contourPoints->push_back(currentPoint);
+	        point* firstPoint = FindFirstpoint();
+			point firstdirpnt;
+			firstdirpnt.x = firstPoint->x;
+			firstdirpnt.y = firstPoint->y-1;
+			firstdirpnt.z = firstPoint->z;
+			point* directionPoint = &firstdirpnt;
+            point* currentPoint = firstPoint;
+
+            cont->contourpoints[0] = currentPoint;
+			cont->contourpntcnt = 1;
+
+            point* nextPoint;
+            do
+            {
+                nextPoint = GetNextpoint(currentPoint, directionPoint);
+                if (nextPoint)
+                {
+                    directionPoint = currentPoint;
+
+					cont->contourpoints[cont->contourpntcnt] = nextPoint;
+					cont->contourpntcnt++;
+                    currentPoint = nextPoint;
+                }
+            } while (nextPoint && !((firstPoint->x==nextPoint->x)&&(firstPoint->y==nextPoint->y)));
+			
+
+            //this.contourPoints.Add(firstPoint);
+
+			/*
+
+	FindFirstpoint();
+	point* currentpoint = &cont->newpoints[0];//is an actual copy of points
+	cont->contourpoints[0] = currentpoint;
+	cont->contourpntcnt = 1;
 	int retraceCount = 0;
-	pointfunctions pntfnc;
+	
 	//TODO: Find better stop condition
-	while (retraceCount < maximumRetraceSteps && ResultCount() <= 1500 && !(ResultCount() > 10 && pntfnc.distance(currentPoint, firstPoint) < 2))
+	
+	while (retraceCount < maximumRetraceSteps && ResultCount() <= 1500 && !(ResultCount() > 10 && pntfnc.distance(currentpoint, &cont->newpoints[0]) < 2))
 	{
-		Point* nextPoint = GetNextPoint(currentPoint);
-		if (nextPoint != NULL)
+		point* nextpoint = GetNextpoint(currentpoint);
+		if (nextpoint != NULL)
 		{
 			retraceCount = 0;
-			contourPoints->push_back(nextPoint);
-			currentPoint = nextPoint;
+			cont->contourpoints[cont->contourpntcnt] = nextpoint;
+			cont->contourpntcnt++;
+			currentpoint = nextpoint;
 		}
 		else
 		{
-			currentPoint = contourPoints->at(std::max(0, ResultCount() - retraceCount - 1));
+			currentpoint = cont->contourpoints[std::max(cont->contourpntcnt-retraceCount-1,0)];
 			retraceCount++;
 		}
 	}
-	contourPoints->push_back(firstPoint);
-}
-
-
-
-
-PointRotation::PointRotation(){
-	points = new std::vector<Point*>;
-	points->push_back(new Point(1, 0, 0));
-	points->push_back(new Point(1, 1, 0));
-	points->push_back(new Point(0, 1, 0));
-	points->push_back(new Point(-1, 1, 0));
-	points->push_back(new Point(-1, 0, 0));
-	points->push_back(new Point(-1, -1, 0));
-	points->push_back(new Point(0, -1, 0));
-	points->push_back(new Point(1, -1, 0));
-
+	*/
+	printf("resultcount: %d", ResultCount());
+	
 
 }
+
+
+
+
+void pointRotation::set(){
+
+	points[0] = &p1;
+	points[1] = &p2;
+	points[2] = &p3;
+	points[3] = &p4;
+	points[4] = &p5;
+	points[5] = &p6;
+	points[6] = &p7;
+	points[7] = &p8;
+
+
+	pntfnc.set(1, 0, 0,&p1);
+	pntfnc.set(1, 1, 0,&p2);
+	pntfnc.set(0, 1, 0,&p3);
+	pntfnc.set(-1, 1, 0,&p4);
+	pntfnc.set(-1, 0, 0,&p5);
+	pntfnc.set(-1, -1, 0,&p6);
+	pntfnc.set(0, -1, 0,&p7);
+	pntfnc.set(1, -1, 0,&p8);
+
+
+}
+
+        int ContourTracer::GetStartIndex(float diffX, float diffY)
+        {
+            if (diffY == -1)
+            {
+                if (diffX == -1)
+                {
+                    return 6;
+                }
+                if (diffX == 0)
+                {
+                    return 7;
+                }
+                if (diffX == 1)
+                {
+                    return 0;
+                }
+            }
+            if (diffY == 0)
+            {
+                if (diffX == -1)
+                {
+                    return 5;
+                }
+                if (diffX == 1)
+                {
+                    return 1;
+                }
+            }
+            if (diffY == 1)
+            {
+                if (diffX == -1)
+                {
+                    return 4;
+                }
+                if (diffX == 0)
+                {
+                    return 3;
+                }
+                if (diffX == 1)
+                {
+                    return 2;
+                }
+            }
+            return 0;
+        }
+    

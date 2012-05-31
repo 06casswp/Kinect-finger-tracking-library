@@ -2,137 +2,153 @@
 #include "rectangle.h"
 #include "kmeans.h"
 
-ClusterHelper::ClusterHelper(ClusterDataSourceSettings* settings1, intsize* size){
-	settings = *settings1;
-	clusterMergerz = new ClusterMerger(settings);
-	algorithm = new KMeans(settings.ClusterCount, settings.DepthRange(), size);
-	value = new ClusterData();
+
+
+void ClusterHelper::allocate() { //rewrite to allocate if not exist, wipe if it does, relies on size and clusterdat count
+	int index = 0;
+	for (index=0;index<(sizeof(clusterdats)/sizeof(clusterdats[0]));index++) {
+		clusterdatpnt[index] = &clusterdats[index];
+	}
+	clusterdatarray = &clusterdatpnt[0];
+	memset(reducedpoints,0,sizeof(reducedpoints));
+	reduced = &reducedpoints[0];
 
 }
 
-ClusterData* ClusterHelper::Update(){
+clusterdat **ClusterHelper::Update(){
+	
+	reducedpointsize = 0;
+	memset(reducedpoints,0,sizeof(reducedpoints)); //reset reduced points before calc
 
+	clusterdatarray = &clusterdatpnt[0];
+	
+	Reducepoint(); //copies through only relevant points
 
-	std::vector<Point*>* reducedPoints = ReducePoints(localcpy);
-
-	if (AreEnoughPointsForClustering((int)reducedPoints->size()))
-	{
-		FindClusters(reducedPoints);
-		AssignAllPoints(localcpy);
+	if (AreEnoughpointsForclusterdating((int)reducedpointsize)) {
+		Findclusterdats();
+		if (clusterdatarray == 0) {
+			return 0;
+		}
+		AssignAllpoints();
 	}
 	else
 	{
-		if (value) {
-			delete value;
-		}
-		value = new ClusterData();
-	}
-	return value;
-
-}
-
-bool ClusterHelper::AreEnoughPointsForClustering(int count){
-	return count >= settings.MinimalPointsForClustering;
-
-}
-
-std::vector<Point*>* ClusterHelper::ReducePoints(std::vector<Point*>* points){
-	std::vector<Point*>::iterator iter;
-	outp = new std::vector<Point*>;
-	Point* tmp;
-	for (iter=points->begin();iter<points->end();iter++) {
-		tmp = (Point*)*iter;
-		int mod = settings.PointModulo;
-		if (((int)tmp->x % mod == 0) && ((int)tmp->y%mod == 0)) {
-			outp->push_back(new Point(tmp));
-		}
-	}//points.Where(p => p.X % ClusterHelper::settings.PointModulo == 0 && p.Y % ClusterHelper::settings.PointModulo == 0).ToList();
-
-	return outp;
-
-}
-
-void ClusterHelper::FindClusters(std::vector<Point*>* pointList){
-	InitializeAlgorithm(pointList);
-
-	algorithm->IterateUntilStable();
-
-	if (algorithm->ClusterCount() > 0)
-	{
-		value = new ClusterData(FlattenIfRequired(MergeClustersIfRequired(algorithm->Clusters)));
-		printf("\nCluster Data Generated");
+		return 0;
 	}
 
-}
-
-std::vector<Cluster*>* ClusterHelper::FlattenIfRequired(std::vector<Cluster*>* clusters){
-	if (settings.MaximumClusterDepth)
-	{
-		std::vector<Cluster*>::iterator iter;
-		Cluster* c1;
-		for (iter = clusters->begin();iter<clusters->end();iter++) 
-		{
-			c1 = (Cluster*)*iter;
-			c1->Flatten(settings.MaximumClusterDepth);
-		}
-	}
-	return clusters;
+	
+	return clusterdatarray;
 
 }
 
-void ClusterHelper::InitializeAlgorithm(std::vector<Point*>* pointList){
-	algorithm->Initialize(pointList);
+bool ClusterHelper::AreEnoughpointsForclusterdating(int count){
+	return count >= settings->MinimalpointsForclusterdating;
 
 }
-void ClusterHelper::AssignAllPoints(std::vector<Point*>* fullList){
-	std::vector<Cluster*>::iterator iter;
 
-	std::vector<Point*>::iterator iter1;
-	Rectanglez* area;
-	Cluster* c1;
-	Point* p1;
-	for (iter=value->Clusters->begin(); iter<value->Clusters->end();iter++) {
-		c1 = (Cluster*)*iter;
-		
-		for (iter1=fullList->begin();iter1<fullList->end();iter1++) 
-		{
-			p1 = (Point*)*iter1;
-			
-			if (c1->Area().Contains(p1))
-			{
-				c1->AllPoints.push_back(new Point(p1));
+
+
+void ClusterHelper::Reducepoint(){
+	//for statement through localcopy, where the criteria are met and for the corresponding position, add the pointer to reduced points.
+
+	int index;
+	int count1 = 0;
+	int mod = settings->pointModulo;
+	
+	for (index=0;index<count;index++) {
+		if (!(localcopy[index]==0)) {
+			count1++;
+			if (((int)localcopy[index]->x % mod == 0) && ((int)localcopy[index]->y % mod == 0)) {
+				reducedpoints[reducedpointsize] = localcopy[index]; //assign pointer to reduced array
+				reducedpointsize++;
 			}
 		}
-		
 	}
-	printf("\nAssigned all Points to their classes");
-
+	//printf("\n original count: %d", count1);
 }
 
-std::vector<Cluster*>* ClusterHelper::MergeClustersIfRequired(std::vector<Cluster*>* clusters){
-	std::vector<Cluster*>::iterator iter;
-	std::vector<Cluster*>* localClusters = new std::vector<Cluster*>;
-	Cluster* c1;
-	for (iter=clusters->begin();iter<clusters->end();iter++) {
-		c1 = (Cluster*)*iter;
-		if (c1->Count()>settings.MinimalPointsForValidCluster) {
-			c1->CalculateVolume();
-			localClusters->push_back(c1);
+void ClusterHelper::Findclusterdats(){ //this uses reduced list
+	algorithm.setclustcount = settings->clusterdatcount;
+	algorithm.reducedcount = reducedpointsize;
+	algorithm.IterateUntilStable();
+
+	if (algorithm.clusterdatcount > 0)
+	{
+
+		MergeclusterdatsIfRequired();
+		FlattenIfRequired();
+		//flatten, then no return, just leave in the array with the correct count
+		//printf("\nclusterdat Data Generated");
+	}
+	else
+	{
+
+		clusterdatarray = 0;
+	}
+} 
+
+
+void ClusterHelper::FlattenIfRequired(){
+	int index = 0;
+	if (settings->MaximumclusterdatDepth)
+	{
+		for (index = 0; index<localcount;index++) {
+			cfnc.Flatten(clusterdatpnt[index], settings->MaximumclusterdatDepth);
+		}
+	}	
+}
+
+
+
+
+
+
+void ClusterHelper::AssignAllpoints(){ //takes fulllist (non reduced) (localcopy)
+	int index = 0;
+	int index1 = 0;
+	
+	rectdata rect;
+	
+
+	for (index = 0;index<2; index++) { //modify this to change cluster count
+	clusterdatarray[index]->allpointscnt = 0;
+	clusterdatarray[index]->allpointpnt = &clusterdatarray[index]->Allpoints[0];
+		for (index1=0;index1<count;index1++) {
+			cfnc.Area(&rect,clusterdatarray[index]);
+			if (rfnc.Contains(&rect, localcopy[index1])) {
+				clusterdatarray[index]->Allpoints[clusterdatarray[index]->allpointscnt] = localcopy[index1];
+				clusterdatarray[index]->allpointscnt++;
+			}
 		}
 	}
 
+	//printf("\nAssigned all points to their classes");
+	
+}
 
-
-	if (localClusters->size() > 1)
-	{
-		int clusterCount;
+void ClusterHelper::MergeclusterdatsIfRequired(){
+	int index = 0;
+	clusterdat *localclusterdats[10];
+	clusterdat **localpnt;
+	localpnt = &localclusterdats[0];
+	localcount = 0;
+	for (index=0;index<2;index++) {
+		if (clusterdatarray[index]->pointscnt>settings->MinimalpointsForValidclusterdat) {//using reduced count
+			cfnc.CalculateVolume(clusterdatarray[index]);
+			localclusterdats[localcount] = clusterdatarray[index];
+			localcount++;
+		}
+	}
+	if (localcount > 1) {
+		int clustcount = localcount;
 		do
 		{
-			clusterCount = localClusters->size();
-			localClusters = clusterMergerz->MergeClustersIfRequired(localClusters);
-		}             
-		while (localClusters->size() != clusterCount);
+			clustcount = localcount;
+			ClusterMergerz.MergeclusterdatsIfRequired(localpnt, &clustcount);
+		}
+		while (clustcount != localcount);
 	}
-	return localClusters;
+	printf("\n%d\n", localcount);
+
 
 }

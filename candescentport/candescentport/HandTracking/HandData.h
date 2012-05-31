@@ -1,16 +1,16 @@
 #ifndef HANDAT_H
 #define HANDAT_H
 
-#include "..\Point.h"
-#include "FingerPoint.h"
+#include "..\point.h"
+#include "Fingerpoint.h"
 #include "ConvexHull.h"
 #include "../clusters.h"
 #include "Palm.h"
 #include "Contour.h"
-#include "../ILocatable.h"
+
 #include <vector>
 
-class HandData : public ILocatable
+class HandData
 {
 public:
 
@@ -18,29 +18,31 @@ public:
 	ConvexHull* convexHull;
 
 
-	Cluster* cluster;
+	clusterdat* clusterdata;
 	Palm* palm;
 	Contour* contour;
 
-	HandData(int id1, Cluster* cluster1, ConvexHull* convexHull1, Contour *contour1, Palm *palm1, std::vector<FingerPoint*>* fingerPoints1);
+	HandData(int id1, clusterdat* clusterdat1, ConvexHull* convexHull1, Contour *contour1, Palm *palm1, Fingerpoint** fingerpoints1);
+	//void set(int id1, clusterdat* clusterdat1, ConvexHull* convexHull1, Contour *contour1, Palm *palm1, Fingerpoint** fingerpoints1);
 
-	Point* Center();
+	point* Center();
 
-	Point* Location();
+	point* Location();
 
 	bool HasPalm();
 
-	Point* PalmPoint();
+	point* Palmpoint();
 
 	double PalmDistance();
 
-	std::vector<FingerPoint*>* FingerPoints;
+	Fingerpoint** Fingerpoints;
 
-	int FingerPointCount();
+
+	int FingerpointCount;
 
 	bool HasContour();
 
-	bool HasFingerPoints();
+
 };
 
 #endif 

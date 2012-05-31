@@ -1,18 +1,30 @@
 #ifndef RECTANGLE_H
 #define RECTANGLE_H
 
-#include "Point.h"
+#include "point.h"
 #include "size.h"
-class Rectanglez
+
+struct rectdata
+{
+	point location;
+	sizedat size;
+
+};
+
+class rectfnc
 {
 public:
-	Point* location;
-	Size* size;
+	pointman pntfnc;
+	sizefnc szfnc;
+	void set(rectdata* dest, point* location, sizedat* size);
+	void set(rectdata* dest, unsigned short x, unsigned short y, float width, float height);
+	bool Contains(rectdata* dest, point * p);
+	bool Equals(rectdata* dest, rectdata* test);
 
-	Rectanglez(Point* location, Size* size);
-	Rectanglez(float x, float y, float width, float height);
-	bool Contains(Point* p);
-	bool Equals(void* p);
+
+
 };
+
+
 
 #endif 

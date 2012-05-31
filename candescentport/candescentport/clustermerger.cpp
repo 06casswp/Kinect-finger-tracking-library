@@ -2,53 +2,46 @@
 #include "clustermerger.h"
 
 
-ClusterMerger::ClusterMerger(ClusterDataSourceSettings settings1)
-{
-	settings = settings1;
-}
 
-std::vector<Cluster*>* ClusterMerger::MergeClustersIfRequired(std::vector<Cluster*>* clusters)
-{
-	std::vector<Cluster*>::iterator iter;
-	std::vector<Cluster*>::iterator iter1;
-	//check each against every other
-	//check for 2 instances of each given comparing to several :(
-	//iterate through each cluster, then iterate through each other cluster 
-	Cluster* c1;
-	Cluster* c2;
+void ClusterMerger::MergeclusterdatsIfRequired(clusterdat** clusterdats, int* count){
+	
+	int index = 0;
+	int index1 = 0;
 	a:
-	for (iter=clusters->begin();iter<clusters->end();iter++) {
-		c1 = (Cluster*)*iter;
-		for (iter1=clusters->begin();iter1<clusters->end();iter1++) {
-			c2 = (Cluster*)*iter1;
-			if (!(c1==c2)) {
-				if (IsMergeRequired(c1,c2)) {
-					Cluster* merged = c1->Merge(c2);
-					remove(clusters, c1);
-					remove(clusters, c2);
-					clusters->push_back(merged);
-					goto a;
+		for (index=0;index<settings->clusterdatcount;index++) {
+			if (clusterdats[index]) {
+				for (index1=0;index1<settings->clusterdatcount;index1++) {
+					if (clusterdats[index1]) {
+						if (!(clusterdats[index]==clusterdats[index1])) {
+							if (IsMergeRequired(clusterdats[index],clusterdats[index1])) {
+								cfnc.Merge(clusterdats[index],clusterdats[index1]);
+								*count--;
+								clusterdats[index1]=0;
+								int check = 0;
+								while (check<(settings->clusterdatcount-1)) {
+									if (clusterdats[check]==0) {
+										clusterdats[check] = clusterdats[check+1];
+									}
+									check++;
+								}
+								goto a;
+							}
+						}
+					}
 				}
 			}
 		}
 	}
 
-	return clusters;
-}
 
-bool ClusterMerger::IsMergeRequired(Cluster* cluster1, Cluster* cluster2)
+
+
+
+
+
+
+bool ClusterMerger::IsMergeRequired(clusterdat* clusterdat1, clusterdat* clusterdat2)
 {
-	return cluster1->DistanceMetric(cluster2) < settings.MergeMinimumDistanceToCluster || pntfnc.distance(&cluster1->center, &cluster2->center) < settings.MergeMaximumClusterCenterDistances || pntfnc.distance(cluster1->center.x, cluster1->center.y, cluster2->center.x, cluster2->center.y) < settings.MergeMaximumClusterCenterDistances2D;
+	return cfnc.DistanceMetric(clusterdat1, clusterdat2) < settings->MergeMinimumDistanceToclusterdat || pntman.distance(&clusterdat1->center, &clusterdat2->center) < settings->MergeMaximumclusterdatCenterDistances || pntman.distance(clusterdat1->center.x, clusterdat1->center.y, clusterdat2->center.x, clusterdat2->center.y) < settings->MergeMaximumclusterdatCenterDistances2D;
 }
 
-void ClusterMerger::remove(std::vector<Cluster*>* clusters, Cluster* c1) {
-	std::vector<Cluster*>::iterator iter;
-	Cluster* tmp;
-	for (iter=clusters->begin();iter<clusters->end();iter++) {
-		tmp = (Cluster*)*iter;
-		if (tmp==c1) {
-			clusters->erase(iter);
-			return;
-		}
-	}
-}

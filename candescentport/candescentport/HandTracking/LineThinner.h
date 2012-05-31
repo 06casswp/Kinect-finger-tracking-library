@@ -1,21 +1,29 @@
 #ifndef LINETHIN_H
 #define LINETHIN_H
 
-#include "..\Point.h"
+#include "..\point.h"
 #include <vector>
+#include "Contour.h"
+#include "ConvexHull.h"
 class LineThinner
 {
 public:
 	bool checkBoundary;
-	float mindDistBetweenPoints;
+	float mindDistBetweenpoints;
+	pointman pntfnc;
 
-	LineThinner(float mindDistBetweenPointsz, bool checkBoundaryz);
+	point* newstore[640*480];
+	int size;
 
-	std::vector<Point*>* Filter(std::vector<Point*>* points);
+	void set(float mindDistBetweenpoints1, bool check);
 
-	bool MergeIfDistanceIsTooSmall(Point* sourcePoint, Point* destPoint);
+	void Filter(Contour* cont);
+	void Filter1(ConvexHull* conv);
 
-	void CheckFirstAndLastPoint(std::vector<Point*>* points);
+	bool DistanceIsTooSmall(point* sourcepoint, point* destpoint);
+
+	void CheckFirstAndLastpoint(Contour* cont);
+	void CheckFirstAndLastpoint1(ConvexHull* conv);
 };
 
 #endif 

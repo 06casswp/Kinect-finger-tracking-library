@@ -1,31 +1,30 @@
 #include "Range.h"
 
 
-Range::Range(int Min1, int Max1){
-	Max = Max1;
-	Min = Min1;
-}
-Range::Range(std::vector<int> values){
-	//iterator
-	Min = (int)*values.begin();
-	Max = Min;
-	float value;
-	std::vector<int>::iterator iter;
-	for (iter = values.begin();iter<values.end(); iter++) {
-		value = (int)*iter;
-		if (value>Max) {
-			Max= value;
+	void rangefnc::set(rangedat* dest, unsigned short min, unsigned short max){
+		dest->max = max;
+		dest->min = min;
+	}
+	void rangefnc::set(rangedat* dest, rangedat* src){
+		dest->max = src->max;
+		dest->min = src->min;
+	}
+	unsigned short rangefnc::value(rangedat* dat){
+		return dat->max-dat->min;
+	}
+	
+	void rangefnc::set(rangedat* dest, unsigned short* ints, int size)
+	{
+		dest->min = ints[0];
+		dest->max = dest->min;
+		int index = 0;
+		for (index=0;index<size;index++) {
+			if (ints[index]<dest->min) {
+				dest->min = ints[index];
+			}
+			else if (ints[index]>dest->max) {
+				dest->max = ints[index];
+			}
 		}
-		if (value<Min) {
-			Min = value;
-		}
-
 	}
 
-
-}
-int Range::value(){
-	return Max-Min;
-
-
-}

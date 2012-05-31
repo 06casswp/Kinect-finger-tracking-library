@@ -1,0 +1,210 @@
+15:30:49: D3D9 : RenderSystem Option: Allow NVPerfHUD = No
+15:30:49: D3D9 : RenderSystem Option: FSAA = 0
+15:30:49: D3D9 : RenderSystem Option: Floating-point mode = Fastest
+15:30:49: D3D9 : RenderSystem Option: Full Screen = No
+15:30:49: D3D9 : RenderSystem Option: Rendering Device = Monitor-1-Mobile Intel(R) 965 Express Chipset Family (Microsoft Corporation - WDDM 1.1)
+15:30:49: D3D9 : RenderSystem Option: Resource Creation Policy = Create on all devices
+15:30:49: D3D9 : RenderSystem Option: VSync = No
+15:30:49: D3D9 : RenderSystem Option: VSync Interval = 1
+15:30:49: D3D9 : RenderSystem Option: Video Mode = 800 x 600 @ 32-bit colour
+15:30:49: D3D9 : RenderSystem Option: sRGB Gamma Conversion = No
+15:30:49: CPU Identifier & Features
+15:30:49: -------------------------
+15:30:49:  *   CPU ID: GenuineIntel: Intel(R) Core(TM)2 Duo CPU     T5670  @ 1.80GHz
+15:30:49:  *      SSE: yes
+15:30:49:  *     SSE2: yes
+15:30:49:  *     SSE3: yes
+15:30:49:  *      MMX: yes
+15:30:49:  *   MMXEXT: yes
+15:30:49:  *    3DNOW: no
+15:30:49:  * 3DNOWEXT: no
+15:30:49:  *     CMOV: yes
+15:30:49:  *      TSC: yes
+15:30:49:  *      FPU: yes
+15:30:49:  *      PRO: yes
+15:30:49:  *       HT: no
+15:30:49: -------------------------
+15:30:49: D3D9 : Subsystem Initialising
+15:30:49: Registering ResourceManager for type Texture
+15:30:49: Registering ResourceManager for type GpuProgram
+15:30:49: D3D9RenderSystem::_createRenderWindow "FingerTrack 0.01A", 800x600 windowed  miscParams: FSAA=0 FSAAHint= colourDepth=32 gamma=false monitorIndex=0 useNVPerfHUD=false vsync=false vsyncInterval=1 
+15:30:49: D3D9 : Created D3D9 Rendering Window 'FingerTrack 0.01A' : 800x600, 32bpp
+15:30:49: D3D9 : WARNING - disabling VSync in windowed mode can cause timing issues at lower frame rates, turn VSync on if you observe this problem.
+15:30:49: D3D9: Vertex texture format supported - PF_L8
+15:30:49: D3D9: Vertex texture format supported - PF_L16
+15:30:49: D3D9: Vertex texture format supported - PF_A8
+15:30:49: D3D9: Vertex texture format supported - PF_A4L4
+15:30:49: D3D9: Vertex texture format supported - PF_BYTE_LA
+15:30:49: D3D9: Vertex texture format supported - PF_R5G6B5
+15:30:49: D3D9: Vertex texture format supported - PF_B5G6R5
+15:30:49: D3D9: Vertex texture format supported - PF_A4R4G4B4
+15:30:49: D3D9: Vertex texture format supported - PF_A1R5G5B5
+15:30:49: D3D9: Vertex texture format supported - PF_A8R8G8B8
+15:30:49: D3D9: Vertex texture format supported - PF_B8G8R8A8
+15:30:49: D3D9: Vertex texture format supported - PF_A2R10G10B10
+15:30:49: D3D9: Vertex texture format supported - PF_DXT1
+15:30:49: D3D9: Vertex texture format supported - PF_DXT2
+15:30:49: D3D9: Vertex texture format supported - PF_DXT3
+15:30:49: D3D9: Vertex texture format supported - PF_DXT4
+15:30:49: D3D9: Vertex texture format supported - PF_DXT5
+15:30:49: D3D9: Vertex texture format supported - PF_FLOAT16_RGB
+15:30:49: D3D9: Vertex texture format supported - PF_FLOAT16_RGBA
+15:30:49: D3D9: Vertex texture format supported - PF_FLOAT32_RGB
+15:30:49: D3D9: Vertex texture format supported - PF_FLOAT32_RGBA
+15:30:49: D3D9: Vertex texture format supported - PF_X8R8G8B8
+15:30:49: D3D9: Vertex texture format supported - PF_R8G8B8A8
+15:30:49: D3D9: Vertex texture format supported - PF_DEPTH
+15:30:49: D3D9: Vertex texture format supported - PF_SHORT_RGBA
+15:30:49: D3D9: Vertex texture format supported - PF_FLOAT16_R
+15:30:49: D3D9: Vertex texture format supported - PF_FLOAT32_R
+15:30:49: D3D9: Vertex texture format supported - PF_SHORT_GR
+15:30:49: D3D9: Vertex texture format supported - PF_FLOAT16_GR
+15:30:49: D3D9: Vertex texture format supported - PF_FLOAT32_GR
+15:30:49: D3D9: Vertex texture format supported - PF_SHORT_RGB
+15:30:49: D3D9: Vertex texture format supported - PF_PVRTC_RGB2
+15:30:49: D3D9: Vertex texture format supported - PF_PVRTC_RGBA2
+15:30:49: D3D9: Vertex texture format supported - PF_PVRTC_RGB4
+15:30:49: D3D9: Vertex texture format supported - PF_PVRTC_RGBA4
+15:30:49: RenderSystem capabilities
+15:30:49: -------------------------
+15:30:49: RenderSystem Name: Direct3D9 Rendering Subsystem
+15:30:49: GPU Vendor: intel
+15:30:49: Device Name: Monitor-1-Mobile Intel(R) 965 Express Chipset Family (Microsoft Corporation - WDDM 1.1)
+15:30:49: Driver Version: 8.15.10.1749
+15:30:49:  * Fixed function pipeline: yes
+15:30:49:  * Hardware generation of mipmaps: yes
+15:30:49:  * Texture blending: yes
+15:30:49:  * Anisotropic texture filtering: yes
+15:30:49:  * Dot product texture operation: yes
+15:30:49:  * Cube mapping: yes
+15:30:49:  * Hardware stencil buffer: yes
+15:30:49:    - Stencil depth: 8
+15:30:49:    - Two sided stencil support: yes
+15:30:49:    - Wrap stencil values: yes
+15:30:49:  * Hardware vertex / index buffers: yes
+15:30:49:  * Vertex programs: yes
+15:30:49:  * Number of floating-point constants for vertex programs: 256
+15:30:49:  * Number of integer constants for vertex programs: 16
+15:30:49:  * Number of boolean constants for vertex programs: 16
+15:30:49:  * Fragment programs: yes
+15:30:49:  * Number of floating-point constants for fragment programs: 224
+15:30:49:  * Number of integer constants for fragment programs: 16
+15:30:49:  * Number of boolean constants for fragment programs: 16
+15:30:49:  * Geometry programs: no
+15:30:49:  * Number of floating-point constants for geometry programs: 8192
+15:30:49:  * Number of integer constants for geometry programs: 8312
+15:30:49:  * Number of boolean constants for geometry programs: 14388
+15:30:49:  * Supported Shader Profiles: hlsl ps_1_1 ps_1_2 ps_1_3 ps_1_4 ps_2_0 ps_2_a ps_2_b ps_2_x ps_3_0 vs_1_1 vs_2_0 vs_2_a vs_2_x vs_3_0
+15:30:49:  * Texture Compression: yes
+15:30:49:    - DXT: yes
+15:30:49:    - VTC: no
+15:30:49:    - PVRTC: no
+15:30:49:  * Scissor Rectangle: yes
+15:30:49:  * Hardware Occlusion Query: yes
+15:30:49:  * User clip planes: yes
+15:30:49:  * VET_UBYTE4 vertex element type: yes
+15:30:49:  * Infinite far plane projection: yes
+15:30:49:  * Hardware render-to-texture: yes
+15:30:49:  * Floating point textures: yes
+15:30:49:  * Non-power-of-two textures: yes (limited)
+15:30:49:  * Volume textures: yes
+15:30:49:  * Multiple Render Targets: 4
+15:30:49:    - With different bit depths: yes
+15:30:49:  * Point Sprites: yes
+15:30:49:  * Extended point parameters: yes
+15:30:49:  * Max Point Size: 10
+15:30:49:  * Vertex texture fetch: yes
+15:30:49:  * Number of world matrices: 0
+15:30:49:  * Number of texture units: 8
+15:30:49:  * Stencil buffer depth: 8
+15:30:49:  * Number of vertex blend matrices: 0
+15:30:49:    - Max vertex textures: 4
+15:30:49:    - Vertex textures shared: no
+15:30:49:  * Render to Vertex Buffer : no
+15:30:49:  * DirectX per stage constants: yes
+15:30:49: ***************************************
+15:30:49: *** D3D9 : Subsystem Initialised OK ***
+15:30:49: ***************************************
+15:30:49: DefaultWorkQueue('Root') initialising on thread 00243270.
+15:30:49: Particle Renderer Type 'billboard' registered
+15:30:49: SceneManagerFactory for type 'BspSceneManager' registered.
+15:30:49: Registering ResourceManager for type BspLevel
+15:30:49: SceneManagerFactory for type 'PCZSceneManager' registered.
+15:30:49: MovableObjectFactory for type 'PCZLight' registered.
+15:30:49: MovableObjectFactory for type 'Portal' registered.
+15:30:49: MovableObjectFactory for type 'AntiPortal' registered.
+15:30:49: PCZone Factory Type 'ZoneType_Octree' registered
+15:30:49: PCZone Factory Type 'ZoneType_Terrain' registered
+15:30:49: SceneManagerFactory for type 'OctreeSceneManager' registered.
+15:30:49: SceneManagerFactory for type 'TerrainSceneManager' registered.
+15:30:49: DefaultWorkQueue('Root')::WorkerFunc - thread 00267390 starting.
+15:30:49: Creating resource group Essential
+15:30:50: DefaultWorkQueue('Root')::WorkerFunc - thread 002673C0 starting.
+15:30:50: Added resource location 'C:\Users\Will\Documents\Visual Studio 2010\Projects\candescentport\Release/../media/packs/SdkTrays.zip' of type 'Zip' to resource group 'Essential'
+15:30:50: Creating resource group Fonts
+15:30:50: Added resource location 'C:\Users\Will\Documents\Visual Studio 2010\Projects\candescentport\Release/../media/datafiles/fonts' of type 'FileSystem' to resource group 'Fonts'
+15:30:50: Creating resource group Imagesets
+15:30:50: Added resource location 'C:\Users\Will\Documents\Visual Studio 2010\Projects\candescentport\Release/../media/datafiles/imagesets' of type 'FileSystem' to resource group 'Imagesets'
+15:30:50: Creating resource group LookNFeel
+15:30:50: Added resource location 'C:\Users\Will\Documents\Visual Studio 2010\Projects\candescentport\Release/../media/datafiles/looknfeel' of type 'FileSystem' to resource group 'LookNFeel'
+15:30:50: Creating resource group Popular
+15:30:50: Added resource location 'C:\Users\Will\Documents\Visual Studio 2010\Projects\candescentport\Release/../media/fonts' of type 'FileSystem' to resource group 'Popular'
+15:30:50: Added resource location 'C:\Users\Will\Documents\Visual Studio 2010\Projects\candescentport\Release/../media/models' of type 'FileSystem' to resource group 'Popular'
+15:30:50: Added resource location 'C:\Users\Will\Documents\Visual Studio 2010\Projects\candescentport\Release/../media/materials/scripts' of type 'FileSystem' to resource group 'Popular'
+15:30:50: Added resource location 'C:\Users\Will\Documents\Visual Studio 2010\Projects\candescentport\Release/../media/materials/textures' of type 'FileSystem' to resource group 'Popular'
+15:30:50: Creating resource group Schemes
+15:30:50: Added resource location 'C:\Users\Will\Documents\Visual Studio 2010\Projects\candescentport\Release/../media/datafiles/schemes' of type 'FileSystem' to resource group 'Schemes'
+15:30:50: Parsing scripts for resource group Autodetect
+15:30:50: Finished parsing scripts for resource group Autodetect
+15:30:50: Parsing scripts for resource group Essential
+15:30:50: Parsing script SdkTrays.material
+15:30:50: Parsing script SdkTrays.fontdef
+15:30:50: Parsing script SdkTrays.overlay
+15:30:50: Bad element attribute line: '# you can offset the image to change the cursor "hotspot"' for element SdkTrays/Cursor in overlay 
+15:30:50: Texture: sdk_cursor.png: Loading 1 faces(PF_A8R8G8B8,32x32x1) with  hardware generated mipmaps from Image. Internal format is PF_A8R8G8B8,32x32x1.
+15:30:50: Texture: sdk_tray.png: Loading 1 faces(PF_A8R8G8B8,64x64x1) with  hardware generated mipmaps from Image. Internal format is PF_A8R8G8B8,64x64x1.
+15:30:50: Texture: sdk_button_up.png: Loading 1 faces(PF_A8R8G8B8,128x32x1) with  hardware generated mipmaps from Image. Internal format is PF_A8R8G8B8,128x32x1.
+15:30:50: Texture: sdk_text_box.png: Loading 1 faces(PF_A8R8G8B8,32x32x1) with  hardware generated mipmaps from Image. Internal format is PF_A8R8G8B8,32x32x1.
+15:30:50: Texture: sdk_mini_tray.png: Loading 1 faces(PF_A8R8G8B8,32x32x1) with  hardware generated mipmaps from Image. Internal format is PF_A8R8G8B8,32x32x1.
+15:30:50: Texture: sdk_track.png: Loading 1 faces(PF_A8R8G8B8,16x32x1) with  hardware generated mipmaps from Image. Internal format is PF_A8R8G8B8,16x32x1.
+15:30:50: Texture: sdk_handle.png: Loading 1 faces(PF_A8R8G8B8,16x16x1) with  hardware generated mipmaps from Image. Internal format is PF_A8R8G8B8,16x16x1.
+15:30:50: Texture: sdk_mini_text_box.png: Loading 1 faces(PF_A8R8G8B8,32x32x1) with  hardware generated mipmaps from Image. Internal format is PF_A8R8G8B8,32x32x1.
+15:30:50: Texture: sdk_label.png: Loading 1 faces(PF_A8R8G8B8,32x32x1) with  hardware generated mipmaps from Image. Internal format is PF_A8R8G8B8,32x32x1.
+15:30:50: Texture: sdk_separator.png: Loading 1 faces(PF_A8R8G8B8,64x16x1) with  hardware generated mipmaps from Image. Internal format is PF_A8R8G8B8,64x16x1.
+15:30:50: Texture: sdk_logo.png: Loading 1 faces(PF_A8R8G8B8,128x64x1) with  hardware generated mipmaps from Image. Internal format is PF_A8R8G8B8,128x64x1.
+15:30:50: D3D9 : ***** Dimensions altered by the render system
+15:30:50: D3D9 : ***** Source image dimensions : 64x48
+15:30:50: D3D9 : ***** Texture dimensions : 64x64
+15:30:50: Texture: sdk_shade.png: Loading 1 faces(PF_A8R8G8B8,64x48x1) with 6 generated mipmaps from Image. Internal format is PF_A8R8G8B8,64x64x1.
+15:30:50: Texture: sdk_frame.png: Loading 1 faces(PF_A8R8G8B8,32x32x1) with  hardware generated mipmaps from Image. Internal format is PF_A8R8G8B8,32x32x1.
+15:30:50: Texture: sdk_mini_text_box_over.png: Loading 1 faces(PF_A8R8G8B8,32x32x1) with  hardware generated mipmaps from Image. Internal format is PF_A8R8G8B8,32x32x1.
+15:30:50: Texture: sdk_pulse.png: Loading 1 faces(PF_R8G8B8,8x1x1) with  hardware generated mipmaps from Image. Internal format is PF_X8R8G8B8,8x1x1.
+15:30:50: Finished parsing scripts for resource group Essential
+15:30:50: Parsing scripts for resource group Fonts
+15:30:50: Finished parsing scripts for resource group Fonts
+15:30:50: Parsing scripts for resource group General
+15:30:50: Finished parsing scripts for resource group General
+15:30:50: Parsing scripts for resource group Imagesets
+15:30:50: Finished parsing scripts for resource group Imagesets
+15:30:50: Parsing scripts for resource group Internal
+15:30:50: Finished parsing scripts for resource group Internal
+15:30:50: Parsing scripts for resource group LookNFeel
+15:30:50: Finished parsing scripts for resource group LookNFeel
+15:30:50: Parsing scripts for resource group Popular
+15:30:50: Parsing script Examples.material
+15:30:50: Parsing script sample.fontdef
+15:30:50: Finished parsing scripts for resource group Popular
+15:30:50: Parsing scripts for resource group Schemes
+15:30:50: Finished parsing scripts for resource group Schemes
+15:30:50: Texture: _cegui_ogre_0: Loading 1 faces(PF_A8B8G8R8,256x256x1) with 0 generated mipmaps from Image. Internal format is PF_A8R8G8B8,256x256x1.
+15:30:50: Texture: _cegui_ogre_1: Loading 1 faces(PF_A8B8G8R8,256x256x1) with 0 generated mipmaps from Image. Internal format is PF_A8R8G8B8,256x256x1.
+15:30:50: D3D9 : ***** Dimensions altered by the render system
+15:30:50: D3D9 : ***** Source image dimensions : 780x511
+15:30:50: D3D9 : ***** Texture dimensions : 1024x512
+15:30:50: Texture: back.jpg: Loading 1 faces(PF_R8G8B8,780x511x1) with 10 generated mipmaps from Image. Internal format is PF_X8R8G8B8,1024x512x1.
+15:30:50: Mesh: Loading cube.mesh.
+15:30:50: D3D9 : ***** Dimensions altered by the render system
+15:30:50: D3D9 : ***** Source image dimensions : 780x511
+15:30:50: D3D9 : ***** Texture dimensions : 1024x512
+15:30:51: Texture: cube.jpg: Loading 1 faces(PF_R8G8B8,780x511x1) with 10 generated mipmaps from Image. Internal format is PF_X8R8G8B8,1024x512x1.
+15:30:53: Texture: _cegui_ogre_2: Loading 1 faces(PF_A8B8G8R8,256x256x1) with 0 generated mipmaps from Image. Internal format is PF_A8R8G8B8,256x256x1.

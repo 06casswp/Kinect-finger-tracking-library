@@ -1,28 +1,29 @@
 #ifndef VOLUME_H
 #define VOLUME_H
 
-#include "Point.h"
-class volume
+#include "point.h"
+
+
+struct volumedat
 {
-public:
-	Point* location;
+	point location;
 	float width;
 	float height;
 	float depth;
 
-
-	volume(float x, float y, float z, float width, float height, float depth);
-	volume(Point* location, float width, float height, float depth);
-	volume();
-	bool contains(int x, int y, int z);
-	float X();
-	float Y();
-	float Z();
-
-
-
-
-
 };
+
+class volumefnc
+{
+public:
+	bool contains(volumedat* vol, unsigned short x, unsigned short y, unsigned short z);
+	void set(volumedat* vol, unsigned short x, unsigned short y, unsigned short z, float width, float height, float depth);
+	void set(volumedat* vol, point* location, float width, float height, float depth);
+	void reset(volumedat* vol);
+};
+
+
+
+
 
 #endif 

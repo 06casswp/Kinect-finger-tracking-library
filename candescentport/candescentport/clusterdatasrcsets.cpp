@@ -3,44 +3,40 @@
 
 void ClusterDataSourceSettings::SetToDefault(){
 
-	MinimalPointsForValidCluster = 10;
-	MinimalPointsForClustering = 50;
-	PointModulo = 5;
+	MinimalpointsForValidclusterdat = 10;
+	MinimalpointsForclusterdating = 50;
+	pointModulo = 5;
 	LowerBorder = 0;
-	MinimumDepthThreshold = 500;
-	MaximumDepthThreshold = 700;
-	ClusterCount = 2;
+	MinimumDepthThreshold = 0;
+	MaximumDepthThreshold = 200;
+	clusterdatCount = 2;
+	clusterdatcount = 2;
 
-	MergeMinimumDistanceToCluster = 50;
-	MergeMaximumClusterCenterDistances = 120;
-	MergeMaximumClusterCenterDistances2D = 100;
+	MergeMinimumDistanceToclusterdat = 50;
+	MergeMaximumclusterdatCenterDistances = 120;
+	MergeMaximumclusterdatCenterDistances2D = 100;
 
-	MaximumClusterDepth = 150;
+	MaximumclusterdatDepth = 150;
 
 }
 void ClusterDataSourceSettings::SetToFast(){
 
 	SetToDefault();
-	PointModulo = 6;
+	pointModulo = 6;
 
 }
 void ClusterDataSourceSettings::SetToAccurate(){
 	SetToDefault();
-	PointModulo = 4;
+	pointModulo = 4;
 
 
 
 }
 
-Range* ClusterDataSourceSettings::DepthRange(){
-	depth = new Range(MinimumDepthThreshold, MaximumDepthThreshold);
-	return depth;
 
-
+rangedat* ClusterDataSourceSettings::DepthRange() {
+	 depth.max = MaximumDepthThreshold;
+	 depth.min = MinimumDepthThreshold;
+	 return &depth;
 }
 
-ClusterDataSourceSettings::ClusterDataSourceSettings(){
-	SetToDefault();
-
-
-}

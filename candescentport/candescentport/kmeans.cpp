@@ -1,159 +1,175 @@
 #include "kmeans.h"
 #include <time.h>
 
-KMeans::KMeans(int numberOfClusters, Range* zRange1, intsize* size1)
-{
-	size = size1;
-	zRange = zRange1;
-	clusterFactory = new ClusterFactory();
-	Clusters = clusterFactory->CreateClusters(numberOfClusters, size1);
-}
 
-void KMeans::Initialize(std::vector<Point*>* points1)
-{
-	points = points1;
-}
+#include <windows.h>
+
+
+
 
 
 
 void KMeans::IterateUntilStable()
 {
-	Clusters->at(0)->AllPoints.clear();
-	Clusters->at(0)->points.clear();
-	if (Clusters->size()>1) {
-		Clusters->at(1)->AllPoints.clear();
-		Clusters->at(1)->points.clear();
+	//clear clusterdat*s
+	int index = 0;
+	int *counts = 0;//change this for cluster count change
+	if (counts) {
+		free(counts);
 	}
-	std::vector<int>* counts = new std::vector<int>;
+	counts = (int*)malloc(sizeof(int)*setclustcount);
+	//clear the clusterdats
+	for (index = 0; index<setclustcount; index++) { //and this
+		cfnc.clearall(clusterdatarr[index]);
+	}
+
 	do
 	{
-
-		std::vector<Cluster*>::iterator iter1;
-		counts->clear();
-
-		Cluster* c1;
-
-		for (iter1=Clusters->begin();iter1<Clusters->end();iter1++){
-			c1 = (Cluster*)*iter1;
-			counts->push_back(c1->Count());
-		}
+		count(counts);
 		IterateOnce();
 	} while (DetectCountChange(counts));
-
-	std::vector<Cluster*>::iterator iter;
-	Cluster* c1;
-	for (iter=Clusters->begin();iter<Clusters->end();iter++) {
-		c1 = (Cluster*)*iter;
-		c1->CalculateVolume();
+	
+	clusterdatcount = 0;
+	for (index = 0; index<setclustcount;index++) {
+		if (counts[index]>0) {
+			cfnc.CalculateVolume(clusterdatarr[index]);
+			clusterdatarr[index]->pointspnt = &clusterdatarr[index]->points[0];
+			clusterdatcount++;
+		}
 	}
+	
+	free(counts);
 
 }
 
 void KMeans::IterateOnce()
 {
-	ClearPoints();
-	DistributePointsToClusters();
+	Clearpoints();
+	DistributepointsToclusterdats();
 	RecalculateCenters();
 }
 
-void KMeans::ClearPoints()
-{
-	std::vector<Cluster*>::iterator iter;
-	Cluster* c1;
-	for (iter=Clusters->begin();iter<Clusters->end();iter++) {
-		c1 = (Cluster*)*iter;
-		c1->ClearPoints();
-	}
-}
-
-void KMeans::DistributePointsToClusters()
-{
-	std::vector<Point*>::iterator iter;
-	Point* p;
-	for (iter=points->begin();iter<points->end();iter++) {
-		p = (Point*)*iter;
-		AddToMinimalDistanceCluster(new Point(p));
-	}
-}
-
-int KMeans::ClusterCount(){
-	return Clusters->size();
-}
-
-bool KMeans::DetectCountChange(std::vector<int>* counts) //match up a vector of the counts with the counts of clusters in the cluster vector
-{
-	std::vector<Cluster*>::iterator iter1;
-	std::vector<int>::iterator iter2;
-	//form a new count vector and compare
-	Cluster* c1;
-	std::vector<int>* newcount = new std::vector<int>;
-
-	for (iter1=Clusters->begin();iter1<Clusters->end();iter1++){
-		c1 = (Cluster*)*iter1;
-		newcount->push_back(c1->Count());
-	}
-
-	int number;
-
+void KMeans::count(int* counts) {
 	int index = 0;
-	for (iter2=counts->begin(); iter2 < counts->end(); iter2++)
-	{
-		
-		number = (int)*iter2;
-		if (!number==newcount->at(index)) {
+	int which = 0;
+	memset(counts,0, setclustcount*sizeof(int));
+	for (index = 0; index<setclustcount; index++) {
+		for (which = 0; which<640*480; which++) {
+			if (!(clusterdatarr[index]->points[which]==0)) { //if the pointer representing the point is null then dont add
+				counts[index]++;
+			}
+		}
+	}
+}
+
+
+void KMeans::Clearpoints() {
+	int index = 0;
+	for (index=0;index<setclustcount;index++) {
+		cfnc.Clearpoints(clusterdatarr[index]);
+	}
+
+}
+
+void KMeans::DistributepointsToclusterdats()
+{
+	int index = 0;
+	//int reduced = 0;
+	for (index=0;index<reducedcount;index++) {
+	//	if (!(reducedpoints[index]==0)) {
+			//reduced++;
+			AddToMinimalDistanceclusterdat(reducedpoints[index]);
+		//}
+	}
+	//printf("\n point count: %d",reduced);
+
+}
+
+
+bool KMeans::DetectCountChange(int* counts) //match up a vector of the counts with the counts of clusterdats in the clusterdat vector
+{
+	int index = 0;
+	int which = 0;
+
+	int *newcounts = 0;
+	if (newcounts) {
+		free(newcounts);
+	}
+	newcounts = (int*)malloc(sizeof(int)*setclustcount);
+	
+	count(newcounts);
+	/*
+	printf("\n");
+	for (index = 0; index<setclustcount; index++) {
+		printf("%d ",newcounts[index]);
+	}
+	printf(" - ");
+	for (index = 0; index<setclustcount; index++) {
+		printf("%d ",counts[index]);
+	}
+	*/
+	for (index = 0; index<setclustcount; index++) {
+
+		if (!(newcounts[index]==counts[index])) {
 			return true;
 		}
-		index++;
 	}
+
+	free(newcounts);
+
 	return false;
 }
 
-void KMeans::RecalculateCenters()
+
+void KMeans::RecalculateCenters() //this comes after the points are assigned
 {
-	std::vector<Cluster*>::iterator iter;
-	Cluster* c1;
+	
+	clusterdat* c1;
+	LARGE_INTEGER li;
 
-	for (iter=Clusters->begin(); iter<Clusters->end();iter++) {
-		c1 =(Cluster*)*iter;
-
-		if (c1->Count() == 0) //If no points are assigned, the point is repositioned randomly
-		{
-			srand(time(NULL));
-			int a = rand()%(size->Width - 1);
-			int b = rand()%(size->Height - 1);
-			int c = rand()%(zRange->Max-zRange->Min)+zRange->Min;
-
-			c1->center= new Point(a, b, c);
+	int index= 0;
+	for (index=0;index<setclustcount;index++) { 
+		if (clusterdatarr[index]->pointscnt==0) { //ensure that the first position for each is in a different area!
+			QueryPerformanceCounter(&li) ;
+			srand(li.QuadPart);
+			unsigned short a = 639*index;
+			unsigned short b = 479*index;
+			unsigned short c = 0; 
+			clusterdatarr[index]->center.x = a;
+			clusterdatarr[index]->center.y = b;
+			clusterdatarr[index]->center.z = 0;
 		}
 		else
 		{
-			c1->FindCenter();
+			cfnc.FindCenter(clusterdatarr[index]);
 		}
+		//printf("\n %d, %d, %d",clusterdatarr[index]->center.x,clusterdatarr[index]->center.z,clusterdatarr[index]->center.z);
 	}
+		
+		
 }
 
-double KMeans::CalcDistance(Cluster* c1, Point* point)
+double KMeans::CalcDistance(clusterdat* c1, point* pnt)
 {
-	return c1->Calc2DDistance(point);
+	return cfnc.Calc2DDistance(c1,pnt);
 }
 
-void KMeans::AddToMinimalDistanceCluster(Point* point)
+
+void KMeans::AddToMinimalDistanceclusterdat(point* pnt)
 {
-	int clusterIndex = 0;
-	double minDist = CalcDistance(*Clusters->begin(), point);
-	std::vector<Cluster*>::iterator iter;
-	Cluster* c1;
-	Cluster* closest = *Clusters->begin();
-	for (iter = Clusters->begin(); iter < Clusters->end(); iter++)
-	{
-		c1 = (Cluster*)*iter;
-		double dist = CalcDistance(c1, point);
+	int clusterdatIndex = 0;
+
+	double minDist = CalcDistance(clusterdatarr[0], pnt);
+	clusterdat* closest = clusterdatarr[0];
+	int index = 0;
+	double dist = 0.0f;
+	for (index=1;index<setclustcount;index++) { 
+		dist = CalcDistance(clusterdatarr[index],pnt);
 		if (dist < minDist)
 		{
-			closest = c1;
+			closest = clusterdatarr[index];
 			minDist = dist;
 		}
 	}
-	closest->AddPoint(point);
+	cfnc.Addpoint(closest,pnt);
 }
-

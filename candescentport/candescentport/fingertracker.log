@@ -1,0 +1,1 @@
+16:03:27: OGRE EXCEPTION(6:FileNotFoundException): 'settings.cfg' file not found! in ConfigFile::load at ..\..\..\..\OgreMain\src\OgreConfigFile.cpp (line 83)

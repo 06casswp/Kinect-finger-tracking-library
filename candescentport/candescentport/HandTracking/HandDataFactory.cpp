@@ -3,116 +3,159 @@
 #include "Palm.h"
 #include "DistanceMap2.h"
 
-HandDataFactory::HandDataFactory(HandDataSourceSettings* settings1){
-	settings = settings1;
-	fingerPointDetector = new FingerPointDetector(settings);
-	contourFactory = new ContourFactory(settings->ContourLineThinningDistance, settings->MaximumRetraceSteps);
-	palmFinder = new PalmFinder(settings);
-	idGenerator = new IdGenerator();
 
+	
+
+
+void HandDataFactory::setsettings() {
+	fingerpointDetector.settings = settings;
+	contourFactory.tracer.maximumRetraceSteps = settings->MaximumRetraceSteps;
+	contourFactory.thinner.checkBoundary = false;
+	contourFactory.thinner.mindDistBetweenpoints = settings->ContourLineThinningDistance;
+	palmFinder.searchRadius = settings->PalmAccuracySearchRadius;
+	palmFinder.contourReduction = settings->PalmContourReduction;
 }
 
 void HandDataFactory::ReturnId(int id){
 
-	idGenerator->Return(id);
+	idGenerator.Return(id);
 }
 
-HandData* HandDataFactory::Create(Cluster* cluster){
-	return Create(idGenerator->GetNextId(), cluster, new std::vector<FingerPoint*>);
+HandData* HandDataFactory::Create(clusterdat* clusterdat){ //create new
+	HandData* HD = new HandData(idGenerator.GetNextId(),clusterdat,0,0,0,0);
+
+	return Create1(HD);
 }
 
-HandData* HandDataFactory::Create(HandData* lastFrameData, Cluster* cluster)
+HandData* HandDataFactory::Create(HandData* lastFrameData, clusterdat* clusterdat)//reuse old
 {
-	return Create(lastFrameData->id, cluster, lastFrameData->FingerPoints);
+	lastFrameData->clusterdata = clusterdat;
+	return Create1(lastFrameData);
 }
 
 void HandDataFactory::ClearIds()
 {
-	idGenerator->Clear();
+	idGenerator.Clear();
 }
 
-HandData* HandDataFactory::Create(int id, Cluster* cluster, std::vector<FingerPoint*>* lastFrameFingerPoints){
-	GrahamScan* GS = new GrahamScan(&cluster->points);
-	ConvexHull* convexHull = GS->FindHull();
-	BinaryMap* map = CreateMap(cluster);
 
-	Contour* contour = CreateContour(map, cluster);
-	if (contour->Count() < settings->MinimalPointsInContour)
-	{
-		return &HandData(id, cluster, convexHull, 0, 0, &std::vector<FingerPoint*>());
+
+HandData* HandDataFactory::Create1(HandData* HD){ //if existing handdata, be sure to delete convexhull, contour etc
+	DepthMapFnc dfnc;
+	
+	if (HD->convexHull) {
+		free(HD->convexHull);
+		extern int hulls;
+		hulls--;
+		HD->convexHull = 0;
+	}
+	if (HD->contour) {
+		free(HD->contour);
+		extern int contours;
+		contours--;
+		HD->contour = 0;
 	}
 
-	std::vector<FingerPoint*>* newFingerPoints = DetectFingerPoints(convexHull, cluster, contour);
-	std::vector<FingerPoint*>* fingerPoints = MapFingerPoints(lastFrameFingerPoints, newFingerPoints);
+	GS.set(HD->clusterdata->allpointpnt,HD->clusterdata->allpointscnt);
+	
+	HD->convexHull = GS.FindHull(); //new created here! cleared when handdata's are cleared
 
-	std::vector<Point*>* candidates = &cluster->points;
-	Palm *palm = 0;
+	depthmapdat* map = CreateMap(HD->clusterdata); //new created here! cleared just here
 
-	if (settings->DetectCenterOfPalm && cluster->Count() > 0 && contour->Count() > 0)
+	HD->contour = contourFactory.CreateContour(map, HD->clusterdata->vol.location.x, HD->clusterdata->vol.location.y);
+	dfnc.remove(map);
+	delete map;
+
+	int count2 = 0;
+	HD->FingerpointCount = count2;
+	//
+	if (HD->contour->newpointcnt < settings->MinimalpointsInContour)
 	{
-		palm = palmFinder->FindCenter(contour, &cluster->points);
+		return HD;
+	}
+	
+	Fingerpoint** newFingerpoints = 0;
+	newFingerpoints = DetectFingerpoints(HD->convexHull, HD->contour,&count2); //may return 0 if none found!
+	HD->Fingerpoints = newFingerpoints;// = MapFingerpoints(HD->Fingerpoints, HD->FingerpointCount,newFingerpoints,count2,&HD->FingerpointCount);
+	
+	
+	HD->FingerpointCount = count2;
+	
+	
+	if (settings->DetectCenterOfPalm && HD->clusterdata->allpointpnt > 0 && HD->contour->newpointcnt > 0)
+	{
+		//HD->palm = palmFinder.FindCenter(HD->contour, HD->clusterdata->allpointpnt,HD->clusterdata->allpointscnt );
 	}
 
-	return new HandData(id, cluster, convexHull, contour, palm, fingerPoints);
+	
+	
+	return HD;
 }
 
-std::vector<FingerPoint*>* HandDataFactory::MapFingerPoints(std::vector<FingerPoint*>* oldFingerPoints, std::vector<FingerPoint*>* newFingerPoints){
-	IdGenerator* idGenerator = &IdGenerator();
-	DistanceMap2b *distanceMap = new DistanceMap2b(oldFingerPoints, 100); //TODO)
-	distanceMap->Map(newFingerPoints);
-	std::vector<FingerPoint*>::iterator iter;
-	std::tr1::tuple<FingerPoint*,FingerPoint*>* tupple;
-	std::vector<std::tr1::tuple<FingerPoint*,FingerPoint*>*>::iterator iter1;
-	for (iter1 = distanceMap->MappedItems->begin();iter1<distanceMap->MappedItems->end();iter1++) {
+Fingerpoint** HandDataFactory::MapFingerpoints(Fingerpoint** oldFingerpoints, int count, Fingerpoint** newFingerpoints, int count1, int* count2){
+	
+	distanceMap.set(oldFingerpoints, 100, count);
+	distanceMap.map(newFingerpoints,count1);
+	*count2 = count1;
+	std::tr1::tuple<Fingerpoint*,Fingerpoint*>* tupple;
+	
+	int i = 0;
+	for (i = 0;i<distanceMap.mappeditemcount;i) {
 
-		tupple = (std::tr1::tuple<FingerPoint*,FingerPoint*>*)*iter1;
-		idGenerator->SetUsed(std::get<0>(*tupple)->Id);
+		tupple = distanceMap.mappeditems[i];
+		idGenerator.SetUsed(std::get<0>(*tupple)->Id);
 		std::get<1>(*tupple)->Id = std::get<0>(*tupple)->Id;
 	}
 	
-	FingerPoint* newFinger;
-	FingerPoint* otherFinger;
-	for (iter=distanceMap->UnmappedItems->begin();iter<distanceMap->UnmappedItems->end();iter++) {
-		newFinger = (FingerPoint*)*iter;
-		newFinger->Id = idGenerator->GetNextId();
+	Fingerpoint* newFinger;
+	Fingerpoint* otherFinger;
+	for (i=0;i<distanceMap.unmappeditemcount;i++) {
+		newFinger = distanceMap.UnmappedItems1[i];
+		newFinger->Id = idGenerator.GetNextId();
 	}
 	
-
-	std::vector<FingerPoint*>* out= new std::vector<FingerPoint*>;
+	Fingerpoint* out[100];
+	*count2 = 0;
 	
-	//distanceMap->MappedItems.Select(i => i.Item2).Union(distanceMap.UnmappedItems).ToList();
-	for (iter=distanceMap->UnmappedItems->begin();iter<distanceMap->UnmappedItems->end();iter++) {
-		otherFinger = (FingerPoint*)*iter;
-		for (iter1=distanceMap->MappedItems->begin();iter1<distanceMap->MappedItems->end();iter1++) {
-			tupple = (std::tr1::tuple<FingerPoint*,FingerPoint*>*)*iter1;
+	int j = 0;
+		for (i=0;i<distanceMap.unmappeditemcount;i++) {
+		otherFinger = distanceMap.UnmappedItems1[i];
+		for (j=0;j<distanceMap.mappeditemcount;j++) {
+			tupple = distanceMap.mappeditems[j];
 
 			newFinger = std::get<1>(*tupple);
 			if (newFinger==otherFinger) {
-				out->push_back(newFinger);
+				out[*count2] = newFinger;
+				*count2++;
 			}
 		}
 	}
-			return out;
+	return out;
 }
 
-Contour *HandDataFactory::CreateContour(BinaryMap* map, Cluster* cluster){
-	return contourFactory->CreateContour(map, cluster->vol.location->x, cluster->vol.location->y);
-}
 
-std::vector<FingerPoint*>* HandDataFactory::DetectFingerPoints(ConvexHull *convexHull, Cluster* cluster, Contour* contour){
-	if (!settings->DetectFingers || contour->Count() < 3)
+Fingerpoint** HandDataFactory::DetectFingerpoints(ConvexHull *convexHull, Contour* contour, int* outcount){
+	if (!settings->DetectFingers)
 	{
-		return new std::vector<FingerPoint*>;
+		*outcount = 0;
+		return 0;
 	}
-	return fingerPointDetector->FindFingerPoints(contour, convexHull);
+	return fingerpointDetector.FindFingerpoints(contour, convexHull, outcount);
 }
 
-BinaryMap* HandDataFactory::CreateMap(Cluster* cluster)        {
-	BinaryMap* map = new BinaryMap(cluster->vol.width + 1, cluster->vol.height + 1);
-	std::vector<Point*>::iterator iter;
-	for (iter = cluster->AllPoints.begin(); iter < cluster->AllPoints.end(); iter++) {
-		Point* p = (Point*)*iter;
-		map->map[(int)(p->x - cluster->vol.location->x)][(int)(p->y - cluster->vol.location->y)] = 1;
+depthmapdat* HandDataFactory::CreateMap(clusterdat* clusterdat)        {
+	depthmapdat* map = new depthmapdat;
+	DepthMapFnc dfnc;
+	dfnc.create(map,clusterdat->vol.width + 1, clusterdat->vol.height + 1);
+	int i = 0;
+	for (i = 0; i<clusterdat->allpointscnt; i++) {
+		map->map[clusterdat->allpointpnt[i]->x - clusterdat->vol.location.x][clusterdat->allpointpnt[i]->y - clusterdat->vol.location.y] = 1;
 	}
+
 	return map;
+}
+
+HandDataFactory::HandDataFactory(){
+
+
 }

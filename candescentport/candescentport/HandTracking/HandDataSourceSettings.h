@@ -6,12 +6,12 @@
 class HandDataSourceSettings
 {
 public:
-	HandDataSourceSettings();
+	
 
-	float MinimumDistanceBetweenFingerPoints;
-	float MinimumDistanceIntersectionPoints;
-	float MinimumDistanceFingerPointToIntersectionLine;
-	float MaximumDistanceBetweenIntersectionPoints;
+	float MinimumDistanceBetweenFingerpoints;
+	float MinimumDistanceIntersectionpoints;
+	float MinimumDistanceFingerpointToIntersectionLine;
+	float MaximumDistanceBetweenIntersectionpoints;
 
 	float ContourLineThinningDistance;
 
@@ -21,7 +21,7 @@ public:
 
 	int MaximumRetraceSteps;
 
-	int MinimalPointsInContour;
+	int MinimalpointsInContour;
 
 	int PalmAccuracySearchRadius;
 

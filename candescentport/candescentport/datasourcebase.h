@@ -2,7 +2,7 @@
 #define DATASRCCLA_H
 
 #include <XnCppWrapper.h>
-#include "XnVNite.h"
+
 #include "contextdatasourcebase.h"
 //#include "ImageData.h"
 

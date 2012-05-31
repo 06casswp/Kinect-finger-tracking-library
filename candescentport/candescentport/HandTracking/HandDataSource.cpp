@@ -3,76 +3,93 @@
 #include "DistanceMap2.h"
 #include "../clusterdatasrc.h"
 
+void HandDataSource::start() {
+	settings.SetToDefault();
+	results = 0;
+	map.init();
+	factory.distanceMap.init();
+	results = 0;
+	handcoll.count = 0;
+	handcoll.hands = 0;
+	factory.idGenerator.usedIds = new std::vector<int>;
+}
 
-HandDataSource::HandDataSource(ClusterDataSource *clusterDataSource)// : DataSourceProcessor(clusterDataSource)
-{
-	
-	factory = new HandDataFactory(new HandDataSourceSettings());
-	Size = clusterDataSource->Size;
-	CurrentValue = new HandCollection();
+HandDataSource::HandDataSource() {
 
 }
 
-HandDataSource::HandDataSource(intsize* size1,/*ClusterDataSource* clusterDataSource,*/ HandDataSourceSettings* settings) //: DataSourceProcessor(clusterDataSource)
-{
+HandCollection* HandDataSource::Process(clusterdat** ClusterData1,sizedat* size, int count){
+	Size = *size;
+	factory.settings = &settings;
+	factory.setsettings();
 
-	factory = new HandDataFactory(settings);
-	Size = size1;//clusterDataSource->Size;
-	CurrentValue = new HandCollection();
-
-}
-
-
-
-
-
-HandCollection* HandDataSource::Process(ClusterData* clusterData1){
-	if (clusterData1->Count() == 0)
+	if (count == 0)
 	{
-		factory->ClearIds();
-		return new HandCollection();
+		factory.ClearIds();
+		return 0;
 	}
-	CurrentValue = new HandCollection();
-	CurrentValue->Hands = new std::vector<HandData*>;
-	DistanceMap2a* map = new DistanceMap2a(CurrentValue->Hands, 100); //TODO
-	map->Map(clusterData1->Clusters);
+	
+	//create max number of handdatas into handcollection
 
-	
-	std::vector<HandData*>* result = new std::vector<HandData*>;
-	std::vector<HandData*>::iterator iter1;
-	std::vector<Cluster*>::iterator iter2;
-	std::vector<std::tr1::tuple<HandData*,Cluster*>*>::iterator iter3;
-	Cluster * cl;
-	HandData* hd;
-	std::tr1::tuple<HandData*,Cluster*>* tupple;
-	
-	for (iter3 = map->MappedItems->begin();iter3<map->MappedItems->end();iter3++)
+	map.reset();
+	map.set(handcoll.hands, 100,handcoll.count); //give the new process the old results!
+	map.map(ClusterData1, count);
+	HandData** oldresults;
+	if (results) {
+		oldresults = results;
+	}
+	else
 	{
-		tupple = (std::tr1::tuple<HandData*,Cluster*>*)*iter3;
-		result->push_back(factory->Create(std::get<0>(*tupple), std::get<1>(*tupple)));
+		oldresults = 0;
 	}
-	
-	for (iter2=map->UnmappedItems->begin();iter2<map->UnmappedItems->end();iter2++)
-	{
-		cl = (Cluster*)*iter2;
-		result->push_back(factory->Create(new Cluster((void*)cl)));
+	results = (HandData**)malloc(sizeof(HandData*)*count);
+	resultcount = 0;
+
+
+	clusterdat * cl;
+
+	std::tr1::tuple<HandData*,clusterdat*>* tupple;
+	int i = 0;
+
+	for (i = 0; i<map.mappeditemcount; i++) {
+		tupple = map.mappeditems[i];
+		results[resultcount] = factory.Create(std::get<0>(*tupple), std::get<1>(*tupple)); //doesnt create a new 1
+		resultcount++;
 	}
-	for (iter1=map->DiscontinuedItems->begin();iter1<map->DiscontinuedItems->end();iter1++) {
-	
-		hd = (HandData*)*iter1;
-		factory->ReturnId(hd->id);
+	for (i = 0; i<map.unmappeditemcount; i++) {
+		cl = map.UnmappedItems1[i];
+		results[resultcount] = factory.Create(cl); //creates a new 1
+		resultcount++;
 	}
+	for (i = 0; i<map.originalitemscount; i++) {
+		factory.ReturnId(map.originalitems[i]->id);
+		free(map.originalitems[i]->convexHull);
+		free(map.originalitems[i]->contour);
+		extern int contours;
+		contours--;
+		extern int hulls;
+		hulls--;
+		free(map.originalitems[i]);//this is where the unused handdata's are removed!
+		map.originalitems[i] = 0;
+	}
+	map.originalitemscount = 0;
 	
-	return new HandCollection(result);
+	if (oldresults) {
+		delete oldresults;
+	}
+
+	handcoll.hands = results;
+	handcoll.count = resultcount;
+	return &handcoll;
 }
 
 
 
 	int HandDataSource::Width(){
-		return Size->Width;
+		return Size.Width;
 	}
 
 
 	int HandDataSource::Height(){
-		return Size->Height;
+		return Size.Height;
 	}

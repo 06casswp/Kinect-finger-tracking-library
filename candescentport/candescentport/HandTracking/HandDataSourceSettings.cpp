@@ -1,17 +1,15 @@
 #include "handDataSourceSettings.h"
-HandDataSourceSettings::HandDataSourceSettings(){
-	SetToDefault();
-}
+
 void HandDataSourceSettings::SetToDefault(){
-	MinimumDistanceBetweenFingerPoints = 25;
-	MinimumDistanceIntersectionPoints = 25;
-	MinimumDistanceFingerPointToIntersectionLine = 22;
-	MaximumDistanceBetweenIntersectionPoints = 27;
+	MinimumDistanceBetweenFingerpoints = 25;
+	MinimumDistanceIntersectionpoints = 25;
+	MinimumDistanceFingerpointToIntersectionLine = 22;
+	MaximumDistanceBetweenIntersectionpoints = 27;
 
 	MaximumRetraceSteps = 128;
 
 	ContourLineThinningDistance = 5.0f;
-	MinimalPointsInContour = 50;
+	MinimalpointsInContour = 50;
 
 	DetectFingers = true;
 	DetectCenterOfPalm = true;

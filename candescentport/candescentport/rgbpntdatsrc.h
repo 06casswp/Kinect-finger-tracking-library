@@ -3,10 +3,10 @@
 
 #include "irgbpntdatsrc.h"
 
-class RGBPointerDataSource : public DataSourceBase<const XnUInt8*, xn::ImageGenerator*>, public IRGBPointerDataSource 
+class RGBpointerDataSource : public DataSourceBase<const XnUInt8*, xn::ImageGenerator*>, public IRGBpointerDataSource 
 {
 public:
-	RGBPointerDataSource(xn::ImageGenerator* generator)
+	RGBpointerDataSource(xn::ImageGenerator* generator)
 		: DataSourceBase(generator){};
 
 	void InternalRun(){

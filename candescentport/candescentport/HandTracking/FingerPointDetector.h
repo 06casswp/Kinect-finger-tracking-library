@@ -1,35 +1,44 @@
-#ifndef FINGERPOINTDET_H
-#define FINGERPOINTDET_H
+#ifndef FINGERpointDET_H
+#define FINGERpointDET_H
 
-#include "..\Point.h"
-#include "FingerPoint.h"
+#include "..\point.h"
+#include "Fingerpoint.h"
 #include "HandDataSourceSettings.h"
 #include "ConvexHull.h"
 #include <vector>
 #include "Contour.h"
+#include "LineThinner.h"
 
-class FingerPointDetector
+class FingerpointDetector
 {
 public:
 
 	HandDataSourceSettings* settings;
-	std::vector<Point*>* contourPoints;
 
-	FingerPointDetector(HandDataSourceSettings* settings);
+	
+	Contour* cont;
+	LineThinner LT;
 
-	std::vector<FingerPoint*>* FindFingerPoints(Contour* contour, ConvexHull* convexHull);
+	Fingerpoint* fingerpntpnt[100];
+	Fingerpoint fingerpnt[100]; //size?
+	int fingercnt;
 
-	std::vector<Point*>* VerifyPointsByContour(std::vector<Point*>* candidatePoints);
+	Fingerpoint** FindFingerpoints(Contour* contour, ConvexHull* convexHull, int* outcount);
+	int check(point* pnt1, point* pnt2);
+	point** VerifypointsByContour(ConvexHull* conv);
 
-	bool VerifyIsFingerPointByContour(Point* candidatePoint);
+	bool VerifyIsFingerpointByContour(point* candidatepoint);
 
-	int FindIndexOfClosestPointOnContour(Point* fingerPoint);
+	int FindIndexOfClosestpointOnContour(point* fingerpoint);
 
-	Point* FindPointInDistanceForward(Point* candidatePoint, int startIndex);
+	point* FindpointInDistanceForward(point* candidatepoint, int startIndex);
 
-	Point* FindPointInDistanceBackward(Point* candidatePoint, int startIndex);
+	point* FindpointInDistanceBackward(point* candidatepoint, int startIndex);
 
-	Point* FindPointInDistance(Point* candidatePoint, int startIndex, int direction); //change it
+	point* FindpointInDistance(point* candidatepoint, int startIndex, int direction); //change it
+
+	FingerpointDetector();
+
 };
 
 #endif 

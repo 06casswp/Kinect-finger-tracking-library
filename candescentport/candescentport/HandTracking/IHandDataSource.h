@@ -1,7 +1,7 @@
 #ifndef IHANDDATASRC_H
 #define IHANDDATASRC_H
 
-#include "../intsize.h"
+#include "../size.h"
 #include "HandCollection.h"
 #include "../idatasource.h"
 
@@ -13,7 +13,7 @@ public:
 
 	int Height;
 
-	intsize* Size;
+	sizedat Size;
 };
 
 #endif 

@@ -4,8 +4,8 @@
 class IdGenerator
 {
 public:
-	IdGenerator();
-	std::vector<int> usedIds;
+	
+	std::vector<int>* usedIds;
 
 	int GetNextId();
 

@@ -1,21 +1,47 @@
 #ifndef CONTOURTRACER_H
 #define CONTOURTRACER_H
 
-#include "..\Point.h"
-#include "BinaryMap.h"
+#include "..\point.h"
+#include "DepthMap.h"
 #include <vector>
+#include "Contour.h"
+
+class pointRotation
+{
+public:
+	pointman pntfnc;
+	point* points[8];
+	point p1;
+	point p2;
+	point p3;
+	point p4;
+	point p5;
+	point p6;
+	point p7;
+	point p8;
+	
+	void set();
+	
+};
 
 class ContourTracer
 {
 public:
-	BinaryMap* contourMap;
+	depthmapdat* contourMap;
+
+	Contour* cont;
+
+	pointRotation pntrot;
+	pointman pntfnc;
+
 	int maximumRetraceSteps;
 
-	std::vector<Point*>* contourPoints;
 
-	ContourTracer(int maximumRetraceSteps1);
 
-	std::vector<Point*>* GetContourPoints(BinaryMap* contourMap1);
+	int GetStartIndex(float diffX, float diffY);
+
+
+	void GetContourpoints(depthmapdat* contourMap1,Contour* contour);
 
 	int Width();
 
@@ -23,25 +49,19 @@ public:
 
 	int ResultCount(); 
 
-	Point* FindFirstPoint();
+	point* FindFirstpoint();
 
-	bool IsContourPoint(int x, int y);
+	bool IsContourpoint(int x, int y);
 
 	bool IsAllowed(int x, int y);
 
 	bool IsSetAndAllowed(int x, int y);
 
-	Point* GetNextPoint(Point* p);
+	point* GetNextpoint(point* currentPoint, point* directionPoint);
 
 	void Process();
 };
 
-class PointRotation
-{
-public:
-	std::vector<Point*>* points;
 
-	PointRotation();
-};
 
 #endif 

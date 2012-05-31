@@ -39,9 +39,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="clusterdata.cpp">
-      <Filter>Source Files\Core\Cluster</Filter>
-    </ClCompile>
     <ClCompile Include="clusters.cpp">
       <Filter>Source Files\Core\Cluster</Filter>
     </ClCompile>
@@ -49,9 +46,6 @@
       <Filter>Source Files\Core\Cluster</Filter>
     </ClCompile>
     <ClCompile Include="clusterdatasrcsets.cpp">
-      <Filter>Source Files\Core\Cluster</Filter>
-    </ClCompile>
-    <ClCompile Include="clusterfactory.cpp">
       <Filter>Source Files\Core\Cluster</Filter>
     </ClCompile>
     <ClCompile Include="clusterhelper.cpp">
@@ -66,15 +60,6 @@
     <ClCompile Include="ImageData.cpp">
       <Filter>Source Files\Core\DataSrc</Filter>
     </ClCompile>
-    <ClCompile Include="contextdatasourcebase.cpp">
-      <Filter>Source Files\Core\DataSrc</Filter>
-    </ClCompile>
-    <ClCompile Include="rgbimagesrc.cpp">
-      <Filter>Source Files\Core\DataSrc</Filter>
-    </ClCompile>
-    <ClCompile Include="intsize.cpp">
-      <Filter>Source Files\Core</Filter>
-    </ClCompile>
     <ClCompile Include="volume.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
@@ -87,9 +72,6 @@
     <ClCompile Include="Point.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
-    <ClCompile Include="pointfnc.cpp">
-      <Filter>Source Files\Core</Filter>
-    </ClCompile>
     <ClCompile Include="Range.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
@@ -99,22 +81,10 @@
     <ClCompile Include="size.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
-    <ClCompile Include="HandTracking\BinaryMap.cpp">
-      <Filter>Source Files\HandTracking</Filter>
-    </ClCompile>
-    <ClCompile Include="HandTracking\Contour.cpp">
-      <Filter>Source Files\HandTracking</Filter>
-    </ClCompile>
     <ClCompile Include="HandTracking\ContourFactory.cpp">
       <Filter>Source Files\HandTracking</Filter>
     </ClCompile>
-    <ClCompile Include="HandTracking\ContourScanner.cpp">
-      <Filter>Source Files\HandTracking</Filter>
-    </ClCompile>
     <ClCompile Include="HandTracking\ContourTracer.cpp">
-      <Filter>Source Files\HandTracking</Filter>
-    </ClCompile>
-    <ClCompile Include="HandTracking\ConvexHull.cpp">
       <Filter>Source Files\HandTracking</Filter>
     </ClCompile>
     <ClCompile Include="HandTracking\DistanceMap2.cpp">
@@ -127,9 +97,6 @@
       <Filter>Source Files\HandTracking</Filter>
     </ClCompile>
     <ClCompile Include="HandTracking\GrahamScan.cpp">
-      <Filter>Source Files\HandTracking</Filter>
-    </ClCompile>
-    <ClCompile Include="HandTracking\HandCollection.cpp">
       <Filter>Source Files\HandTracking</Filter>
     </ClCompile>
     <ClCompile Include="HandTracking\HandData.cpp">
@@ -165,44 +132,32 @@
     <ClCompile Include="DepthDataFrame.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
-    <ClCompile Include="depthdataframerep.cpp">
-      <Filter>Source Files\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="depthimagefact.cpp">
-      <Filter>Source Files\Core</Filter>
-    </ClCompile>
     <ClCompile Include="histogram.cpp">
-      <Filter>Source Files\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="rgbimagefact.cpp">
-      <Filter>Source Files\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="sysrect.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
     <ClCompile Include="bitmap.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Iimagesource.cpp">
-      <Filter>Source Files\Core\DataSrc</Filter>
-    </ClCompile>
     <ClCompile Include="idatasource.cpp">
       <Filter>Source Files\Core\DataSrc</Filter>
     </ClCompile>
-    <ClCompile Include="idepthpntdatsrc.cpp">
-      <Filter>Source Files\Core\DataSrc</Filter>
+    <ClCompile Include="HandTracking\DepthMap.cpp">
+      <Filter>Source Files\HandTracking</Filter>
     </ClCompile>
-    <ClCompile Include="depthdatasource.cpp">
-      <Filter>Source Files\Core\DataSrc</Filter>
+    <ClCompile Include="render.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="datasourcebase.cpp">
-      <Filter>Source Files\Core\DataSrc</Filter>
+    <ClCompile Include="framelisten.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="inputman.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="clusterdata.h">
-      <Filter>Header Files\Core\Cluster</Filter>
-    </ClInclude>
     <ClInclude Include="clusters.h">
       <Filter>Header Files\Core\Cluster</Filter>
     </ClInclude>
@@ -210,9 +165,6 @@
       <Filter>Header Files\Core\Cluster</Filter>
     </ClInclude>
     <ClInclude Include="clusterdatasrcsets.h">
-      <Filter>Header Files\Core\Cluster</Filter>
-    </ClInclude>
-    <ClInclude Include="clusterfactory.h">
       <Filter>Header Files\Core\Cluster</Filter>
     </ClInclude>
     <ClInclude Include="clusterhelper.h">
@@ -239,12 +191,6 @@
     <ClInclude Include="irgbpntdatsrc.h">
       <Filter>Header Files\Core\DataSrc</Filter>
     </ClInclude>
-    <ClInclude Include="rgbimagesrc.h">
-      <Filter>Header Files\Core\DataSrc</Filter>
-    </ClInclude>
-    <ClInclude Include="intsize.h">
-      <Filter>Header Files\Core</Filter>
-    </ClInclude>
     <ClInclude Include="volume.h">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
@@ -252,9 +198,6 @@
       <Filter>Header Files\Core</Filter>
     </ClInclude>
     <ClInclude Include="Point.h">
-      <Filter>Header Files\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="pointfnc.h">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
     <ClInclude Include="Range.h">
@@ -266,16 +209,10 @@
     <ClInclude Include="size.h">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
-    <ClInclude Include="HandTracking\BinaryMap.h">
-      <Filter>Header Files\HandTracking</Filter>
-    </ClInclude>
     <ClInclude Include="HandTracking\Contour.h">
       <Filter>Header Files\HandTracking</Filter>
     </ClInclude>
     <ClInclude Include="HandTracking\ContourFactory.h">
-      <Filter>Header Files\HandTracking</Filter>
-    </ClInclude>
-    <ClInclude Include="HandTracking\ContourScanner.h">
       <Filter>Header Files\HandTracking</Filter>
     </ClInclude>
     <ClInclude Include="HandTracking\ContourTracer.h">
@@ -329,37 +266,16 @@
     <ClInclude Include="HandTracking\PointAngleComparer.h">
       <Filter>Header Files\HandTracking</Filter>
     </ClInclude>
-    <ClInclude Include="ILocatable.h">
-      <Filter>Header Files\Core</Filter>
-    </ClInclude>
     <ClInclude Include="depthpntdatsrc.h">
       <Filter>Header Files\Core\DataSrc</Filter>
     </ClInclude>
     <ClInclude Include="rgbpntdatsrc.h">
       <Filter>Header Files\Core\DataSrc</Filter>
     </ClInclude>
-    <ClInclude Include="depthimagesource.h">
-      <Filter>Header Files\Core\DataSrc</Filter>
-    </ClInclude>
     <ClInclude Include="DepthDataFrame.h">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
-    <ClInclude Include="depthdataframerep.h">
-      <Filter>Header Files\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="depthimagefact.h">
-      <Filter>Header Files\Core</Filter>
-    </ClInclude>
     <ClInclude Include="histogram.h">
-      <Filter>Header Files\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="idatasrcfact.h">
-      <Filter>Header Files\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="rgbimagefact.h">
-      <Filter>Header Files\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="sysrect.h">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
     <ClInclude Include="bitmap.h">
@@ -371,17 +287,29 @@
     <ClInclude Include="datasourceprocessor.h">
       <Filter>Header Files\Core\DataSrc</Filter>
     </ClInclude>
-    <ClInclude Include="depthdatasource.h">
-      <Filter>Header Files\Core\DataSrc</Filter>
-    </ClInclude>
     <ClInclude Include="idatasource.h">
-      <Filter>Header Files\Core\DataSrc</Filter>
-    </ClInclude>
-    <ClInclude Include="savedframedepthpntdatsrc.h">
       <Filter>Header Files\Core\DataSrc</Filter>
     </ClInclude>
     <ClInclude Include="main.h">
       <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageData.h">
+      <Filter>Header Files\Core\DataSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="HandTracking\DepthMap.h">
+      <Filter>Header Files\HandTracking</Filter>
+    </ClInclude>
+    <ClInclude Include="render.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="framelisten.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inputman.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

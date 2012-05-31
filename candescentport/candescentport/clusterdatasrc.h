@@ -3,10 +3,11 @@
 
 
 #include "clusterdatasrcsets.h"
-#include "intsize.h"
+
+#include "size.h"
 
 #include <XnCppWrapper.h>
-#include "XnVNite.h"
+
 #include "iclusterdatasrc.h"
 #include "idepthpntdatsource.h"
 #include "datasourceprocessor.h"
@@ -34,23 +35,22 @@
     return outs;
     }
 
-class ClusterDataSource :/* public DataSourceProcessor<ClusterData*,const XnDepthPixel *>,*/ public IClusterDataSource
+class ClusterDataSource : public IClusterDataSource
 {
 public:
 	 
 	ClusterDataSourceSettings* settings;
-	std::vector<Point*> result;
-	std::vector<Point*>* pin;
-	ClusterData* data;
-	void* clusterHelper;
-	intsize* size;
-	int test;
-	Point* p1;
+
+	void* clusterhelper;
+	sizedat* size;
 	
-	ClusterDataSource(intsize* size, ClusterDataSourceSettings* settings);
-	ClusterDataSource(IDepthPointerDataSource* dataSource);
-	ClusterData* Process(const XnDepthPixel * sourceData, void* other);
-	std::vector<Point*>* FindPointsWithinDepthRange(const XnDepthPixel * dataPointer);
+	int found;
+	
+	point** filteredarray;
+	int count;
+
+	clusterdat ** Process(const XnDepthPixel * sourceData, point *p1, point *poff, point** filtered);
+	void FindpointsWithinDepthRange(const XnDepthPixel * datapointer, point *p1, point *poff);
 	int width();
 	int height();
 	bool intarray2bmp(
@@ -58,7 +58,8 @@ public:
 		unsigned           rows,
 		unsigned           columns,
 		int            min_value,
-		int            max_value
+		int            max_value,
+		point *p1
 		) {
 			// This is the difference between each color based upon
 			// the number of distinct values in the input array.
@@ -103,13 +104,10 @@ public:
 
 			unsigned short out[640*480] = {600};// = (unsigned short*)calloc(columns*rows,sizeof(unsigned short));
 			memset(&out,0,640*480);
-			std::vector<Point*>::iterator iter;
-					
-					Point*p;
-					for (iter=result.begin();iter<result.end();iter++) {
-						p = (Point*)*iter;
-						out[640*(p->y)+(p->x)] = p->z;
-					}
+			int index = 0;
+			for (index=0; index<640*480; index++) {
+				out[640*(p1[index].y)+(p1[index].x)] = p1[index].z;
+			}
 
 
 			for (int pos = 0; pos < columns*rows; pos++)  // left-to-right
@@ -152,7 +150,7 @@ public:
 					*/
 
 
-					wavelength = (double)out[pos]/10.0+380.0;
+					wavelength = (double)out[pos]*5+380.0;
 					//fprintf(fil,"\n%u: %lf", pos, wavelength);
 					//WavelengthToRGB1(wave, &red,&green,&blue);
 				double Gamma        =   0.80;
@@ -400,38 +398,6 @@ namespace intarray2bmp1
     return f.good();
     }
 
-  //--------------------------------------------------------------------------
-  /*
-  template <typename IntType>
-  bool intarray2bmp(
-    const std::string& filename,
-    IntType*           intarray,
-    unsigned           rows,
-    unsigned           columns,
-    IntType            min_value,
-    IntType            max_value
-    ) {
-    //IntType* ia = new( std::nothrow ) IntType* [ rows*columns ];
-    
-    bool result = intarray2bmp(
-                    filename, intarray, rows, columns, min_value, max_value
-                    );
-    
-    return result;
-    }
-	*/
-		
-	
-
-
-
   } // namespace intarray2bmp
-
-
-// end intarray2bmp.hpp 
-
-
-
-
 
 #endif 

@@ -1,84 +1,124 @@
 #include "LineThinner.h"
-#include "../pointfnc.h"
 
-LineThinner::LineThinner(float mindDistBetweenPointsz, bool checkBoundaryz){
-
-	checkBoundary = checkBoundaryz;
-	mindDistBetweenPoints = mindDistBetweenPointsz;
+void LineThinner::set(float mindDistBetweenpoints1, bool check) {
+	mindDistBetweenpoints = mindDistBetweenpoints1;
+	checkBoundary = check;
 }
 
-std::vector<Point*>* LineThinner::Filter(std::vector<Point*>* points){
 
-	std::vector<Point*>* result = new std::vector<Point*>;
-	int Count = 0;
-	std::vector<Point*>::iterator iter;
-	for (iter = points->begin();iter<points->end();iter++){
-		Count++;
-	}
 
-	if (Count == 0)
+void LineThinner::Filter(Contour* cont){
+	size = 0;
+	if (cont->newpointcnt == 0)
 	{
-		return result;
+		return;
 	}
-	Count = 0;
-	Point* p2;
-	Point* p1 = (Point*)*points->begin();
-	Point* point = new Point(p1->x,p1->y,p1->z);
-	result->push_back(point);
-	Count++;
-	
-	
+
+
+	newstore[0] = &cont->newpoints[0];
+	size++;
+	int i = 0;
+
+	point* pnt;
+	pnt = newstore[0];
+
+
+	for (i = 0;i<cont->newpointcnt;i++) {
+		i++;
+		if (!DistanceIsTooSmall(&cont->newpoints[i], pnt))
+		{
+			pnt = &cont->newpoints[i];
+			newstore[size] = pnt;
+			size++;
+		}
+	}
+
+	for (i = 1;i<cont->newpointcnt;i++) {
 		
+		if (!DistanceIsTooSmall(&cont->newpoints[i], pnt))
+		{
+			pnt = &cont->newpoints[i];
+			newstore[size] = pnt;
+			size++;
+			
+		}
+		i++;
+	}
+
+
+
+	if (checkBoundary && size > 1)
+	{
+		CheckFirstAndLastpoint(cont);
+	}
+
+	memcpy(&cont->contourpoints,&newstore, 640*480*sizeof(point*));
+	cont->contourpntcnt = size;
 	
-	//run through every second, then run through the rest
-	for (iter=points->begin();iter<points->end(); iter++) {
-		iter++;
-		p2 = (Point*)*iter;
-
-		if (!MergeIfDistanceIsTooSmall(p2, point))
-		{
-			point = new Point(p2->x,p2->y,p2->z);
-			result->push_back(point);
-			Count++;
-		}
-	}
-	for (iter=points->begin()+1;iter<points->end(); iter++) {
-		iter++;
-		p2 = (Point*)*iter;
-
-		if (!MergeIfDistanceIsTooSmall(p2, point))
-		{
-			point = new Point(p2->x,p2->y,p2->z);
-			result->push_back(point);
-			Count++;
-		}
-	}
-
-	if (checkBoundary && Count > 1)
-	{
-		CheckFirstAndLastPoint(result);
-	}
-
-	return result;
+	return;
 }
 
-bool LineThinner::MergeIfDistanceIsTooSmall(Point* sourcePoint, Point* destPoint){
-	pointfunctions pntfnc;
-	if (pntfnc.distance(sourcePoint, destPoint) < mindDistBetweenPoints)
+
+void LineThinner::Filter1(ConvexHull* conv){
+	size = 0;
+	if (conv->Count == 0)
 	{
-		Point p = pntfnc.Center(sourcePoint, destPoint);
-		destPoint = new Point(p.x,p.y,p.z);
-		return true;
+		return;
 	}
-	return false;
+
+
+	newstore[0] = conv->points[0];
+	size++;
+	int i = 0;
+
+	point* pnt;
+	pnt = newstore[0];
+
+
+	for (i = 1;i<conv->Count-1;i++) {
+		
+		if (conv->points[i]) {
+			if (!DistanceIsTooSmall(conv->points[i], pnt))
+			{
+				pnt = conv->points[i];
+				newstore[size] = pnt;
+				size++;
+			}
+		}
+	}
+
+
+
+
+
+	if (checkBoundary && size > 1)
+	{
+		CheckFirstAndLastpoint1(conv);
+	}
+
+	memcpy(&conv->points,&newstore, 640*480*sizeof(point*));
+	conv->Count = size;
+	
+	return;
 }
 
-void LineThinner::CheckFirstAndLastPoint(std::vector<Point*>* points)        {
-	Point *a = (Point*)*points->end();
-	Point *b = (Point*)*points->begin();
 
-	if (MergeIfDistanceIsTooSmall(a, b))
+bool LineThinner::DistanceIsTooSmall(point* sourcepoint, point* destpoint){
+	pointman pntfnc;
+	return pntfnc.distance(sourcepoint, destpoint) < mindDistBetweenpoints;
+}
+
+void LineThinner::CheckFirstAndLastpoint(Contour* cont)        {
+
+	if (DistanceIsTooSmall(newstore[0], newstore[size-1]))
 	{
-		points->erase(points->end());
+		cont->newpointcnt--;
+	}
+}
+
+void LineThinner::CheckFirstAndLastpoint1(ConvexHull* conv)        {
+	if (DistanceIsTooSmall(newstore[0], newstore[size-1]))
+	{
+		conv->Count--;
 	}
 }

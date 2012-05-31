@@ -2,16 +2,15 @@
 #define DEPTHPNTDATSRC_H
 
 #include "idepthpntdatsource.h"
-#include "intsize.h"
+#include "size.h"
 #include <XnCppWrapper.h>
-#include "XnVNite.h"
 #include "datasourcebase.h"
 
 
-class DepthPointerDataSource : public DataSourceBase<const XnDepthPixel*, xn::DepthGenerator*>, public IDepthPointerDataSource
+class DepthpointerDataSource : public DataSourceBase<const XnDepthPixel*, xn::DepthGenerator*>, public IDepthpointerDataSource
 {
 public:
-	DepthPointerDataSource(xn::DepthGenerator* generator);
+	DepthpointerDataSource(xn::DepthGenerator* generator);
 
 	void InternalRun(){
 		data = generator->GetDepthMap();

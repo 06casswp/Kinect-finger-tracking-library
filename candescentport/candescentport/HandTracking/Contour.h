@@ -7,17 +7,15 @@
 class Contour
 {
 public:
-	//IList<Point> points; //points list
-	std::vector<Point*>* points;
+	
+	point newpoints[640*480];
+	int newpointcnt;
 
-	Contour();
+	point* contourpoints[640*480];
+	int contourpntcnt;
 
-	Contour(std::vector<Point*>* points1);
 
 
-	int Count();
-
-	Contour* Empty(); //returns an empty contour, do it the other way
 };
 
 #endif 

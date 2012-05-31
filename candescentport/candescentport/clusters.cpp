@@ -1,207 +1,188 @@
 #include "clusters.h"	
 
-
-
-Cluster::Cluster(Point center1){          
-	center = center1;
-	//vol = 0;
-}
-Cluster::Cluster(int x, int y, int z){   
-	center =  Point(x, y, z);
-	//vol = 0;
-}
-
-
-Cluster::Cluster(Point center1, std::vector<Point*> points1){     
-	center = center1;
-	points = points1;
-	//vol = 0;
-}
-double Cluster::Calc2DDistance(Point* point){  
-	return sqrt(pow((float)point->x - center.x, 2) + pow((float)point->y - center.y, 2) + pow((float)point->z - center.z, 2));
-}
-
-Point* Cluster::FindClosestPoint(std::vector<Point*>* points){
-	std::vector<Point*>::iterator iter;
-	double dist;
-	Point* closest;
-	iter=points->begin();
-	Point *p = (Point*)*iter;
-	double minDist = Calc2DDistance(p);
-	closest = p;
-	for (iter=points->begin(); iter<points->end();iter++) {
-		p = (Point*)*iter;
-
-
-		dist = Calc2DDistance(p);
-		if (dist < minDist)
-		{
-			closest = p;
-			minDist = dist;
-		}
-	}
-	return p;
-}
-
-void Cluster::AddPoint(Point* point){
-	points.push_back(new Point(point));
-
-}
-
-void Cluster::FindCenter(){               
-	//iterator
-	if (points.empty() == 1)
-	{
-		return;
-	}
-	std::vector<Point*>::iterator iter;
-	iter = points.begin();
-	center = (Point*)*iter;
-	iter++;
-	int i = 1;
-	for (iter; iter < points.end(); iter++)
-	{
-		Point p = *(Point*)*iter;
-		center.x += p.x;
-		center.y += p.y;
-		center.z += p.z;
-		i++;
-	}
-
-	center.x /= i;
-	center.y /= i;
-	center.z /= i;
-}
-
-void Cluster::CalculateVolume(){   
-	if (points.empty() == 1)
-	{
-		return;
+	void clusterfnc::clearall(clusterdat* c1) {
+		c1->center.angle = 0.0f;
+		c1->center.x = 0;
+		c1->center.y = 0;
+		c1->center.z = 0;
+		c1->vol.depth = 0;
+		c1->vol.height = 0;
+		c1->vol.location.x = 0;
+		c1->vol.location.y = 0;
+		c1->vol.location.z = 0;
+		c1->vol.location.angle = 0.0f;
+		memset(c1->points,0,sizeof(c1->points));
+		memset(c1->Allpoints,0,sizeof(c1->Allpoints));
+		c1->allpointscnt =0;
+		c1->pointscnt =0;
+		
 	}
 
 
-
-	std::vector<int> valuesx;
-	std::vector<int> valuesy;
-	std::vector<int> valuesz;
-
-	std::vector<Point*>::iterator iter;
-
-	for (iter=points.begin();iter<points.end();iter++) {
-		Point p = *(Point*)*iter;
-		valuesx.push_back(p.x);
-		valuesy.push_back(p.y);
-		valuesz.push_back(p.z);
+	void clusterfnc::set(clusterdat* dest, point* pnt){
+		dest->center = *pnt;
 	}
-	Range *rangeX = new Range(valuesx);
-	Range *rangeY = new Range(valuesy);
-	Range* rangeZ = new Range(valuesz);
-	Point* loca = new Point(rangeX->Min, rangeY->Min, rangeZ->Min);
-	//if (!vol) {
-		vol.location = loca;
-		//new volume(loca,rangeX.value(),rangeY.value(),rangeZ.value());
-	//}
-	//else
-	//{
+	void clusterfnc::set(clusterdat* dest, clusterdat* src){
+		dest->center = src->center;
+		dest->vol = src->vol;
+		memcpy(dest->points,src->points, sizeof(dest->points));
+		dest->pointspnt = src->pointspnt;
+		dest->pointscnt = src->pointscnt;
+		memcpy(dest->Allpoints,src->Allpoints, sizeof(dest->Allpoints));
+		dest->allpointpnt = src->allpointpnt;
+		dest->allpointscnt = src->allpointscnt;
+	}
+	void clusterfnc::set(clusterdat* dest, unsigned short x, unsigned short y, unsigned short z){
+		dest->center.x = x;
+		dest->center.y = y;
+		dest->center.z = z;
+	}
+	void clusterfnc::set(clusterdat* dest, point center, point** pnts){
+		dest->center = center;
+		memcpy(dest->points,*pnts,sizeof(dest->points));
+	}
 
-	//	vol->location = new Point(rangeX.Min, rangeY.Min, rangeZ.Min);
+	double clusterfnc::Calc2DDistance(clusterdat* c1, point* pnt){
+		return sqrt(pow((float)pnt->x - c1->center.x, 2) + pow((float)pnt->y - c1->center.y, 2) + pow((float)pnt->z - c1->center.z, 2));
 
-		vol.width = rangeX->value();
-		vol.height = rangeY->value();
-		vol.depth = rangeZ->value();
-	//}
-}
-
-void Cluster::ClearPoints(){     
-	points.clear();
-}
-
-void Cluster::Flatten(int maxDepth){    
-	float maxZValue = vol.location->z + maxDepth;
-	std::vector<Point*> newlist;
-	std::vector<Point*>::iterator iter;
-	Point *p;
-	if (vol.depth > maxDepth)
-	{
-		for (iter=points.begin();iter<points.end();iter++) {
-			//go through list, make new list, apply to old list
-			p = (Point*)*iter;
-			if (p->z<maxZValue) {
-				newlist.push_back(new Point(p));
+	}
+	point* clusterfnc::FindClosestpoint(clusterdat* c1, point** pnts,int count){
+		double dist = 999999;
+		double tempdist = 0;
+		point* closest = 0;
+		int index = 0;
+		for (index=0; index<count; index++) {
+			if (!(pnts[index]==0)) {
+				tempdist = Calc2DDistance(c1,pnts[index]);
+				if (tempdist<dist) {
+					closest = pnts[index];
+					dist = tempdist;
+				}
 			}
 		}
+
+		return closest;
+	}
+	void clusterfnc::Addpoint(clusterdat* c1, point* pnt){
+		c1->points[c1->pointscnt] = pnt;
+		c1->pointscnt++;
+	}
+	void clusterfnc::FindCenter(clusterdat* c1){
+		if (c1->pointscnt == 0) {
+			return;
+		}
+		int index = 0;
+		int count = 0;
+
+		unsigned __int64 x = 0;
+		unsigned __int64 y = 0;
+		unsigned __int64 z = 0;
+
+		for (index=0;index<640*480;index++) {
+			if (!(c1->points[index]==0)) {
+				count++;
+				x += c1->points[index]->x;
+				y += c1->points[index]->y;
+				z += c1->points[index]->z;	
+			}
+		}
+		x /= count;
+		y /= count;
+		z /= count;
+		c1->center.x = x;
+		c1->center.y = y;
+		c1->center.z = z;
+	} 
+	void clusterfnc::CalculateVolume(clusterdat* c1){
+		if (c1->pointscnt == 0) {
+			return;
+		}
+		unsigned short minx = 1000;
+		unsigned short maxx = 0;
+		unsigned short miny = 1000;
+		unsigned short maxy = 0;
+		unsigned short minz = 10000;
+		unsigned short maxz = 0;
+
+		int index = 0;
+		for (index = 0;index<640*480;index++) {
+			if (!(c1->points[index]==0)) {
+				if (c1->points[index]->x<minx) {
+					minx = c1->points[index]->x;
+				}
+				if (c1->points[index]->x>maxx) {
+					maxx = c1->points[index]->x;
+				}
+				if (c1->points[index]->y<miny) {
+					miny = c1->points[index]->y;
+				}
+				if (c1->points[index]->y>maxy) {
+					maxy = c1->points[index]->y;
+				}
+				if (c1->points[index]->z<minz) {
+					minz = c1->points[index]->z;
+				}
+				if (c1->points[index]->z>maxz) {
+					maxz = c1->points[index]->z;
+				}
+			}
+		}
+		c1->vol.location.x = minx;
+		c1->vol.location.y = miny;
+		c1->vol.location.z = minz;
+		c1->vol.width = maxx-minx;
+		c1->vol.height = maxy-miny;
+		c1->vol.depth = maxz-minz;
+
+	}
+	void clusterfnc::Clearpoints(clusterdat* c1){
+		memset(c1->points,0,sizeof(c1->points)); 
+		c1->pointscnt = 0;
+	}
+	void clusterfnc::Flatten(clusterdat* c1, int maxDepth){
+		float maxZValue = c1->vol.location.z + maxDepth;
+		if (c1->vol.depth > maxDepth) {
+			int index = 0;
+			for (index=0;index<640*480;index++) {
+				if (!(c1->points[index]==0)) {
+					if (c1->points[index]->z > maxDepth) {
+						c1->points[index]->z = maxDepth; //ALTERED
+					}
+				}
+			}
+			FindCenter(c1);
+			CalculateVolume(c1);
+		}
+	}
+	int clusterfnc::Count(clusterdat* c1){
+		return c1->pointscnt;
+	}
+	void clusterfnc::Area(rectdata* dest, clusterdat* src){ // RECTANGLEZ point change
 		
 
-		points = newlist;
-		FindCenter();
-		CalculateVolume();
+		
+		dest->location.x = src->vol.location.x;
+		dest->location.y = src->vol.location.y;
+		dest->size.Width = src->vol.width;
+		dest->size.Height = src->vol.height;
 	}
-}
-int Cluster::Count(){  
-	return points.size();
-	/*int i =0;
-	std::vector<Point*>::iterator iter;
-	for (iter=points.begin();iter<points.end();iter++) {
-		i++;
+	double clusterfnc::DistanceMetric(clusterdat* c1, clusterdat* c2){ //c2 is the input, c1 is the self
+		point* p1 = FindClosestpoint(c1, c2->points,c2->pointscnt);
+		point* p2 = FindClosestpoint(c2, c1->points,c1->pointscnt);
+		return c1->pntfnc.distance(p1,p2);
 	}
 
-	return i; 
-	*/
-}
-
-Rectanglez Cluster::Area(){     
-	return Rectanglez(vol.location->x, vol.location->y, vol.width, vol.height); 
-}
-
-double Cluster::DistanceMetric(Cluster* c1){
-	Cluster* c2 = new Cluster(center, points);
-	Point* p1 = FindClosestPoint(&c1->points);
-	Point* p2 = c2->FindClosestPoint(&points);
-	return pntfnc.distance(p1, p2);
-}
-Cluster* Cluster::Merge(Cluster* c){
-	//form a new list of points which are common to both!
-	std::vector<Point*>::iterator iter1;
-	std::vector<Point*>::iterator iter2;
-	Point *p1;
-	Point *p2;
-	std::vector<Point*>* pointout = new std::vector<Point*>;
-	for (iter1=points.begin();iter1<points.end();iter1++) {
-		p1 = (Point*)*iter1;
-		for (iter2=c->points.begin();iter2<c->points.end();iter2++) {
-			p2 = (Point*)*iter2;
-			if ((p1->x==p2->x)&&(p1->y==p2->y)&&(p1->z==p2->z)) {
-				Point* pntptr = new Point(p2);
-				pointout->push_back(pntptr);
+	void clusterfnc::Merge(clusterdat* c1, clusterdat* c2){ //c2 and c1 are going to be in c3 from now on.
+		int index = 0;
+		for (index=0;index<640*480;index++) {
+			if (!(c2->points[index]==0)) {
+				c1->points[index] = c2->points[index];
 			}
 		}
+		c1->pntfnc.Center(&c1->center,&c2->center,&c1->center);
+		CalculateVolume(c1);
+		FindCenter(c1);
 	}
-	Cluster *mergedCluster = new Cluster(pntfnc.Center(&center, &c->center), *pointout);
-	mergedCluster->CalculateVolume();
-	mergedCluster->FindCenter();
-	return mergedCluster;
 
-}
 
-Cluster::Cluster(void * cl) {
-	Cluster* clust = (Cluster*)cl;
-	std::vector<Point*>::iterator iter;
-	for (iter=clust->points.begin();iter<clust->points.end();iter++) {
-		points.push_back(new Point(*iter));
-	}
-	for (iter=clust->AllPoints.begin();iter<clust->AllPoints.end();iter++) {
-		AllPoints.push_back(new Point(*iter));
-	}
-	center.x = clust->center.x;
-	center.y = clust->center.y;
-	center.z = clust->center.z;
-	vol.depth = clust->vol.depth;
-	vol.width = clust->vol.width;
-	vol.height = clust->vol.height;
-	vol.location->x = clust->vol.location->x;
-	vol.location->y = clust->vol.location->y;
-	vol.location->z = clust->vol.location->z;
-	//Point center;
-	//volume vol;
 
-	}

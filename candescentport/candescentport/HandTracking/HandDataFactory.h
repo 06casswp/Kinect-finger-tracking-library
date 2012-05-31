@@ -4,47 +4,58 @@
 #include "HandDataSourceSettings.h"
 #include "ContourFactory.h"
 #include "PalmFinder.h"
-#include "FingerPointDetector.h"
+#include "FingerpointDetector.h"
 #include "IdGenerator.h"
 #include "HandData.h"
 #include "../clusters.h"
-#include "FingerPoint.h"
-#include "BinaryMap.h"
+#include "Fingerpoint.h"
+#include "DepthMap.h"
 #include "ConvexHull.h"
 #include <vector>
-
-
-
+#include "GrahamScan.h"
+#include "DistanceMap2.h"
+#include <fstream>
+#include <iostream>
+#include <string>
 
 class HandDataFactory
 {
 public:
 
 	HandDataSourceSettings* settings;
-	ContourFactory* contourFactory;
-	PalmFinder* palmFinder;
-	FingerPointDetector* fingerPointDetector;
-	IdGenerator* idGenerator;
+	ContourFactory contourFactory;
+	PalmFinder palmFinder;
+	FingerpointDetector fingerpointDetector;
+	IdGenerator idGenerator;
+	
+	GrahamScan GS;
 
-	HandDataFactory(HandDataSourceSettings *settings1);
+	DistanceMap2b distanceMap;
+
+	void setsettings();
 
 	void ReturnId(int id);
 
-	HandData* Create(Cluster* cluster);
+	HandData* Create(clusterdat* clusterdat); //create new handdata
 
-	HandData* Create(HandData* lastFrameData, Cluster* cluster);
+	HandData* Create(HandData* lastFrameData, clusterdat* clusterdat); //reuse and return the old 1
 
 	void ClearIds();
 
-	HandData* Create(int id, Cluster* cluster, std::vector<FingerPoint*>* lastFrameFingerPoints);
+	HandData* Create1(HandData* HD);//create new 1
 
-	std::vector<FingerPoint*>* MapFingerPoints(std::vector<FingerPoint*>* oldFingerPoints, std::vector<FingerPoint*>* newFingerPoints);
 
-	Contour* CreateContour(BinaryMap* map, Cluster* cluster);
+	Fingerpoint** MapFingerpoints(Fingerpoint** oldFingerpoints, int oldcount, Fingerpoint** newFingerpoints, int newcount, int*outcount);
 
-	std::vector<FingerPoint*>* DetectFingerPoints(ConvexHull* convexHull, Cluster* cluster, Contour* contour);
 
-	BinaryMap* CreateMap(Cluster* cluster);
+	Contour* CreateContour(depthmapdat* map, clusterdat* clusterdat);
+
+	Fingerpoint** DetectFingerpoints(ConvexHull* convexHull, Contour* contour, int* outcount);
+
+
+	depthmapdat* CreateMap(clusterdat* clusterdat);
+
+	HandDataFactory();
 };
 
 #endif 

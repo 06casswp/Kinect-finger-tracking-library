@@ -2,10 +2,9 @@
 #define CLUSTERHELPER_H
 
 //#include "clusterdatasrc.h"
-#include "Point.h"
+#include "point.h"
 #include "clusters.h"
 
-#include "clusterdata.h"
 #include "kmeans.h"
 #include "clustermerger.h"
 
@@ -13,29 +12,51 @@ class ClusterHelper
 {
 
 public:
-	ClusterMerger* clusterMergerz;
-	KMeans* algorithm;
-	std::vector<Point*>* localcpy;
-	ClusterDataSourceSettings settings;
-	ClusterData* value;
-	std::vector<Point*>* outp;
+	ClusterMerger ClusterMergerz;
+	KMeans algorithm;
 
-	ClusterHelper(ClusterDataSourceSettings* settings1, intsize* size);
+	ClusterDataSourceSettings* settings;
+	
+	void allocate();
 
-	ClusterData* Update();
+	point** localcopy; //just a local pointer to the pointer array. this is modified only to remove any reduced points by setting their pointer to 0; assigned each update
+	int count;
 
-	bool AreEnoughPointsForClustering(int count);
+	point* reducedpoints[640*480]; //the new set of working points to be used
+	int reducedpointsize;
+	point** reduced;
+	
+	clusterdat clusterdats[10];
+	clusterdat *clusterdatpnt[10];
+	int localcount;
+	clusterdat **clusterdatarray;
 
-	std::vector<Point*>* ReducePoints(std::vector<Point*>* points);
 
-	void FindClusters(std::vector<Point*>* pointList);
+	clusterfnc cfnc; //cluster modification functions
+	rectfnc rfnc; //rectangle modification functions
 
-	std::vector<Cluster*>* FlattenIfRequired(std::vector<Cluster*>* clusters);
+	
 
-	void InitializeAlgorithm(std::vector<Point*>* pointList);
-	void AssignAllPoints(std::vector<Point*>* fullList);
+	clusterdat ** Update();
 
-	std::vector<Cluster*>* MergeClustersIfRequired(std::vector<Cluster*>* clusters);
+	bool AreEnoughpointsForclusterdating(int count);
+
+
+	void Reducepoint();
+
+
+	void Findclusterdats();
+
+	void FlattenIfRequired(); //will be changed once clusterdats are pointered like points
+
+
+	void InitializeAlgorithm();
+
+
+
+	void AssignAllpoints();
+
+	void MergeclusterdatsIfRequired();
 
 
 

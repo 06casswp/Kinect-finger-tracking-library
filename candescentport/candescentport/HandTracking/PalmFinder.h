@@ -3,9 +3,10 @@
 
 #include "Palm.h"
 #include "HandDataSourceSettings.h"
-#include "..\Point.h"
+#include "..\point.h"
 #include "Contour.h"
 #include <vector>
+#include "LineThinner.h"
 class PalmFinder
 {
 public:
@@ -14,15 +15,21 @@ public:
 	float contourReduction;
 	int searchRadius;
 
-	PalmFinder(HandDataSourceSettings* settings);
+	LineThinner LT;
+	pointman pntfnc;
+	Palm* FindCenter(Contour* contour, point** candidates,int count);
 
-	Palm* FindCenter(Contour *contour, std::vector<Point*>* candidates);
+	void FindCenterFromCandidates(Contour* cont, point** candidates,int count);
 
-	void FindCenterFromCandidates(std::vector<Point*>* contour, std::vector<Point*>* candidates);
+	void IncreaseAccuracy(point* center, Contour* cont);
 
-	void IncreaseAccuracy(Point* center, std::vector<Point*>* contour);
+	double FindMaxDistance(Contour* cont, point* candidate);
 
-	double FindMaxDistance(std::vector<Point*>* contourPoints, Point* candidate);
+	point** newCandidatepointspnt;
+	point* newcandidatepnt[640*480];
+	point newcandidate[640*480];
+	int newcandidatecnt;
+
 };
 
 #endif 

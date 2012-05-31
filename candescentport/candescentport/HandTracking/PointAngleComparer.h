@@ -1,43 +1,45 @@
 #ifndef PNTANGCOMP_H
 #define PNTANGCOMP_H
 
-#include "..\Point.h"
-#include "../pointfnc.h"
+#include "..\point.h"
 
-class PointAngleComparer2D //removed c# comparer interface
+
+class pointAngleComparer2D //removed c# comparer interface
 {
 public:
-	Point* p0;
+	point* p0;
 
-	PointAngleComparer2D(Point* zeroPoint);
-	PointAngleComparer2D();
+	void set(point* zeropoint);
+	
 
-	int Compare(Point* p1, Point* p2);
+	int Compare(point* p1, point* p2);
 
-	float Compare(Point* p0, Point* p1, Point* p2);
+	float Compare(point* p0, point* p1, point* p2);
 };
 
-class PointAngleComparer2Da //removed c# comparer interface
+class pointAngleComparer2Da //removed c# comparer interface
 {
 public:
 	
-	pointfunctions pntfnc;
+	pointman pntfnc;
 	
-    PointAngleComparer2Da(Point* _anchor):anchor(_anchor){};
+    
 
-   bool operator()(Point* p1,Point* p2)
+   bool compare(point* p1,point* p2)
    {
-      if (p1->angle < p2->angle)      return true;
+      
+	   if (p1->angle < p2->angle)      return true;
       else if (p1->angle > p2->angle) return false;
-      else if (p1->Equals((void*)p2))     return false;
+      else if (p1==p2)     return false;
       else if (pntfnc.distance(anchor->x, anchor->y, p1->x, p1->y) < pntfnc.distance(anchor->x, anchor->y, p2->x, p2->y))
-         return true;
+         return false;
       else
+	  
          return false;
    }
 
 
-   Point* anchor;
+   point* anchor;
 
 };
 

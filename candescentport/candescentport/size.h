@@ -1,18 +1,20 @@
 #ifndef SIZE_H
 #define SIZE_H
 
-
-class Size {
-public:
+struct sizedat {
 	float Width;
 	float Height;
-	int WidthInt();
-	int HeightInt();
-
-	Size(float width, float height);
-	bool Equals(void* a);
 
 
 };
+
+class sizefnc {
+public:
+	bool Equals(sizedat* s1, sizedat* s2);
+	void set (sizedat* s1, float width,float height);
+
+};
+
+
 
 #endif 

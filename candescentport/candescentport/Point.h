@@ -1,23 +1,24 @@
-#ifndef POINT_H
-#define POINT_H
+#ifndef point_H
+#define point_H
 
-class Point {
-public:
-	int x;
-	int y;
-	int z;
+struct point {
+	short x;
+	short y;
+	short z;
 	double angle;
-	Point(int x1, int y1, int z1);
-	Point(void* p);
-	Point(){
-		x= 0;
-		y=0;
-		z=0;
-	}
+};
 
-	//void adapt(float x1, float y1, float z1);
-	bool isZero();
-	bool Equals(void* pnt);
+
+class pointman {
+public:
+	void set (short x, short y, short z, point* dest);
+	void set (point* dest, point* src);
+	void reset (point* dest);
+	bool isZero(point* p);
+	bool Equals(point* p1, point* p2);
+	double distance(point *p1, point *p2);
+	double distance(float x1, float y1, float x2, float y2);
+	void Center(point *p1, point *p2, point *dest); //ISSUE HERE. WHERE ARE THESE CREATED pointS NEEDED AND STORED AND HOW MANY ETC
 };
 
 #endif 

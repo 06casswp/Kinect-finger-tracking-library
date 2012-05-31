@@ -1,27 +1,36 @@
-#ifndef CLUSTERDATSRCSET_H
-#define CLUSTERDATSRCSET_H
+#ifndef clusterdatDATSRCSET_H
+#define clusterdatDATSRCSET_H
 #include "Range.h"
 
 class ClusterDataSourceSettings
 {
 public:
-	int ClusterCount;
+	int clusterdatCount;
 	int LowerBorder;
-	int PointModulo;
+	int pointModulo;
 	int MinimumDepthThreshold;
 	int MaximumDepthThreshold;
-	Range * DepthRange();
-	Range * depth;
-	int MinimalPointsForClustering;
-	int MinimalPointsForValidCluster;
-	double MergeMinimumDistanceToCluster;
-	double MergeMaximumClusterCenterDistances;
-	double MergeMaximumClusterCenterDistances2D;
-	int MaximumClusterDepth;
+
+
+	rangedat * DepthRange();
+	rangedat depth;
+
+	int MinimalpointsForclusterdating;
+	int MinimalpointsForValidclusterdat;
+	double MergeMinimumDistanceToclusterdat;
+	double MergeMaximumclusterdatCenterDistances;
+	double MergeMaximumclusterdatCenterDistances2D;
+	int MaximumclusterdatDepth;
 	void SetToDefault();
 	void SetToFast();
 	void SetToAccurate();
-	ClusterDataSourceSettings();
+	
+
+
+
+	//new ones
+	unsigned short dispoffset; //the distance to include from the saved offset surface
+	unsigned short clusterdatcount; //max clusterdats <do not make more than 9>
 
 };
 

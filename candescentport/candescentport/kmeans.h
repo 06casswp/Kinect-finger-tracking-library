@@ -4,43 +4,51 @@
 #include <vector>
 #include "Range.h"
 #include "clusters.h"
-#include "intsize.h"
-#include "clusterfactory.h"
+#include "size.h"
+
 
 
 class KMeans
 {
 public:
-	ClusterFactory* clusterFactory;
-
-	//Random random = new Random(); //sys fnc for random numbers
-	std::vector<Point*>* points;
-	intsize* size;
-	Range* zRange;
-	std::vector<Cluster*>* Clusters;
-	int ClusterCount();
-
-	KMeans(int numberOfClusters, Range* zRange1, intsize* size1);
 
 
-	void Initialize(std::vector<Point*>* points1);
 
+	point** reducedpoints; //same as points
+	int reducedcount;
+
+	sizedat* size;
+
+	rangedat* zrangedat;
+
+	
+	clusterfnc cfnc;
+
+	clusterdat** clusterdatarr;
+	int clusterdatcount;
+
+	int setclustcount;
+
+	void count(int* counts);
+
+	void Initialize(point ** reduced);
 
 	void IterateUntilStable();
 
 	void IterateOnce();
 
-	void ClearPoints();
+	void Clearpoints();
 
-	void DistributePointsToClusters();
+	void DistributepointsToclusterdats();
 
-	bool DetectCountChange(std::vector<int>* counts);
-
+	bool DetectCountChange(int* counts);
 	void RecalculateCenters();
 
-	double CalcDistance(Cluster* c1, Point* point);
 
-	void AddToMinimalDistanceCluster(Point* point);
+	double CalcDistance(clusterdat* c1, point* pnt);
+
+
+	void AddToMinimalDistanceclusterdat(point* pnt);
 };
 
 

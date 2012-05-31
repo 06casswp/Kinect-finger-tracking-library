@@ -4,23 +4,22 @@
 #include "ContourScanner.h"
 #include "ContourTracer.h"
 #include "LineThinner.h"
-#include "../Point.h"
+#include "../point.h"
 #include "Contour.h"
-#include "BinaryMap.h"
+#include "DepthMap.h"
 #include <vector>
 
 class ContourFactory
 {
 public:
-	ContourScanner* scanner;
-	ContourTracer* tracer;
-	LineThinner* thinner;  
 
-	ContourFactory(float lineThinningDistance, int maximumRetraceSteps);
+	ContourTracer tracer;
+	LineThinner thinner;  
 
-	Contour* CreateContour(BinaryMap* map, float left, float top);
 
-	std::vector<Point*>* Translate(std::vector<Point*>* points, int deltaX, int deltaY);
+	Contour* CreateContour(depthmapdat* map, float left, float top);
+
+	void Translate(Contour* cont, int deltaX, int deltaY);
 
 };
 

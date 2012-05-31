@@ -3,11 +3,11 @@
 
 
 #include <XnCppWrapper.h>
-#include "XnVNite.h"
-#include "idatasource.h"
-#include "bitmap.h"
 
-class IImageSource : public IDataSourceT<bitmap*>
+#include "idatasource.h"
+
+
+class IImageSource
 {
 public:
 	int Width;

@@ -1,7 +1,7 @@
 #define NOMINMAX
 
 
-#include "idatasrcfact.h"
+
 #include "OpenNIDataSourceFactory.h"
 #include "HandTracking/IHandDataSource.h"
 #include "HandTracking/HandDataSourceSettings.h"
@@ -11,52 +11,22 @@
 #include <iostream>
 #include <string>
 #include <math.h>
+#include <Windows.h>
+#include <WinUser.h>
+void initogre();
 
 class program
 {
 public:
-	int minNumberOfFingersToShowMenu;
 	HandDataSource* handDataSource;
-	ClusterDataSource* clustersource;
+	ClusterDataSource* clusterdatsource;
 	OpenNIDataSourceFactory* factory;
 	void* other;
 	OpenNIDataSourceFactory* CreateFactory();
 	void CreateDataSources();
-	program();
-
-
-};
-
-class ImageData
-{
-public:
-	ImageData(const XnDepthPixel* depthPointer, const XnUInt8* rgbPointer)
-	{
-		DepthPointer = depthPointer;
-		RgbPointer = rgbPointer;
-	}
-
-	const XnDepthPixel* DepthPointer;
-	const XnUInt8* RgbPointer;
-};
-
-class MultiGeneratorDataSource : public ContextDataSourceBase<ImageData*>
-{
-	xn::ImageGenerator* imageGenerator;
-	xn::DepthGenerator* depthGenerator;
-
-	MultiGeneratorDataSource(xn::Context* context, xn::ImageGenerator* imageGenerator1, xn::DepthGenerator* depthGenerator1)
-		: ContextDataSourceBase(context)
-	{
-		imageGenerator = imageGenerator1;
-		depthGenerator = depthGenerator1;
-	}
-
-	void InternalRun()
-	{
-		data = &ImageData(depthGenerator->GetDepthMap(), imageGenerator->GetImageMap());
-		OnNewDataAvailable(CurrentValue());
-	}
+	
+	void setoffset(const XnDepthPixel * sourceData,point *poff);
+	void gotoxy ( short x, short y );
 };
 
 
@@ -103,7 +73,7 @@ namespace intarray2bmp
 	template <typename IntType>
 	bool intarray2bmp(
 		const std::string& filename,
-		Cluster*          cd,
+		HandData*          cd,
 		unsigned           rows,
 		unsigned           columns,
 		IntType            min_value,
@@ -149,16 +119,25 @@ namespace intarray2bmp
 			FILE* fil;
 			fil = fopen("a.txt","w");
 
-
+			
 			char* out = (char*)calloc(columns*rows,sizeof(char));
-			std::vector<Point*>::iterator iter;
+			
 					
-					Point*p;
-					for (iter=cd->points.begin();iter<cd->points.end();iter++) {
-						p = (Point*)*iter;
-						out[p->x+640*p->y] = p->z;
+					int index = 0;
+					for (index = 0; index<cd->clusterdata->allpointscnt; index++) {
+						out[cd->clusterdata->Allpoints[index]->x+640*cd->clusterdata->Allpoints[index]->y] = cd->clusterdata->Allpoints[index]->z;
 					}
 
+					index = 0;
+					int index1 = 0;
+					for (index=0;index<cd->FingerpointCount;index++) {
+						out[cd->Fingerpoints[index]->location->x+640*cd->Fingerpoints[index]->location->y] = 99;
+						for (index1 = -10; index1<10; index1++) {
+							out[std::max(0,cd->Fingerpoints[index]->location->x-index1)+640*cd->Fingerpoints[index]->location->y] = 99;
+							out[cd->Fingerpoints[index]->location->x+640*std::max(0,cd->Fingerpoints[index]->location->y-index1)] = 99;
+						}
+					}
+					
 
 			for (int pos = 0; pos < columns*rows; pos++)  // left-to-right
 			{
@@ -212,29 +191,11 @@ namespace intarray2bmp
 			
 			fclose(fil);
 			// All done!
-			return f.good();
+			free(out);
+			f.close();
+			return 1;
 	}
 
-	//--------------------------------------------------------------------------
-	/*
-	template <typename IntType>
-	bool intarray2bmp(
-	const std::string& filename,
-	IntType*           intarray,
-	unsigned           rows,
-	unsigned           columns,
-	IntType            min_value,
-	IntType            max_value
-	) {
-	//IntType* ia = new( std::nothrow ) IntType* [ rows*columns ];
-
-	bool result = intarray2bmp(
-	filename, intarray, rows, columns, min_value, max_value
-	);
-
-	return result;
-	}
-	*/
 
 } // namespace intarray2bmp
 

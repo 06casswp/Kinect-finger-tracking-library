@@ -2,14 +2,14 @@
 #define ICLUSTDATSRC_H
 
 
-#include "clusterdata.h"
-#include "intsize.h"
+#include "clusters.h"
+#include "size.h"
 #include "idatasource.h"
 
-class IClusterDataSource : public IDataSourceT <ClusterData*>
+class IClusterDataSource : public IDataSourceT <clusterdat **>
 {
 public:
-	intsize* Size;
+	sizedat* Size;
 };
 
 #endif 

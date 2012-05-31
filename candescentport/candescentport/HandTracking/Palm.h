@@ -1,15 +1,15 @@
 #ifndef PALM_H
 #define PALM_H
 
-#include "..\Point.h"
+#include "..\point.h"
 
 class Palm
 {
 public:
-	Point* location;
+	point* location;
 	double distanceToContour;
 
-	Palm(Point* locationz, double distanceToContourz);
+	Palm(point* locationz, double distanceToContourz);
 };
 
 #endif 

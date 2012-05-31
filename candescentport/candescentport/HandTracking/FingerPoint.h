@@ -1,15 +1,15 @@
-#ifndef FINGERPOINT_H
-#define FINGERPOINT_H
+#ifndef FINGERpoint_H
+#define FINGERpoint_H
 
-#include "..\Point.h"
-#include "..\ILocatable.h"
+#include "..\point.h"
 
-class FingerPoint : public ILocatable
+
+class Fingerpoint 
 {
 public:
-	Point* location;
+	point *location;
 
-	FingerPoint(Point* location);
+	void set(point* location);
 
 	int Id;
 
